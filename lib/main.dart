@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const IbjujunAdminApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class IbjujunAdminApp extends StatelessWidget {
+  const IbjujunAdminApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: '입주전 관리자',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: '입주전 관리자'),
     );
   }
 }

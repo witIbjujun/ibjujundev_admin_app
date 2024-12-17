@@ -31,10 +31,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
   http: ^0.13.4 #HTTP 요청을 처리하기 위한 패키지
   image: ^3.0.1 #위젯으로, 애플리케이션에서 이미지 표시
 

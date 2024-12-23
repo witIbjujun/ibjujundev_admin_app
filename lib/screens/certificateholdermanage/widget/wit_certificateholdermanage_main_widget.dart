@@ -56,8 +56,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
  */
 class CertificateHolderListView extends StatelessWidget {
   final List<dynamic> certificateHolderList;
+  final Future<void> Function() getList; // 메서드 타입으로 변경
 
-  const CertificateHolderListView({required this.certificateHolderList});
+  const CertificateHolderListView({
+    required this.certificateHolderList,
+    required this.getList,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +70,14 @@ class CertificateHolderListView extends StatelessWidget {
       itemBuilder: (context, index) {
         final item = certificateHolderList[index];
         return GestureDetector(
-          onTap: () {
+          onTap: () async {
             // 클릭 시 CertificateHolderDetail로 화면 전환
-            Navigator.push(context, _createRoute(CertificateHolderDetail(itemInfo: item)));
+            await Navigator.push(
+              context,
+              _createRoute(CertificateHolderDetail(itemInfo: item)),
+            );
+            // 화면 복귀 시 리스트를 새로 조회
+            await getList();
           },
           child: CertificateHolderCard(item: item),
         );
@@ -81,9 +90,9 @@ class CertificateHolderListView extends StatelessWidget {
    ******************************/
   Route _createRoute(Widget page) {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page, // 이동할 페이지
+      pageBuilder: (context, animation, secondaryAnimation) => page,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0); // 오른쪽에서 들어오는 애니메이션
+        const begin = Offset(1.0, 0.0);
         const end = Offset.zero;
         const curve = Curves.easeInOut;
 
@@ -98,7 +107,6 @@ class CertificateHolderListView extends StatelessWidget {
     );
   }
 }
-
 
 /**
  * 사업자 인증 요청 카드
@@ -139,8 +147,16 @@ class CertificateHolderCard extends StatelessWidget {
               Text(
                 "(${item["bizCertificationNm"]})",
                 style: item["bizCertification"] == "01"
+                    ? TextStyle(fontSize: 16, color: Colors.green)
+                    : item["bizCertification"] == "02"
+                    ? TextStyle(fontSize: 16, color: Colors.green)
+                    : item["bizCertification"] == "03"
+                    ? TextStyle(fontSize: 16, color: Colors.blue)
+                    : item["bizCertification"] == "04"
+                    ? TextStyle(fontSize: 16, color: Colors.orange)
+                    : item["bizCertification"] == "05"
                     ? TextStyle(fontSize: 16, color: Colors.red)
-                    : TextStyle(fontSize: 16, color: Colors.blue),
+                    : TextStyle(fontSize: 16, color: Colors.green),
               ),
             ],
           ),

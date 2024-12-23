@@ -74,6 +74,7 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
    * 화면 UI
    */
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
@@ -86,7 +87,7 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
             startSearch();
           }
         },
-        onSearchSubmit: (value) => filterList()
+        onSearchSubmit: (value) => filterList(),
       ),
       body: SafeArea(
         child: certificateHolderList.isEmpty
@@ -98,10 +99,12 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
         )
             : CertificateHolderListView(
           certificateHolderList: certificateHolderList,
+          getList: getCertificateHolderList, // 메서드의 참조를 전달
         ),
       ),
     );
   }
+
 
   // [서비스] 사업자 인증 요청 업체 조회
   Future<void> getCertificateHolderList() async {

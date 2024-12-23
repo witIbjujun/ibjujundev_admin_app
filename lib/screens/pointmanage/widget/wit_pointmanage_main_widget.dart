@@ -1,57 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:ibjujundev_admin_app/screens/certificateholdermanage/wit_certificateholdermanage_detail_sc.dart';
 
 /**
- * 사업자 인증 요청 리스트 뷰
+ * 포인트 관리 리스트 뷰
  */
-class CertificateHolderListView extends StatelessWidget {
-  final List<dynamic> certificateHolderList;
+class PointInfoListView extends StatelessWidget {
+  final List<dynamic> pointInfoList;
   final Future<void> Function() getList; // 메서드 타입으로 변경
 
-  const CertificateHolderListView({
-    required this.certificateHolderList,
+  const PointInfoListView({
+    required this.pointInfoList,
     required this.getList,
   });
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: certificateHolderList.length,
+      itemCount: pointInfoList.length,
       itemBuilder: (context, index) {
-        final item = certificateHolderList[index];
+        final item = pointInfoList[index];
         return GestureDetector(
           onTap: () async {
-            // 클릭 시 CertificateHolderDetail로 화면 전환
+            /*// 클릭 시 CertificateHolderDetail로 화면 전환
             await Navigator.push(
               context,
               _createRoute(CertificateHolderDetail(itemInfo: item)),
             );
             // 화면 복귀 시 리스트를 새로 조회
-            await getList();
+            await getList();*/
           },
-          child: CertificateHolderCard(item: item),
-        );
-      },
-    );
-  }
-
-  /*******************************
-   * [이벤트] 화면 전환
-   ******************************/
-  Route _createRoute(Widget page) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0);
-        const end = Offset.zero;
-        const curve = Curves.easeInOut;
-
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        var offsetAnimation = animation.drive(tween);
-
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
+          child: PointInfoListCard(item: item),
         );
       },
     );
@@ -59,13 +36,13 @@ class CertificateHolderListView extends StatelessWidget {
 }
 
 /**
- * 사업자 인증 요청 카드
+ * 포인트 관리 요청 카드
  */
-class CertificateHolderCard extends StatelessWidget {
+class PointInfoListCard extends StatelessWidget {
 
   final dynamic item;
 
-  const CertificateHolderCard({required this.item});
+  const PointInfoListCard({required this.item});
 
   @override
   Widget build(BuildContext context) {

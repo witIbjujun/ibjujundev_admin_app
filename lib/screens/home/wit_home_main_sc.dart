@@ -6,6 +6,7 @@ import 'package:ibjujundev_admin_app/screens/estimatemanage/wit_estimatemanage_m
 import 'package:ibjujundev_admin_app/screens/joininfomanage/wit_joininfomanage_main_sc.dart';
 import 'package:ibjujundev_admin_app/screens/partnermanage/wit_partnermanage_main_sc.dart';
 import 'package:ibjujundev_admin_app/screens/pointmanage/wit_pointmanage_main_sc.dart';
+import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dart';
 
 /**
  * 입주전 관리자 메인 홈
@@ -60,7 +61,7 @@ class HomeState extends State<Home> {
                     // 사업자 인증 요청 내역 버튼
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(_createRoute(CertificateHolderManage()));
+                        Navigator.of(context).push(SlideRoute(page: CertificateHolderManage()));
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),
@@ -79,7 +80,7 @@ class HomeState extends State<Home> {
                     // 포인트 관리 버튼
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(_createRoute(PointManage()));
+                        Navigator.of(context).push(SlideRoute(page: PointManage()));
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),
@@ -97,9 +98,10 @@ class HomeState extends State<Home> {
                     
                     // 커뮤니티 관리 버튼
                     ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(_createRoute(CommunityManage()));
-                      },
+                        onPressed: null,
+                      /*onPressed: () {
+                        Navigator.of(context).push(SlideRoute(page: CommunityManage()));
+                      },*/
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
@@ -117,7 +119,7 @@ class HomeState extends State<Home> {
                     // 결재내역 조회 버튼
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(_createRoute(ApprovalManage()));
+                        Navigator.of(context).push(SlideRoute(page: ApprovalManage()));
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),
@@ -135,9 +137,10 @@ class HomeState extends State<Home> {
                     
                     // 가입정보 정보조회 버튼
                     ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(_createRoute(JoinInfoManage()));
-                      },
+                      onPressed: null,
+                      /*onPressed: () {
+                        Navigator.of(context).push(SlideRoute(page: JoinInfoManage()));
+                      },*/
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
@@ -155,7 +158,7 @@ class HomeState extends State<Home> {
                     // 견적요청 리스트 버튼
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(_createRoute(EstimateManage()));
+                        Navigator.of(context).push(SlideRoute(page: EstimateManage()));
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),
@@ -173,9 +176,10 @@ class HomeState extends State<Home> {
                     
                     // 협력업체 인증관리 버튼
                     ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(_createRoute(PartnerManage()));
-                      },
+                      onPressed: null,
+                      /*onPressed: () {
+                        Navigator.of(context).push(SlideRoute(page: PartnerManage()));
+                      },*/
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
@@ -196,27 +200,4 @@ class HomeState extends State<Home> {
       ),
     );
   }
-
-  /*******************************
-   * [이벤트] 화면 전환
-   ******************************/
-  Route _createRoute(page) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page, // 이동할 페이지
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0); // 오른쪽에서 들어오는 애니메이션
-        const end = Offset.zero;
-        const curve = Curves.easeInOut;
-
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        var offsetAnimation = animation.drive(tween);
-
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        );
-      },
-    );
-  }
-
 }

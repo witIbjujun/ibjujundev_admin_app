@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/certificateholdermanage/widget/wit_certificateholdermanage_main_widget.dart';
 import 'package:ibjujundev_admin_app/util/wit_api_ut.dart';
 
+import '../common/widget/wit_common_widget.dart';
+
 /**
  * 사업자 인증 요청 내역 메인
  */
@@ -74,10 +76,10 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
    * 화면 UI
    */
   @override
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: SearchAppBar(
+        appBarTitle: "사업자 인증 요청 내역",
         isSearching: isSearching,
         searchController: searchController,
         onSearchToggle: () {

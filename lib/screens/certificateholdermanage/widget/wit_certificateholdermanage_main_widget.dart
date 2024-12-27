@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/certificateholdermanage/wit_certificateholdermanage_detail_sc.dart';
+import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dart';
 
 /**
  * 사업자 인증 요청 리스트 뷰
@@ -24,34 +25,12 @@ class CertificateHolderListView extends StatelessWidget {
             // 클릭 시 CertificateHolderDetail로 화면 전환
             await Navigator.push(
               context,
-              _createRoute(CertificateHolderDetail(itemInfo: item)),
+              SlideRoute(page: CertificateHolderDetail(itemInfo: item)),
             );
             // 화면 복귀 시 리스트를 새로 조회
             await getList();
           },
           child: CertificateHolderCard(item: item),
-        );
-      },
-    );
-  }
-
-  /*******************************
-   * [이벤트] 화면 전환
-   ******************************/
-  Route _createRoute(Widget page) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => page,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0);
-        const end = Offset.zero;
-        const curve = Curves.easeInOut;
-
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        var offsetAnimation = animation.drive(tween);
-
-        return SlideTransition(
-          position: offsetAnimation,
-          child: child,
         );
       },
     );

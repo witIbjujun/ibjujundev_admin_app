@@ -39,7 +39,6 @@ class ApprovalInfoListView extends StatelessWidget {
  * 결재내역 요청 카드
  */
 class ApprovalInfoListCard extends StatelessWidget {
-
   final dynamic item;
 
   const ApprovalInfoListCard({required this.item});
@@ -49,6 +48,7 @@ class ApprovalInfoListCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       padding: EdgeInsets.all(16.0),
+      height: 190, // 카드 높이를 늘림
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10.0),
@@ -61,38 +61,43 @@ class ApprovalInfoListCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
         children: [
-          Row(
-            children: [
-              Text(
-                item["storeName"],
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(width: 8),
-              Text(
-                "(${item["bizCertificationNm"]})",
-                style: item["bizCertification"] == "01"
-                    ? TextStyle(fontSize: 16, color: Colors.green)
-                    : item["bizCertification"] == "02"
-                    ? TextStyle(fontSize: 16, color: Colors.green)
-                    : item["bizCertification"] == "03"
-                    ? TextStyle(fontSize: 16, color: Colors.blue)
-                    : item["bizCertification"] == "04"
-                    ? TextStyle(fontSize: 16, color: Colors.orange)
-                    : item["bizCertification"] == "05"
-                    ? TextStyle(fontSize: 16, color: Colors.red)
-                    : TextStyle(fontSize: 16, color: Colors.green),
-              ),
-            ],
-          ),
           Text(
-            item["bizCertificationDate"],
+            item["approvalNm"],
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 8), // 줄 간격 추가
+          Text(
+            "결재 ID : " + item["approvalNo"],
+            style: TextStyle(fontSize: 16),
+          ),
+          SizedBox(height: 8), // 줄 간격 추가
+          Text(
+            "결재금액 : " + _formatNumber(item["approvalAmt"]),
+            style: TextStyle(fontSize: 16),
+          ),
+          SizedBox(height: 8), // 줄 간격 추가
+          Text(
+            "결재처리 결과 : " + item["sendResult"],
+            style: TextStyle(fontSize: 16),
+          ),
+          SizedBox(height: 8), // 줄 간격 추가
+          Text(
+            "결재처리 시간 : " + item["resultTime"],
             style: TextStyle(fontSize: 16),
           ),
         ],
       ),
+    );
+  }
+
+  String _formatNumber(String number) {
+    // 숫자를 문자열로 변환한 후, 정규 표현식을 사용하여 천 단위 콤마 추가
+    return number.replaceAllMapped(
+      RegExp(r'(\d)(?=(\d{3})+$)'),
+          (Match m) => "${m[1]},",
     );
   }
 }

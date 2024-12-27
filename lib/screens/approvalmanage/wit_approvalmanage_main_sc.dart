@@ -121,7 +121,13 @@ class ApprovalManageState extends State<ApprovalManage> {
     });
 
     // API 호출 (결재내역 조회)
-    final _approvalInfoList = await sendPostRequest(restId, param);
+    //final _approvalInfoList = await sendPostRequest(restId, param);
+
+    List<dynamic>  _approvalInfoList = [
+      {"approvalGbn":"01", "approvalNm":"카카오페이 충전", "approvalNo":"P2024120000223", "approvalAmt":"300000", "sendResult":"정상", "resultTime":"2024년 12월 23일 18:12:21"},
+      {"approvalGbn":"01", "approvalNm":"카카오페이 충전", "approvalNo":"P2024120000223", "approvalAmt":"400000", "sendResult":"정상", "resultTime":"2024년 12월 23일 18:12:21"},
+      {"approvalGbn":"01", "approvalNm":"카카오페이 충전", "approvalNo":"P2024120000223", "approvalAmt":"500000", "sendResult":"정상", "resultTime":"2024년 12월 23일 18:12:21"}
+    ];
 
     // 결과 셋팅
     setState(() {

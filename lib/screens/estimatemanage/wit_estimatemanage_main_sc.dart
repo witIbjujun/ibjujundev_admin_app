@@ -78,7 +78,7 @@ class EstimateManageState extends State<EstimateManage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SearchAppBar(
-        appBarTitle: "견적요청 리스트",
+        appBarTitle: "업체별 견적요청 리스트",
         isSearching: isSearching,
         searchController: searchController,
         onSearchToggle: () {

@@ -88,11 +88,6 @@ class PointInfoListCard extends StatelessWidget {
                 "포인트 : ${formatCash(item["cash"])} 원",
                 style: TextStyle(fontSize: 16),
               ),
-              Icon(
-                Icons.arrow_forward, // 페이지 상세로 가는 아이콘
-                size: 20,
-                color: Colors.grey, // 아이콘 색상
-              ),
             ],
           ),
           SizedBox(height: 8.0), // 간격 조절

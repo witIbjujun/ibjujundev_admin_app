@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dart';
+import 'package:ibjujundev_admin_app/screens/estimatemanage/wit_estimatemanage_detail_sc.dart';
 
 /**
- * 견적요청 리스트 뷰
+ * 견적요청 리스트 위젯
  */
 class EstimateInfoListView extends StatelessWidget {
   final List<dynamic> estimateInfoList;
@@ -20,13 +22,13 @@ class EstimateInfoListView extends StatelessWidget {
         final item = estimateInfoList[index];
         return GestureDetector(
           onTap: () async {
-            /*// 클릭 시 CertificateHolderDetail로 화면 전환
+            // 클릭 시 EstimateInfoDetail 화면 전환
             await Navigator.push(
               context,
-              _createRoute(CertificateHolderDetail(itemInfo: item)),
+              SlideRoute(page: EstimateInfoDetail(itemInfo: item)),
             );
             // 화면 복귀 시 리스트를 새로 조회
-            await getList();*/
+            await getList();
           },
           child: EstimateInfoListCard(item: item),
         );
@@ -36,10 +38,9 @@ class EstimateInfoListView extends StatelessWidget {
 }
 
 /**
- * 포인트 관리 요청 카드
+ * 포인트 관리 요청 카드 위젯
  */
 class EstimateInfoListCard extends StatelessWidget {
-
   final dynamic item;
 
   const EstimateInfoListCard({required this.item});
@@ -61,35 +62,51 @@ class EstimateInfoListCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column( // Row에서 Column으로 변경
+        crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 item["storeName"],
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              SizedBox(width: 8),
               Text(
-                "(${item["bizCertificationNm"]})",
-                style: item["bizCertification"] == "01"
-                    ? TextStyle(fontSize: 16, color: Colors.green)
-                    : item["bizCertification"] == "02"
-                    ? TextStyle(fontSize: 16, color: Colors.green)
-                    : item["bizCertification"] == "03"
-                    ? TextStyle(fontSize: 16, color: Colors.blue)
-                    : item["bizCertification"] == "04"
-                    ? TextStyle(fontSize: 16, color: Colors.orange)
-                    : item["bizCertification"] == "05"
-                    ? TextStyle(fontSize: 16, color: Colors.red)
-                    : TextStyle(fontSize: 16, color: Colors.green),
+                "업체번호 : ${item["sllrNo"]}",
+                style: TextStyle(fontSize: 16),
               ),
             ],
           ),
-          Text(
-            item["bizCertificationDate"],
-            style: TextStyle(fontSize: 16),
+          SizedBox(height: 8), // 간격 추가
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "견적 대기 : ${item["waitCnt"]}건",
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
+          SizedBox(height: 8), // 간격 추가
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "견적 진행 : ${item["goingCnt"]}건",
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
+          SizedBox(height: 8), // 간격 추가
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "견적 취소 : ${item["cencelCnt"]}건",
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
           ),
         ],
       ),

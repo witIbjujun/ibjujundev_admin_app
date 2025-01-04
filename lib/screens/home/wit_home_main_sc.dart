@@ -118,9 +118,10 @@ class HomeState extends State<Home> {
                     
                     // 결재내역 조회 버튼
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: null,
+                      /*onPressed: () {
                         Navigator.of(context).push(SlideRoute(page: ApprovalManage()));
-                      },
+                      },*/
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(

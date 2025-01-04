@@ -5,7 +5,7 @@ import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dar
 import 'package:ibjujundev_admin_app/screens/estimatemanage/widget/wit_estimatemanage_main_widget.dart';
 
 /**
- * 견적요청 리스트 메인
+ * 견적요청 리스트 메인 UI
  */
 class EstimateManage extends StatefulWidget {
 
@@ -113,14 +113,14 @@ class EstimateManageState extends State<EstimateManage> {
     estimateInfoList = [];
 
     // REST ID
-    String restId = "getEstimateInfoList";
+    String restId = "getEstimateCntList";
 
     // PARAM
     final param = jsonEncode({
       "storeName" : searchController.text
     });
 
-    // API 호출 (견적요청 정보 조회)
+    // API 호출 (업체별 견적요청 정보 조회)
     final _estimateInfoList = await sendPostRequest(restId, param);
 
     // 결과 셋팅

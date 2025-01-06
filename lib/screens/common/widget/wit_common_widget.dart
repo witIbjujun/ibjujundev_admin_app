@@ -38,7 +38,9 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         ),
-      ) : Text(appBarTitle),
+      ) : Text(appBarTitle,
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
       actions: [
         IconButton(
           icon: Icon(isSearching ? Icons.close : Icons.search),
@@ -75,4 +77,70 @@ class SlideRoute extends PageRouteBuilder {
       );
     },
   );
+}
+
+/*******************************
+ * [이벤트] 컨펌 팝업 호출
+ ******************************/
+class ConfirmationDialog {
+  static void show(BuildContext context, String message, Future<void> Function() onConfirm) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("확인",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+          ),
+          content: Text(message,
+            style: TextStyle(fontSize: 12),
+          ), // 메시지를 파라미터로 받음
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // 다이얼로그 닫기
+              },
+              child: Text("취소"),
+            ),
+            TextButton(
+              onPressed: () {
+                onConfirm().then((_) {
+                  Navigator.of(context).pop(); // 다이얼로그 닫기
+                });
+              },
+              child: Text("확인"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+/*******************************
+ * [이벤트] 알림 팝업 호출
+ ******************************/
+class alertDialog {
+  static void show(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("알림",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+          ),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text("확인",
+                style: TextStyle(fontSize: 12)
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

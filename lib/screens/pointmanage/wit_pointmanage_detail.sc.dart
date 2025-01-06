@@ -4,16 +4,17 @@ import 'package:flutter/services.dart';
 import 'package:ibjujundev_admin_app/screens/pointmanage/widget/wit_pointmanage_detail_widget.dart';
 import 'package:ibjujundev_admin_app/util/wit_api_ut.dart';
 
+import '../common/widget/wit_common_widget.dart';
+
 /**
  * 포인트 관리 상세 화면
  */
 class PointManageDetail extends StatefulWidget {
+
   final dynamic itemInfo;
 
-  // 생성자
   const PointManageDetail({super.key, required this.itemInfo});
 
-  // 상태 생성
   @override
   State<StatefulWidget> createState() {
     return PointManageDetailState();
@@ -49,7 +50,9 @@ class PointManageDetailState extends State<PointManageDetail> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("포인트 상세 [" + widget.itemInfo["storeName"] + "]"),
+        title: Text("포인트 상세 [" + widget.itemInfo["storeName"] + "]",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
       ),
       body: SafeArea(
         child: Column(
@@ -60,8 +63,13 @@ class PointManageDetailState extends State<PointManageDetail> {
               controller: _controller,
               onAddPressed: () {
                 // 저장 여부 확인
-                _showConfirmationDialog(context);
+                ConfirmationDialog.show(context, "[ " + widget.itemInfo["storeName"] +
+                    " ] 에게\n입력한 포인트를 등록하시겠습니까?", savePointInfo);
               },
+            ),
+            Container(
+              height: 10,
+              color: Colors.grey[200],
             ),
             // 리스트 데이터 표시
             pointInfoDetailList.isEmpty
@@ -146,64 +154,11 @@ class PointManageDetailState extends State<PointManageDetail> {
       // 포인트 상세 정보 조회
       getPointInfoDetailList();
 
-      _showAlertDialog("입력한 금액이 충전 되었습니다.");
+      alertDialog.show(context, "입력한 금액이 충전 되었습니다.");
     } else {
-      _showAlertDialog("충전중 오류가 발생 되었습니다.");
+      alertDialog.show(context, "충전중 오류가 발생 되었습니다.");
     }
   }
-
-  // 확인 다이얼로그 표시
-  void _showConfirmationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("확인"),
-          content: Text("[ " + widget.itemInfo["storeName"] + " ] 에게"
-              + "\n\n입력한 포인트를 등록하시겠습니까?"),
-          actions: <Widget>[
-            TextButton(
-              child: Text("아니오"),
-              onPressed: () {
-                Navigator.of(context).pop(); // 다이얼로그 닫기
-              },
-            ),
-            TextButton(
-              child: Text("예"),
-              onPressed: () {
-                // 여기에 포인트 등록 로직 추가
-                Navigator.of(context).pop(); // 다이얼로그 닫기
-                // 포인트 저장
-                savePointInfo();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  // 알림창 표시
-  void _showAlertDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("알림"),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              child: Text("확인"),
-              onPressed: () {
-                Navigator.of(context).pop(); // 다이얼로그 닫기
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
 }
 
 

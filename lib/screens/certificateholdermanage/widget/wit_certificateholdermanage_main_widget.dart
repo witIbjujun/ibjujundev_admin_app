@@ -7,7 +7,7 @@ import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dar
  */
 class CertificateHolderListView extends StatelessWidget {
   final List<dynamic> certificateHolderList;
-  final Future<void> Function() getList; // 메서드 타입으로 변경
+  final Future<void> Function() getList;
 
   const CertificateHolderListView({
     required this.certificateHolderList,
@@ -20,9 +20,9 @@ class CertificateHolderListView extends StatelessWidget {
       itemCount: certificateHolderList.length,
       itemBuilder: (context, index) {
         final item = certificateHolderList[index];
-        return GestureDetector(
+        return CertificateHolderCard(
+          item: item,
           onTap: () async {
-            // 클릭 시 CertificateHolderDetail로 화면 전환
             await Navigator.push(
               context,
               SlideRoute(page: CertificateHolderDetail(itemInfo: item)),
@@ -30,7 +30,6 @@ class CertificateHolderListView extends StatelessWidget {
             // 화면 복귀 시 리스트를 새로 조회
             await getList();
           },
-          child: CertificateHolderCard(item: item),
         );
       },
     );
@@ -40,61 +39,145 @@ class CertificateHolderListView extends StatelessWidget {
 /**
  * 사업자 인증 요청 카드
  */
-class CertificateHolderCard extends StatelessWidget {
-
+class CertificateHolderCard extends StatefulWidget {
   final dynamic item;
+  final VoidCallback onTap;
 
-  const CertificateHolderCard({required this.item});
+  const CertificateHolderCard({required this.item, required this.onTap});
+
+  @override
+  _CertificateHolderCardState createState() => _CertificateHolderCardState();
+}
+
+class _CertificateHolderCardState extends State<CertificateHolderCard> {
+
+  Color _backgroundColor = Colors.white; // 초기 배경 색상
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      padding: EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Text(
-                item["storeName"],
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(width: 8),
-              Text(
-                "(${item["bizCertificationNm"]})",
-                style: item["bizCertification"] == "01"
-                    ? TextStyle(fontSize: 16, color: Colors.green)
-                    : item["bizCertification"] == "02"
-                    ? TextStyle(fontSize: 16, color: Colors.green)
-                    : item["bizCertification"] == "03"
-                    ? TextStyle(fontSize: 16, color: Colors.blue)
-                    : item["bizCertification"] == "04"
-                    ? TextStyle(fontSize: 16, color: Colors.orange)
-                    : item["bizCertification"] == "05"
-                    ? TextStyle(fontSize: 16, color: Colors.red)
-                    : TextStyle(fontSize: 16, color: Colors.green),
-              ),
-            ],
-          ),
-          Text(
-            item["bizCertificationDate"],
-            style: TextStyle(fontSize: 16),
-          ),
-        ],
+    return GestureDetector(
+      onTapDown: (_) {
+        setState(() {
+          _backgroundColor = Colors.grey[200]!;
+        });
+      },
+      onTapUp: (_) {
+        setState(() {
+          _backgroundColor = Colors.white;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          _backgroundColor = Colors.white;
+        });
+      },
+      onTap: widget.onTap, // 클릭 시 onTap 콜백 실행
+      child: Container(
+        color: _backgroundColor, // 배경 색상 적용
+        child: Column(
+          children: [
+            SizedBox(height: 10), // Row 위에 빈 공간 추가
+            Row(
+              children: [
+                SizedBox(width: 20),
+                Column(
+                  children: [
+                    Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: Colors.grey.shade200,
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
+                    children: [
+                      Text(
+                        widget.item["storeName"],
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 6), // 텍스트 간격
+                      Row(
+                        children: [
+                          // 인증 여부를 표시할 네모 박스
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200], // 배경 색상
+                              borderRadius: BorderRadius.circular(8), // 라운드 처리
+                            ),
+                            child: Text(
+                              "인증 여부", // 인증 여부 텍스트
+                              style: TextStyle(fontSize: 12), // 텍스트 스타일
+                            ),
+                          ),
+                          SizedBox(width: 10), // 박스와 텍스트 사이의 간격
+                          Text(
+                            "${widget.item["bizCertificationNm"]}",
+                            style: widget.item["bizCertification"] == "01"
+                                ? TextStyle(fontSize: 12, color: Colors.red, fontWeight: FontWeight.bold)
+                                : widget.item["bizCertification"] == "02"
+                                ? TextStyle(fontSize: 12, color: Colors.green, fontWeight: FontWeight.bold)
+                                : widget.item["bizCertification"] == "03"
+                                ? TextStyle(fontSize: 12, color: Colors.blue, fontWeight: FontWeight.bold)
+                                : widget.item["bizCertification"] == "04"
+                                ? TextStyle(fontSize: 12, color: Colors.orange, fontWeight: FontWeight.bold)
+                                : widget.item["bizCertification"] == "05"
+                                ? TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold)
+                                : TextStyle(fontSize: 12, color: Colors.green, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 6), // 텍스트 간격
+                      Row(
+                        children: [
+                          // 요청 일자를 표시할 네모 박스
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200], // 배경 색상
+                              borderRadius: BorderRadius.circular(8), // 라운드 처리
+                            ),
+                            child: Text(
+                              "요청 일자", // 요청 일자 텍스트
+                              style: TextStyle(fontSize: 12), // 텍스트 스타일
+                            ),
+                          ),
+                          SizedBox(width: 10), // 박스와 텍스트 사이의 간격
+                          Text(
+                            widget.item["bizCertificationDate"],
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10), // Row 아래에 빈 공간 추가
+            Container(
+              height: 1, // 줄의 높이
+              color: Colors.grey[200], // 줄의 색상
+            ),
+          ],
+        ),
       ),
     );
   }
 }
+
+
+
+
+
+

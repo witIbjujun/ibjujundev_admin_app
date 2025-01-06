@@ -44,7 +44,9 @@ class HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("입주전 관리자"),
+        title: Text("입주전 관리자",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Center(
         child: Column(
@@ -57,7 +59,6 @@ class HomeState extends State<Home> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    
                     // 사업자 인증 요청 내역 버튼
                     ElevatedButton(
                       onPressed: () {

@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/pointmanage/wit_pointmanage_detail.sc.dart';
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dart';
 
+import '../../common/widget/wit_common_util.dart';
+
 /**
  * 포인트 관리 리스트 뷰
  */
 class PointInfoListView extends StatelessWidget {
+
   final List<dynamic> pointInfoList;
-  final Future<void> Function() getList; // 메서드 타입으로 변경
+  final Future<void> Function() getList;
 
   const PointInfoListView({
     required this.pointInfoList,
@@ -20,17 +23,15 @@ class PointInfoListView extends StatelessWidget {
       itemCount: pointInfoList.length,
       itemBuilder: (context, index) {
         final item = pointInfoList[index];
-        return InkWell(
+        return PointInfoListCard(
+          item: item,
           onTap: () async {
-            // 클릭 시 PointManageDetail 화면 전환
             await Navigator.push(
               context,
               SlideRoute(page: PointManageDetail(itemInfo: item)),
             );
-            // 화면 복귀 시 리스트를 새로 조회
             await getList();
           },
-          child: PointInfoListCard(item: item),
         );
       },
     );
@@ -40,80 +41,148 @@ class PointInfoListView extends StatelessWidget {
 /**
  * 포인트 관리 요청 카드
  */
-class PointInfoListCard extends StatelessWidget {
+class PointInfoListCard extends StatefulWidget {
 
   final dynamic item;
+  final VoidCallback onTap;
 
-  const PointInfoListCard({required this.item});
+  const PointInfoListCard({required this.item, required this.onTap});
+
+  @override
+  _PointInfoListCardState createState() => _PointInfoListCardState();
+}
+
+class _PointInfoListCardState extends State<PointInfoListCard> {
+
+  Color _backgroundColor = Colors.white; // 초기 배경 색상
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      padding: EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // 양쪽 끝 정렬
-            children: [
-              Text(
-                item["storeName"],
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "(업체번호 : ${item["sllrNo"]})",
-                style: TextStyle(fontSize: 12, color: Colors.grey), // 폰트 사이즈 12, 회색으로 설정
-              ),
-            ],
-          ),
 
-          SizedBox(height: 10.0), // 간격 조절
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // 양쪽 끝 정렬
-            children: [
-              Text(
-                "포인트 : ${formatCash(item["cash"])} 원",
-                style: TextStyle(fontSize: 16),
-              ),
-            ],
-          ),
-          SizedBox(height: 8.0), // 간격 조절
-          Text(
-            "보너스 포인트 : ${formatCash(item["bonusCash"])} 원",
-            style: TextStyle(fontSize: 16),
-          ), // 간격 조절
-        ],
+    int cash = int.parse(widget.item["cash"] ?? '0');
+    int bonusCash = int.parse(widget.item["bonusCash"] ?? '0');
+    int total = cash + bonusCash;
+
+    return GestureDetector(
+      onTapDown: (_) {
+        setState(() {
+          _backgroundColor = Colors.grey[200]!;
+        });
+      },
+      onTapUp: (_) {
+        setState(() {
+          _backgroundColor = Colors.white;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          _backgroundColor = Colors.white;
+        });
+      },
+      onTap: widget.onTap,
+      child: Container(
+        color: _backgroundColor,
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            Row(
+              children: [
+                SizedBox(width: 20),
+                Column(
+                  children: [
+                    Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: Colors.grey.shade200,
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.item["storeName"],
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 6),
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.inversePrimary,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text("입주전 캐시",
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Text(formatCash(total.toString()) + " 원",
+                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 6),
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text("충전 캐시",
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Text(formatCash(widget.item["cash"]) + " 원",
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 6),
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text("보너스 캐시",
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Text(formatCash(widget.item["bonusCash"]) + " 원",
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Container(
+              height: 1,
+              color: Colors.grey[200],
+            ),
+          ],
+        ),
       ),
     );
   }
-
-  String formatCash(String cash) {
-    // 문자열을 숫자로 변환하고 쉼표를 추가
-    String buffer = '';
-    int length = cash.length;
-
-    for (int i = 0; i < length; i++) {
-      buffer += cash[i];
-      // 뒤에서부터 3자리마다 쉼표 추가
-      if ((length - i - 1) % 3 == 0 && (length - i - 1) != 0) {
-        buffer += ',';
-      }
-    }
-
-    return buffer;
-  }
-
 }

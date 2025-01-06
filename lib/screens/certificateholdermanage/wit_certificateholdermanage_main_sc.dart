@@ -44,35 +44,6 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
   }
 
   /**
-   * [이벤트] 검색 기능 활성화
-   */
-  void startSearch() {
-    setState(() {
-      isSearching = true;
-    });
-  }
-
-  /**
-   * [이벤트] 검색 기능 비활성화
-   */
-  void stopSearch() {
-    setState(() {
-      isSearching = false;
-      searchController.clear();
-    });
-    // 검색 완료시 필터 제거
-    getCertificateHolderList();
-  }
-  
-  /**
-   * [이벤트] 필터 검색
-   */
-  void filterList() {
-    // 필터 검색
-    getCertificateHolderList();
-  }
-
-  /**
    * 화면 UI
    */
   @override
@@ -130,4 +101,34 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
       certificateHolderList.addAll(_certificateHolderList);
     });
   }
+
+  /**
+   * [이벤트] 검색 기능 활성화
+   */
+  void startSearch() {
+    setState(() {
+      isSearching = true;
+    });
+  }
+
+  /**
+   * [이벤트] 검색 기능 비활성화
+   */
+  void stopSearch() {
+    setState(() {
+      isSearching = false;
+      searchController.clear();
+    });
+    // 검색 완료시 필터 제거
+    getCertificateHolderList();
+  }
+
+  /**
+   * [이벤트] 필터 검색
+   */
+  void filterList() {
+    // 필터 검색
+    getCertificateHolderList();
+  }
+
 }

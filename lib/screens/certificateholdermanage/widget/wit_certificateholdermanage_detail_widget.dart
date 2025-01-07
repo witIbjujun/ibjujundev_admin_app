@@ -74,10 +74,8 @@ class ActionButtonWidget extends StatelessWidget {
             onPressed: isCertificateHolderYes
                 ? null
                 : () {
-              ConfirmationDialog.show(
-                context,
-                "인증 완료 처리 하시겠습니까?",
-                    () async {
+              ConfirmationDialog.show(context, "인증 완료 처리 하시겠습니까?",
+                () async {
                   await updateBizCertification("03");
                 },
               );
@@ -85,7 +83,7 @@ class ActionButtonWidget extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(4.0),
               ),
             ),
             child: Text("인증 완료"),
@@ -106,9 +104,9 @@ class ActionButtonWidget extends StatelessWidget {
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.outlineVariant,
+              backgroundColor: Theme.of(context).colorScheme.tertiaryFixed,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(4.0),
               ),
             ),
             child: Text("재인증 요청"),
@@ -131,7 +129,7 @@ class ActionButtonWidget extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red.shade200,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
+                borderRadius: BorderRadius.circular(4.0),
               ),
             ),
             child: Text("인증 불가"),
@@ -186,7 +184,7 @@ class bizInfoDialog {
             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
             decoration: BoxDecoration(
               color: Colors.grey[200], // 배경 색상
-              borderRadius: BorderRadius.circular(8), // 라운드 처리
+              borderRadius: BorderRadius.circular(4), // 라운드 처리
             ),
             child: Text(
               label,

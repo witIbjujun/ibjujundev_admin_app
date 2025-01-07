@@ -95,7 +95,7 @@ class _PointInfoListCardState extends State<PointInfoListCard> {
                       height: 90,
                       decoration: BoxDecoration(
                         color: Colors.blue[50],
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         border: Border.all(
                           color: Colors.grey.shade200,
                           width: 1,
@@ -120,7 +120,7 @@ class _PointInfoListCardState extends State<PointInfoListCard> {
                             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
                             decoration: BoxDecoration(
                               color: Theme.of(context).colorScheme.inversePrimary,
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text("입주전 캐시",
                               style: TextStyle(fontSize: 12),
@@ -139,7 +139,7 @@ class _PointInfoListCardState extends State<PointInfoListCard> {
                             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                             decoration: BoxDecoration(
                               color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text("충전 캐시",
                               style: TextStyle(fontSize: 12),
@@ -158,7 +158,7 @@ class _PointInfoListCardState extends State<PointInfoListCard> {
                             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                             decoration: BoxDecoration(
                               color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text("보너스 캐시",
                               style: TextStyle(fontSize: 12),

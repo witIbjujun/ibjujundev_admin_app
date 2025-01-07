@@ -40,6 +40,7 @@ class CertificateHolderListView extends StatelessWidget {
  * 사업자 인증 요청 카드
  */
 class CertificateHolderCard extends StatefulWidget {
+
   final dynamic item;
   final VoidCallback onTap;
 
@@ -87,7 +88,7 @@ class _CertificateHolderCardState extends State<CertificateHolderCard> {
                       height: 90,
                       decoration: BoxDecoration(
                         color: Colors.blue[50],
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(5),
                         border: Border.all(
                           color: Colors.grey.shade200,
                           width: 1,
@@ -112,8 +113,8 @@ class _CertificateHolderCardState extends State<CertificateHolderCard> {
                           Container(
                             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
                             decoration: BoxDecoration(
-                              color: Colors.grey[200], // 배경 색상
-                              borderRadius: BorderRadius.circular(8), // 라운드 처리
+                              color: Theme.of(context).colorScheme.inversePrimary, // 배경 색상
+                              borderRadius: BorderRadius.circular(4), // 라운드 처리
                             ),
                             child: Text(
                               "인증 여부", // 인증 여부 텍스트
@@ -145,7 +146,7 @@ class _CertificateHolderCardState extends State<CertificateHolderCard> {
                             padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
                             decoration: BoxDecoration(
                               color: Colors.grey[200], // 배경 색상
-                              borderRadius: BorderRadius.circular(8), // 라운드 처리
+                              borderRadius: BorderRadius.circular(4), // 라운드 처리
                             ),
                             child: Text(
                               "요청 일자", // 요청 일자 텍스트

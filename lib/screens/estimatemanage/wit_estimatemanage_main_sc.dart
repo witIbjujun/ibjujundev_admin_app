@@ -93,8 +93,7 @@ class EstimateManageState extends State<EstimateManage> {
       body: SafeArea(
         child: estimateInfoList.isEmpty
             ? Center(
-          child: Text(
-            "조회된 데이터가 없습니다.",
+          child: Text("조회된 데이터가 없습니다.",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         )

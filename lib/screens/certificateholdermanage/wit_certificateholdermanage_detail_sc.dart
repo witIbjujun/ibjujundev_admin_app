@@ -77,7 +77,7 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("사업자 인증 상세",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
       body: SafeArea( // SafeArea로 감싸기

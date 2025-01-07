@@ -94,7 +94,7 @@ class _PointInputWidgetState extends State<PointInputWidget> {
                 padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.inversePrimary,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text("입주전 캐시",
                   style: TextStyle(fontSize: 12),
@@ -102,45 +102,55 @@ class _PointInputWidgetState extends State<PointInputWidget> {
               ),
               SizedBox(width: 10),
               Text(formatCash(total.toString()) + " 원",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ],
           ),
-          SizedBox(height: 6),
+          SizedBox(height: 15),
           Row(
             children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text("충전 캐시",
-                  style: TextStyle(fontSize: 12),
-                ),
-              ),
-              SizedBox(width: 10),
-              Text(formatCash(widget.pointInfo["cash"]) + " 원",
-                style: TextStyle(fontSize: 12),
-              ),
-            ],
-          ),
-          SizedBox(height: 6),
-          Row(
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text("보너스 캐시",
-                  style: TextStyle(fontSize: 12),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text("충전 캐시",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Text(formatCash(widget.pointInfo["cash"]) + " 원",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(width: 10),
-              Text(formatCash(widget.pointInfo["bonusCash"]) + " 원",
-                style: TextStyle(fontSize: 12),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        "보너스 캐시",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Text(formatCash(widget.pointInfo["bonusCash"]) + " 원",
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -201,13 +211,13 @@ class PointInfoDetailListCard extends StatelessWidget {
                     Icon(
                       Icons.add, // 파란 더하기 아이콘
                       color: Colors.blue,
-                      size: 60,
+                      size: 50,
                     )
                   else if (item["cashGbn"] == "02" || item["cashGbn"] == "04")
                     Icon(
                       Icons.remove, // 빨간 빼기 아이콘
                       color: Colors.red,
-                      size: 60,
+                      size: 50,
                     ),
                 ],
               ),
@@ -219,14 +229,13 @@ class PointInfoDetailListCard extends StatelessWidget {
                     Text("",
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 6),
                     Row(
                       children: [
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
                           decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(8),
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text("캐시",
                             style: TextStyle(fontSize: 12),
@@ -245,7 +254,7 @@ class PointInfoDetailListCard extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text("캐시 구분",
                             style: TextStyle(fontSize: 12),
@@ -264,7 +273,7 @@ class PointInfoDetailListCard extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                           decoration: BoxDecoration(
                             color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text("충전 일자",
                             style: TextStyle(fontSize: 12),
@@ -281,7 +290,7 @@ class PointInfoDetailListCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
           Container(
             height: 1,
             color: Colors.grey[200],

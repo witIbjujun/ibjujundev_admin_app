@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dart';
 import 'package:ibjujundev_admin_app/screens/estimatemanage/wit_estimatemanage_detail_sc.dart';
 
+import '../../common/widget/wit_common_util.dart';
+
 /**
  * 견적요청 리스트 위젯
  */
 class EstimateInfoListView extends StatelessWidget {
+  
   final List<dynamic> estimateInfoList;
   final Future<void> Function() getList;
 
@@ -20,17 +23,15 @@ class EstimateInfoListView extends StatelessWidget {
       itemCount: estimateInfoList.length,
       itemBuilder: (context, index) {
         final item = estimateInfoList[index];
-        return GestureDetector(
+        return EstimateInfoListCard(
+          item : item,
           onTap: () async {
-            // 클릭 시 EstimateInfoDetail 화면 전환
             await Navigator.push(
               context,
               SlideRoute(page: EstimateInfoDetail(itemInfo: item)),
             );
-            // 화면 복귀 시 리스트를 새로 조회
             await getList();
           },
-          child: EstimateInfoListCard(item: item),
         );
       },
     );
@@ -38,77 +39,189 @@ class EstimateInfoListView extends StatelessWidget {
 }
 
 /**
- * 포인트 관리 요청 카드 위젯
+ * 사업자 인증 요청 카드
  */
-class EstimateInfoListCard extends StatelessWidget {
-  final dynamic item;
+class EstimateInfoListCard extends StatefulWidget {
 
-  const EstimateInfoListCard({required this.item});
+  final dynamic item;
+  final VoidCallback onTap;
+
+  const EstimateInfoListCard({required this.item, required this.onTap});
+
+  @override
+  _EstimateInfoListCardState createState() => _EstimateInfoListCardState();
+}
+
+class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
+
+  Color _backgroundColor = Colors.white; // 초기 배경 색상
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      padding: EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column( // Row에서 Column으로 변경
-        crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                item["storeName"],
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "업체번호 : ${item["sllrNo"]}",
-                style: TextStyle(fontSize: 16),
-              ),
-            ],
-          ),
-          SizedBox(height: 8), // 간격 추가
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "견적 대기 : ${item["waitCnt"]}건",
-                style: TextStyle(fontSize: 16),
-              ),
-            ],
-          ),
-          SizedBox(height: 8), // 간격 추가
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "견적 진행 : ${item["goingCnt"]}건",
-                style: TextStyle(fontSize: 16),
-              ),
-            ],
-          ),
-          SizedBox(height: 8), // 간격 추가
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "견적 취소 : ${item["cencelCnt"]}건",
-                style: TextStyle(fontSize: 16),
-              ),
-            ],
-          ),
-        ],
+    return GestureDetector(
+      onTapDown: (_) {
+        setState(() {
+          _backgroundColor = Colors.grey[200]!;
+        });
+      },
+      onTapUp: (_) {
+        setState(() {
+          _backgroundColor = Colors.white;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          _backgroundColor = Colors.white;
+        });
+      },
+      onTap: widget.onTap,
+      child: Container(
+        color: _backgroundColor,
+        child: Column(
+          children: [
+            SizedBox(height: 10),
+            Row(
+              children: [
+                SizedBox(width: 20),
+                Column(
+                  children: [
+                    Container(
+                      width: 90,
+                      height: 90,
+                      decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: Colors.grey.shade200,
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.item["storeName"],
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 6),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).colorScheme.inversePrimary,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    "견적 진행",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  formatCash(widget.item["goingCnt"]) + " 건",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200],
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    "견적 대기",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  formatCash(widget.item["waitCnt"]) + " 건",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 6),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200],
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    "견적 완료",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  formatCash(widget.item["cencelCnt"]) + " 건",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200],
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    "견적 취소",
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  formatCash(widget.item["cencelCnt"]) + " 건",
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Container(
+              height: 1,
+              color: Colors.grey[200],
+            ),
+          ],
+        ),
       ),
     );
   }

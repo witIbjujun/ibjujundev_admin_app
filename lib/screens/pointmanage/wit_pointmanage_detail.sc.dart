@@ -51,46 +51,53 @@ class PointManageDetailState extends State<PointManageDetail> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("포인트 상세 [" + widget.itemInfo["storeName"] + "]",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            // 포인트 입력 UI
-            PointInputWidget(
-              pointInfo : widget.itemInfo,
-              controller: _controller,
-              onAddPressed: () {
-                // 저장 여부 확인
-                ConfirmationDialog.show(context, "[ " + widget.itemInfo["storeName"] +
-                    " ] 에게\n입력한 포인트를 등록하시겠습니까?", savePointInfo);
-              },
-            ),
-            Container(
-              height: 10,
-              color: Colors.grey[200],
-            ),
-            // 리스트 데이터 표시
-            pointInfoDetailList.isEmpty
-                ? Expanded(
-              child: Center(
-                child: Text(
-                  "조회된 데이터가 없습니다.",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        child: Container(
+          color: Colors.white, // 배경색을 흰색으로 설정
+          child: Column(
+            children: [
+              // 포인트 입력 UI
+              PointInputWidget(
+                pointInfo: widget.itemInfo,
+                controller: _controller,
+                onAddPressed: () {
+                  // 저장 여부 확인
+                  ConfirmationDialog.show(
+                    context,
+                    "[ " + widget.itemInfo["storeName"] + " ] 에게\n입력한 포인트를 등록하시겠습니까?",
+                    () async {
+                      savePointInfo();
+                    },
+                  );
+                },
+              ),
+              Container(
+                height: 10,
+                color: Colors.grey[200],
+              ),
+              // 리스트 데이터 표시
+              pointInfoDetailList.isEmpty
+                  ? Expanded(
+                child: Center(
+                  child: Text(
+                    "조회된 데이터가 없습니다.",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              )
+                  : Expanded(
+                child: PointInfoDetailListView(
+                  pointInfoDetailList: pointInfoDetailList,
+                  getList: getPointInfoDetailList, // 메서드의 참조를 전달
                 ),
               ),
-            )
-                : Expanded(
-              child: PointInfoDetailListView(
-                pointInfoDetailList: pointInfoDetailList,
-                getList: getPointInfoDetailList, // 메서드의 참조를 전달
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-
     );
   }
 

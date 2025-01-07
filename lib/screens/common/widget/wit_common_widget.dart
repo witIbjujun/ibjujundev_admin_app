@@ -39,7 +39,7 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
           contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         ),
       ) : Text(appBarTitle,
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
       actions: [
         IconButton(

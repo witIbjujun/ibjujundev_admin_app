@@ -237,7 +237,7 @@ class PointInfoDetailListCard extends StatelessWidget {
                             color: Theme.of(context).colorScheme.inversePrimary,
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: Text("캐시",
+                          child: Text("캐시 금액",
                             style: TextStyle(fontSize: 12),
                           ),
                         ),

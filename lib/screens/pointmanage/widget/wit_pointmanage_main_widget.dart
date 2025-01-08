@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/pointmanage/wit_pointmanage_detail.sc.dart';
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dart';
-
-import '../../common/widget/wit_common_util.dart';
+import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_util.dart';
 
 /**
  * 포인트 관리 리스트 뷰
@@ -84,15 +83,15 @@ class _PointInfoListCardState extends State<PointInfoListCard> {
         color: _backgroundColor,
         child: Column(
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             Row(
               children: [
                 SizedBox(width: 20),
                 Column(
                   children: [
                     Container(
-                      width: 90,
-                      height: 90,
+                      width: 60,
+                      height: 60,
                       decoration: BoxDecoration(
                         color: Colors.blue[50],
                         borderRadius: BorderRadius.circular(5),
@@ -113,69 +112,78 @@ class _PointInfoListCardState extends State<PointInfoListCard> {
                         widget.item["storeName"],
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 6),
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.inversePrimary,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text("입주전 캐시",
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Text(formatCash(total.toString()) + " 원",
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 6),
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text("충전 캐시",
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Text(formatCash(widget.item["cash"]) + " 원",
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 6),
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text("보너스 캐시",
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Text(formatCash(widget.item["bonusCash"]) + " 원",
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ),
               ],
             ),
             SizedBox(height: 10),
+            Row(
+              children: [
+                SizedBox(width: 20),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text("입주전 캐시",
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ),
+                SizedBox(width: 10),
+                Text(formatCash(total.toString()) + " 원",
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                SizedBox(width: 20),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text("충전 캐시",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Text(formatCash(widget.item["cash"]) + " 원",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text("보너스 캐시",
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Text(formatCash(widget.item["bonusCash"]) + " 원",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
             Container(
               height: 1,
               color: Colors.grey[200],

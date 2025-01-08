@@ -1,4 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:ibjujundev_admin_app/screens/estimatemanage/widget/wit_estimatemanage_detail_widget.dart';
+import 'package:ibjujundev_admin_app/util/wit_api_ut.dart';
 
 /**
  * 업체별 상태별 견적 리스트 UI
@@ -20,6 +23,12 @@ class EstimateInfoDetail extends StatefulWidget {
  * 업체별 상태별 견적 리스트 UI
  */
 class EstimateInfoDetailState extends State<EstimateInfoDetail> {
+  // 업체별 견적 리스트
+  List<dynamic> requestEstimateList = [];
+  List<dynamic> sentEstimateList = [];
+
+  // 현재 상태
+  String estStat = "01";
 
   /**
    * 화면 초기화
@@ -27,6 +36,8 @@ class EstimateInfoDetailState extends State<EstimateInfoDetail> {
   @override
   void initState() {
     super.initState();
+
+    getEstimateInfoDetailList(estStat);
   }
 
   /**
@@ -37,62 +48,31 @@ class EstimateInfoDetailState extends State<EstimateInfoDetail> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("업체별 상세 견적 정보",
+        title: Text("업체별 상세 견적 정보 [" + widget.itemInfo["storeName"] + "]",
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
       ),
       body: DefaultTabController(
-        length: 4,
+        length: 2,
         child: Column(
           children: [
-            // TabBar를 AppBar 아래에 위치
             TabBar(
               tabs: [
-                Tab(text: "진행 (${widget.itemInfo["goingCnt"]})"),
-                Tab(text: "대기 (${widget.itemInfo["waitCnt"]})"),
-                Tab(text: "완료 (${widget.itemInfo["cencelCnt"]})"),
-                Tab(text: "취소 (${widget.itemInfo["cencelCnt"]})"),
+                Tab(text: "견적 요청 (${widget.itemInfo["waitCnt"]})"),
+                Tab(text: "견적 발송 (${widget.itemInfo["goingCnt"]})"),
               ],
+              onTap: (index) {
+                estStat = index == 0 ? "01" : ""; // 상태 설정
+                getEstimateInfoDetailList(estStat);
+              },
             ),
             Expanded(
               child: TabBarView(
                 children: [
-                  // 견적 진행
-                  ListView.builder(
-                    itemCount: 10, // 예시 데이터 개수
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text("진행 항목 ${index + 1}"),
-                      );
-                    },
-                  ),
-                  // 견적 대기
-                  ListView.builder(
-                    itemCount: 10, // 예시 데이터 개수
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text("대기 항목 ${index + 1}"),
-                      );
-                    },
-                  ),
-                  // 견적 완료
-                  ListView.builder(
-                    itemCount: 10, // 예시 데이터 개수
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text("완료 항목 ${index + 1}"),
-                      );
-                    },
-                  ),
-                  // 견적 취소
-                  ListView.builder(
-                    itemCount: 10, // 예시 데이터 개수
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text("취소 항목 ${index + 1}"),
-                      );
-                    },
-                  ),
+                  // TAB1 : 견적 요청
+                  EstimateListView(estimateList: requestEstimateList),
+                  // TAB2 : 견적 발송
+                  EstimateListView(estimateList: sentEstimateList),
                 ],
               ),
             ),
@@ -102,4 +82,35 @@ class EstimateInfoDetailState extends State<EstimateInfoDetail> {
     );
   }
 
+  // [서비스] 업체별 견적 리스트 조회
+  Future<void> getEstimateInfoDetailList(String estStat) async {
+
+    // 데이터 초기화
+    if (estStat == "01") {
+      requestEstimateList = [];
+    } else {
+      sentEstimateList = [];
+    }
+
+    // REST ID
+    String restId = "getEstimateRequestList";
+
+    // PARAM
+    final param = jsonEncode({
+      "sllrNo": widget.itemInfo["sllrNo"],
+      "stat": estStat,
+    });
+
+    // API 호출 (사업자 인증 요청 업체 조회)
+    final _estimateInfoDetailList = await sendPostRequest(restId, param);
+
+    // 결과 셋팅
+    setState(() {
+      if (estStat == "01") {
+        requestEstimateList = _estimateInfoDetailList;  // 견적 요청 데이터
+      } else {
+        sentEstimateList = _estimateInfoDetailList;     // 견적 발송 데이터
+      }
+    });
+  }
 }

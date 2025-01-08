@@ -77,15 +77,15 @@ class _CertificateHolderCardState extends State<CertificateHolderCard> {
         color: _backgroundColor, // 배경 색상 적용
         child: Column(
           children: [
-            SizedBox(height: 10), // Row 위에 빈 공간 추가
+            SizedBox(height: 20), // Row 위에 빈 공간 추가
             Row(
               children: [
                 SizedBox(width: 20),
                 Column(
                   children: [
                     Container(
-                      width: 90,
-                      height: 90,
+                      width: 70,
+                      height: 70,
                       decoration: BoxDecoration(
                         color: Colors.blue[50],
                         borderRadius: BorderRadius.circular(5),
@@ -106,57 +106,64 @@ class _CertificateHolderCardState extends State<CertificateHolderCard> {
                         widget.item["storeName"],
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 6), // 텍스트 간격
+                      SizedBox(height: 10), // 텍스트 간격
                       Row(
                         children: [
-                          // 인증 여부를 표시할 네모 박스
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.inversePrimary, // 배경 색상
-                              borderRadius: BorderRadius.circular(4), // 라운드 처리
-                            ),
-                            child: Text(
-                              "인증 여부", // 인증 여부 텍스트
-                              style: TextStyle(fontSize: 12), // 텍스트 스타일
-                            ),
-                          ),
-                          SizedBox(width: 10), // 박스와 텍스트 사이의 간격
-                          Text(
-                            "${widget.item["bizCertificationNm"]}",
-                            style: widget.item["bizCertification"] == "01"
-                                ? TextStyle(fontSize: 12, color: Colors.red, fontWeight: FontWeight.bold)
-                                : widget.item["bizCertification"] == "02"
-                                ? TextStyle(fontSize: 12, color: Colors.green, fontWeight: FontWeight.bold)
-                                : widget.item["bizCertification"] == "03"
-                                ? TextStyle(fontSize: 12, color: Colors.blue, fontWeight: FontWeight.bold)
-                                : widget.item["bizCertification"] == "04"
-                                ? TextStyle(fontSize: 12, color: Colors.orange, fontWeight: FontWeight.bold)
-                                : widget.item["bizCertification"] == "05"
-                                ? TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold)
-                                : TextStyle(fontSize: 12, color: Colors.green, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 6), // 텍스트 간격
-                      Row(
-                        children: [
-                          // 요청 일자를 표시할 네모 박스
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200], // 배경 색상
-                              borderRadius: BorderRadius.circular(4), // 라운드 처리
-                            ),
-                            child: Text(
-                              "요청 일자", // 요청 일자 텍스트
-                              style: TextStyle(fontSize: 12), // 텍스트 스타일
+                          Expanded(
+                            child: Row(
+                              children: [
+                                // 인증 여부를 표시할 네모 박스
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200], // 배경 색상
+                                    borderRadius: BorderRadius.circular(4), // 라운드 처리
+                                  ),
+                                  child: Text(
+                                    "인증 여부", // 인증 여부 텍스트
+                                    style: TextStyle(fontSize: 12), // 텍스트 스타일
+                                  ),
+                                ),
+                                SizedBox(width: 10), // 박스와 텍스트 사이의 간격
+                                Text(
+                                  "${widget.item["bizCertificationNm"]}",
+                                  style: widget.item["bizCertification"] == "01"
+                                      ? TextStyle(fontSize: 12, color: Colors.red, fontWeight: FontWeight.bold)
+                                      : widget.item["bizCertification"] == "02"
+                                      ? TextStyle(fontSize: 12, color: Colors.green, fontWeight: FontWeight.bold)
+                                      : widget.item["bizCertification"] == "03"
+                                      ? TextStyle(fontSize: 12, color: Colors.blue, fontWeight: FontWeight.bold)
+                                      : widget.item["bizCertification"] == "04"
+                                      ? TextStyle(fontSize: 12, color: Colors.orange, fontWeight: FontWeight.bold)
+                                      : widget.item["bizCertification"] == "05"
+                                      ? TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold)
+                                      : TextStyle(fontSize: 12, color: Colors.green, fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                           ),
-                          SizedBox(width: 10), // 박스와 텍스트 사이의 간격
-                          Text(
-                            widget.item["bizCertificationDate"],
-                            style: TextStyle(fontSize: 12),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                // 요청 일자를 표시할 네모 박스
+                                Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200], // 배경 색상
+                                    borderRadius: BorderRadius.circular(4), // 라운드 처리
+                                  ),
+                                  child: Text(
+                                    "요청 일자", // 요청 일자 텍스트
+                                    style: TextStyle(fontSize: 12), // 텍스트 스타일
+                                  ),
+                                ),
+                                SizedBox(width: 10), // 박스와 텍스트 사이의 간격
+                                Text(
+                                  widget.item["bizCertificationDate"],
+                                  style: TextStyle(fontSize: 12),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -165,7 +172,7 @@ class _CertificateHolderCardState extends State<CertificateHolderCard> {
                 ),
               ],
             ),
-            SizedBox(height: 10), // Row 아래에 빈 공간 추가
+            SizedBox(height: 20), // Row 아래에 빈 공간 추가
             Container(
               height: 1, // 줄의 높이
               color: Colors.grey[200], // 줄의 색상

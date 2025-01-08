@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dart';
 import 'package:ibjujundev_admin_app/screens/estimatemanage/wit_estimatemanage_detail_sc.dart';
-
-import '../../common/widget/wit_common_util.dart';
+import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_util.dart';
 
 /**
  * 견적요청 리스트 위젯
@@ -79,15 +78,15 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
         color: _backgroundColor,
         child: Column(
           children: [
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             Row(
               children: [
                 SizedBox(width: 20),
                 Column(
                   children: [
                     Container(
-                      width: 90,
-                      height: 90,
+                      width: 70,
+                      height: 70,
                       decoration: BoxDecoration(
                         color: Colors.blue[50],
                         borderRadius: BorderRadius.circular(5),
@@ -108,7 +107,7 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                         widget.item["storeName"],
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 6),
+                      SizedBox(height: 10),
                       Row(
                         children: [
                           Expanded(
@@ -118,34 +117,11 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                                 Container(
                                   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
                                   decoration: BoxDecoration(
-                                    color: Theme.of(context).colorScheme.inversePrimary,
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Text(
-                                    "견적 진행",
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  formatCash(widget.item["goingCnt"]) + " 건",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                                  decoration: BoxDecoration(
                                     color: Colors.grey[200],
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
-                                    "견적 대기",
+                                    "견적 요청",
                                     style: TextStyle(fontSize: 12),
                                   ),
                                 ),
@@ -157,34 +133,6 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                               ],
                             ),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 6),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[200],
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Text(
-                                    "견적 완료",
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                Text(
-                                  formatCash(widget.item["cencelCnt"]) + " 건",
-                                  style: TextStyle(fontSize: 12),
-                                ),
-                              ],
-                            ),
-                          ),
                           Expanded(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -196,13 +144,13 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
-                                    "견적 취소",
+                                    "견적 발송",
                                     style: TextStyle(fontSize: 12),
                                   ),
                                 ),
                                 SizedBox(width: 10),
                                 Text(
-                                  formatCash(widget.item["cencelCnt"]) + " 건",
+                                  formatCash(widget.item["goingCnt"]) + " 건",
                                   style: TextStyle(fontSize: 12),
                                 ),
                               ],
@@ -215,7 +163,7 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 20),
             Container(
               height: 1,
               color: Colors.grey[200],

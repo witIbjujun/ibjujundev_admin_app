@@ -8,6 +8,8 @@ import 'package:ibjujundev_admin_app/screens/partnermanage/wit_partnermanage_mai
 import 'package:ibjujundev_admin_app/screens/pointmanage/wit_pointmanage_main_sc.dart';
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dart';
 
+import '../checkList/wit_checkList_main_sc.dart';
+
 /**
  * 입주전 관리자 메인 홈
  */
@@ -99,10 +101,9 @@ class HomeState extends State<Home> {
                     
                     // 커뮤니티 관리 버튼
                     ElevatedButton(
-                        onPressed: null,
-                      /*onPressed: () {
+                      onPressed: () {
                         Navigator.of(context).push(SlideRoute(page: CommunityManage()));
-                      },*/
+                      },
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
@@ -119,10 +120,9 @@ class HomeState extends State<Home> {
                     
                     // 결재내역 조회 버튼
                     ElevatedButton(
-                      onPressed: null,
-                      /*onPressed: () {
+                      onPressed: () {
                         Navigator.of(context).push(SlideRoute(page: ApprovalManage()));
-                      },*/
+                      },
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
@@ -139,10 +139,9 @@ class HomeState extends State<Home> {
                     
                     // 가입정보 정보조회 버튼
                     ElevatedButton(
-                      onPressed: null,
-                      /*onPressed: () {
-                        Navigator.of(context).push(SlideRoute(page: JoinInfoManage()));
-                      },*/
+                      onPressed: () {
+                        Navigator.of(context).push(SlideRoute(page: CertificateHolderManage()));
+                      },
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
@@ -178,10 +177,9 @@ class HomeState extends State<Home> {
                     
                     // 협력업체 인증관리 버튼
                     ElevatedButton(
-                      onPressed: null,
-                      /*onPressed: () {
+                      onPressed: () {
                         Navigator.of(context).push(SlideRoute(page: PartnerManage()));
-                      },*/
+                      },
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
@@ -190,6 +188,25 @@ class HomeState extends State<Home> {
                       ),
                       child: Text(
                         "협력업체 인증관리",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ),
+
+                    SizedBox(height: 20),
+
+                    // 입주전 체크리스트
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(SlideRoute(page: CheckListMain()));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(double.infinity, 60),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      child: Text(
+                        "입주전 체크리스트",
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                     ),

@@ -229,6 +229,7 @@ class PointInfoDetailListCard extends StatelessWidget {
                     Text("",
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
+                    SizedBox(height: 6),
                     Row(
                       children: [
                         Container(
@@ -247,6 +248,27 @@ class PointInfoDetailListCard extends StatelessWidget {
                         ),
                       ],
                     ),
+                    if (item["cashGbn"] == "02" || item["cashGbn"] == "04") ...[
+                      SizedBox(height: 6),
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Text("사용 품목",
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Text(item["itemName"] ?? "",
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ],
                     SizedBox(height: 6),
                     Row(
                       children: [

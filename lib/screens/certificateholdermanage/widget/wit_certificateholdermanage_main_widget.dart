@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/certificateholdermanage/wit_certificateholdermanage_detail_sc.dart';
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dart';
+import 'package:ibjujundev_admin_app/util/wit_code_ut.dart';
 
 /**
  * 사업자 인증 요청 리스트 뷰
@@ -83,18 +84,44 @@ class _CertificateHolderCardState extends State<CertificateHolderCard> {
                 SizedBox(width: 20),
                 Column(
                   children: [
-                    Container(
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        color: Colors.blue[50],
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          color: Colors.grey.shade200,
-                          width: 1,
+                    // 이미지가 존재할 경우에만 표시
+                    if (widget.item["storeImage"] != null) ...[
+                      Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey.withOpacity(0.5), // 연한 회색 테두리
+                            width: 1, // 테두리 두께
+                          ),
+                          borderRadius: BorderRadius.circular(4), // 모서리 둥글게
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4), // 이미지 모서리 둥글게
+                          child: Image.network(
+                            apiUrl + widget.item["storeImage"],
+                            width: 70,
+                            height: 70,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
+                      SizedBox(width: 15), // 이미지와 텍스트 사이 여백
+                    ],
+                    if (widget.item["storeImage"] == null) ...[
+                      Container(
+                        width: 70,
+                        height: 70,
+                        decoration: BoxDecoration(
+                          color: Colors.blue[50],
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                            color: Colors.grey.shade200,
+                            width: 1,
+                          ),
+                        ),
+                      ),
+                    ],
                   ],
                 ),
                 SizedBox(width: 20),
@@ -116,28 +143,18 @@ class _CertificateHolderCardState extends State<CertificateHolderCard> {
                                 Container(
                                   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[200], // 배경 색상
+                                    color: Theme.of(context).colorScheme.inversePrimary, // 배경 색상
                                     borderRadius: BorderRadius.circular(4), // 라운드 처리
                                   ),
                                   child: Text(
-                                    "인증 여부", // 인증 여부 텍스트
+                                    "인증여부", // 인증 여부 텍스트
                                     style: TextStyle(fontSize: 12), // 텍스트 스타일
                                   ),
                                 ),
                                 SizedBox(width: 10), // 박스와 텍스트 사이의 간격
                                 Text(
                                   "${widget.item["bizCertificationNm"]}",
-                                  style: widget.item["bizCertification"] == "01"
-                                      ? TextStyle(fontSize: 12, color: Colors.red, fontWeight: FontWeight.bold)
-                                      : widget.item["bizCertification"] == "02"
-                                      ? TextStyle(fontSize: 12, color: Colors.green, fontWeight: FontWeight.bold)
-                                      : widget.item["bizCertification"] == "03"
-                                      ? TextStyle(fontSize: 12, color: Colors.blue, fontWeight: FontWeight.bold)
-                                      : widget.item["bizCertification"] == "04"
-                                      ? TextStyle(fontSize: 12, color: Colors.orange, fontWeight: FontWeight.bold)
-                                      : widget.item["bizCertification"] == "05"
-                                      ? TextStyle(fontSize: 12, color: Colors.black, fontWeight: FontWeight.bold)
-                                      : TextStyle(fontSize: 12, color: Colors.green, fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontSize: 12)
                                 ),
                               ],
                             ),
@@ -153,7 +170,7 @@ class _CertificateHolderCardState extends State<CertificateHolderCard> {
                                     borderRadius: BorderRadius.circular(4), // 라운드 처리
                                   ),
                                   child: Text(
-                                    "요청 일자", // 요청 일자 텍스트
+                                    "요청일자", // 요청 일자 텍스트
                                     style: TextStyle(fontSize: 12), // 텍스트 스타일
                                   ),
                                 ),

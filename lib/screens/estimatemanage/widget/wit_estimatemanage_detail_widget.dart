@@ -135,28 +135,37 @@ class EstimateListCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 10),
-          Row(
-            children: [
-              SizedBox(width: 20),
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        item["reqContents"] + "테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용테스트용", // 요청 내용을 표시
-                        style: TextStyle(fontSize: 12),
-                        maxLines: 5, // 최대 줄 수 설정 (필요에 따라 조정)
-                        overflow: TextOverflow.visible, // 넘치는 경우 표시
-                      ),
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: 100, // 최소 높이 200 설정
+            ),
+            child: Container(
+              color: Colors.grey[100], // 배경색 회색 설정
+              padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // 좌우 0, 위아래 10의 패딩 추가
+              margin: EdgeInsets.fromLTRB(20, 10, 20, 0), // 외부 여백 추가
+              child: Row(
+                children: [
+                  SizedBox(width: 10),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            item["reqContents"],
+                            style: TextStyle(fontSize: 12),
+                            maxLines: 99, // 최대 줄 수 설정 (필요에 따라 조정)
+                            overflow: TextOverflow.visible, // 넘치는 경우 표시
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(width: 10),
+                ],
               ),
-              SizedBox(width: 20),
-            ],
+            ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 10),
           Container(
             height: 1,
             color: Colors.grey[200],

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/certificateholdermanage/widget/wit_certificateholdermanage_main_widget.dart';
 import 'package:ibjujundev_admin_app/util/wit_api_ut.dart';
-
 import '../common/widget/wit_common_widget.dart';
 
 /**

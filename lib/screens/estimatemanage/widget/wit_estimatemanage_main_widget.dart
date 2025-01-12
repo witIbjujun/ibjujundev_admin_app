@@ -3,6 +3,8 @@ import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dar
 import 'package:ibjujundev_admin_app/screens/estimatemanage/wit_estimatemanage_detail_sc.dart';
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_util.dart';
 
+import '../../../util/wit_code_ut.dart';
+
 /**
  * 견적요청 리스트 위젯
  */
@@ -82,22 +84,43 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
             Row(
               children: [
                 SizedBox(width: 20),
-                Column(
-                  children: [
-                    Container(
-                      width: 70,
-                      height: 70,
-                      decoration: BoxDecoration(
-                        color: Colors.blue[50],
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          color: Colors.grey.shade200,
-                          width: 1,
-                        ),
+                if (widget.item["storeImage"] != null) ...[
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey.withOpacity(0.5), // 연한 회색 테두리
+                        width: 1, // 테두리 두께
+                      ),
+                      borderRadius: BorderRadius.circular(4), // 모서리 둥글게
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(4), // 이미지 모서리 둥글게
+                      child: Image.network(
+                        apiUrl + widget.item["storeImage"],
+                        width: 60,
+                        height: 60,
+                        fit: BoxFit.cover,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(width: 15), // 이미지와 텍스트 사이 여백
+                ],
+                if (widget.item["storeImage"] == null) ...[
+                  Container(
+                    width: 70,
+                    height: 70,
+                    decoration: BoxDecoration(
+                      color: Colors.blue[50],
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: Colors.grey.shade200,
+                        width: 1,
+                      ),
+                    ),
+                  ),
+                ],
                 SizedBox(width: 20),
                 Expanded(
                   child: Column(

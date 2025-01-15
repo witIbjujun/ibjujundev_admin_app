@@ -34,6 +34,7 @@ dependencies:
   http: ^0.13.4 #HTTP 요청을 처리하기 위한 패키지
   image: ^3.0.1 #위젯으로, 애플리케이션에서 이미지 표시
   intl: ^0.17.0  #숫자 포맷
+  shared_preferences: ^2.3.3 #로컬 저장소
 
 dev_dependencies:
   flutter_test:

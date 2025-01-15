@@ -61,9 +61,7 @@ class _CheckListDetailViewState extends State<CheckListDetailView> {
                 itemBuilder: (context, index) {
                   bool isExpanded = expandedIndex == index;
                   return ExpandableItem(
-                    inspNm: widget.checkListByLv3[index]["inspNm"],
-                    inspComt: widget.checkListByLv3[index]["inspComt"] ?? "",
-                    checkYn: widget.checkListByLv3[index]["checkYn"],
+                    itemInfo: widget.checkListByLv3[index],
                     isExpanded: isExpanded,
                     onSwitchChanged: (value) {
                       setState(() {
@@ -95,8 +93,6 @@ class _CheckListDetailViewState extends State<CheckListDetailView> {
     );
   }
 }
-
-
 
 /**
  * 체크리스트 상세 TabBar Widget
@@ -147,18 +143,14 @@ class TabBarWidget extends StatelessWidget {
  * 체크리스트 상세 TabBar 상세 Widget
  */
 class ExpandableItem extends StatelessWidget {
-  final String inspNm;
-  final String inspComt;
-  final String checkYn;
+  final dynamic itemInfo;
   final bool isExpanded;
   final Function(bool) onSwitchChanged;
   final VoidCallback onTap;
 
   const ExpandableItem({
     Key? key,
-    required this.inspNm,
-    required this.inspComt,
-    required this.checkYn,
+    required this.itemInfo,
     required this.isExpanded,
     required this.onSwitchChanged,
     required this.onTap,
@@ -171,14 +163,10 @@ class ExpandableItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white, // 배경색 설정
         borderRadius: BorderRadius.circular(10), // 라운드 처리
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1), // 그림자 색상 및 투명도
-            offset: Offset(0, 1), // 그림자의 위치
-            blurRadius: 4, // 흐림 정도
-            spreadRadius: 2, // 그림자의 퍼짐 정도
-          ),
-        ],
+        border: Border.all(
+          color: isExpanded == false ? Colors.grey[200]! : Colors.grey[400]!, // 찐한 회색 테두리 색상
+          width: 2, // 테두리 두께
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,12 +174,14 @@ class ExpandableItem extends StatelessWidget {
           GestureDetector(
             onTap: onTap, // 클릭 이벤트 처리
             child: Container(
-              height: 70, // 높이 70 설정
-              width: double.infinity, // 가로로 가득 차게 설정
-              padding: EdgeInsets.all(10), // 내부 여백 설정
+              height: 70,
+              width: double.infinity,
+              padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.white, // 배경색 설정 (필요에 따라 변경)
-                borderRadius: BorderRadius.circular(10), // 라운드 처리 (필요에 따라 변경)
+                color: isExpanded ? Colors.white : Colors.white,
+                borderRadius: isExpanded ?
+                  BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10),)
+                    : BorderRadius.all(Radius.circular(10)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -203,11 +193,29 @@ class ExpandableItem extends StatelessWidget {
                   SizedBox(width: 10),
                   Expanded(
                     child: Text(
-                      inspNm,
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      itemInfo["inspNm"],
+                      style: isExpanded ?
+                      TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)
+                      : TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Transform.scale(
+                  Container(
+                    child: IconButton(
+                      icon: Text(
+                        itemInfo["checkYn"] == "Y" ? "🔴"  // 축하 이모티콘
+                            : itemInfo["checkYn"] == "D" ? "⚪️"  // 손握기 이모티콘
+                            : "🔵",  // 빨간 따봉 뒤집힌 것
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white, // 텍스트 색상
+                        ),
+                      ),
+                      onPressed: () {
+                        onSwitchChanged(itemInfo["checkYn"] == "Y"); // Y일 경우 false, 나머지 경우 true
+                      },
+                    ),
+                  ),
+                  /*Transform.scale(
                     scale: 0.5,
                     child: Switch(
                       value: checkYn == "N" || checkYn == "D",
@@ -215,14 +223,10 @@ class ExpandableItem extends StatelessWidget {
                       activeTrackColor: checkYn == "D" ? Colors.grey[400] : Colors.blue[200],
                       inactiveTrackColor: Colors.red[200],
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             ),
-          ),
-          Container(
-            height: 1,
-            color: Colors.grey[300],
           ),
           AnimatedContainer(
             duration: Duration(milliseconds: 700),
@@ -231,30 +235,30 @@ class ExpandableItem extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(height: 20),
+                  Container(height: 0),
                   Container(
-                    height: 300,
-                    padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
+                    height: 320,
+                    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: PageView.builder(
                       itemCount: 5,
                       itemBuilder: (context, imageIndex) {
                         final imageUrlList = [
                           apiUrl + "/WIT/66b83d90-6dde-46f5-9005-2cfdf615bdfc5292261861812877321.jpg", // 첫 번째 이미지
-                          apiUrl + "/WIT/66b83d90-6dde-46f5-9005-2cfdf615bdfc5292261861812877321.jpg", // 첫 번째 이미지
-                          apiUrl + "/WIT/66b83d90-6dde-46f5-9005-2cfdf615bdfc5292261861812877321.jpg", // 첫 번째 이미지
-                          apiUrl + "/WIT/66b83d90-6dde-46f5-9005-2cfdf615bdfc5292261861812877321.jpg", // 첫 번째 이미지
-                          apiUrl + "/WIT/66b83d90-6dde-46f5-9005-2cfdf615bdfc5292261861812877321.jpg", // 첫 번째 이미지
+                          apiUrl + "/WIT/66b83d90-6dde-46f5-9005-2cfdf615bdfc5292261861812877321.jpg", // 두 번째 이미지
+                          apiUrl + "/WIT/66b83d90-6dde-46f5-9005-2cfdf615bdfc5292261861812877321.jpg", // 세 번째 이미지
+                          apiUrl + "/WIT/66b83d90-6dde-46f5-9005-2cfdf615bdfc5292261861812877321.jpg", // 네 번째 이미지
+                          apiUrl + "/WIT/66b83d90-6dde-46f5-9005-2cfdf615bdfc5292261861812877321.jpg", // 다섯 번째 이미지
                         ];
+
                         return Container(
-                          width: 200,
-                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          width: 0,
+                          margin: EdgeInsets.symmetric(horizontal: 0),
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: NetworkImage(imageUrlList[imageIndex]),
                               fit: BoxFit.cover,
                             ),
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(0),
                           ),
                         );
                       },
@@ -264,7 +268,7 @@ class ExpandableItem extends StatelessWidget {
                     height: 120,
                     alignment: Alignment.topLeft,
                     padding: EdgeInsets.all(20),
-                    child: Text(inspComt,
+                    child: Text(itemInfo["inspComt"] ?? "",
                       style: TextStyle(fontSize: 14, color: Colors.grey),
                     ),
                   ),
@@ -275,14 +279,14 @@ class ExpandableItem extends StatelessWidget {
                         context: context,
                         barrierDismissible: false,
                         builder: (context) {
-                          return ExamplePhotoPopup(); // 팝업 호출
+                          return ExamplePhotoPopup(itemInfo : itemInfo); // 팝업 호출
                         },
                       );
                     },
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Colors.grey[350],
+                        color: Colors.grey[300],
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(10), // 아래 왼쪽 모서리 둥글게
                           bottomRight: Radius.circular(10), // 아래 오른쪽 모서리 둥글게
@@ -317,72 +321,62 @@ class ExpandableItem extends StatelessWidget {
 }
 
 class ExamplePhotoPopup extends StatefulWidget {
+  final dynamic itemInfo;
+
+  const ExamplePhotoPopup({Key? key, required this.itemInfo}) : super(key: key);
+
   @override
   _ExamplePhotoPopupState createState() => _ExamplePhotoPopupState();
 }
 
 class _ExamplePhotoPopupState extends State<ExamplePhotoPopup> {
-  String text = "";
-  String? imagePath;
-  final FocusNode _focusNode = FocusNode(); // FocusNode 추가
+
+  DateTime? defectDate;
+  DateTime? repairDate;
+  String defectComment = "";
+  String? imagePath1;
+  String? imagePath2;
+  String? imagePath3;
 
   @override
   void initState() {
     super.initState();
-    /*WidgetsBinding.instance.addPostFrameCallback((_) {
-      // 다이얼로그가 열리면 TextField에 포커스를 줌
-      FocusScope.of(context).requestFocus(_focusNode);
-    });*/
+    defectDate = DateTime.now();
   }
-
-  @override
-  void dispose() {
-    _focusNode.dispose(); // FocusNode 해제
-    super.dispose();
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Container(
-        height: 50, // 높이 설정
-        width: double.infinity, // 좌우 가득 차게 설정
+        height: 50,
+        width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.grey, // 원하는 배경색 설정
-          borderRadius: BorderRadius.vertical(top: Radius.circular(10)), // 위쪽 모서리 둥글게
+          color: Colors.grey[350],
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
         ),
-        alignment: Alignment.center, // 중앙 정렬
+        alignment: Alignment.center,
         child: Text(
-          "하자 작성", // 제목 텍스트
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white), // 텍스트 스타일
+          "하자 등록 [" + widget.itemInfo["inspNm"] + "]",
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Container(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start, // 왼쪽 정렬
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  "하자 작성일자",
+                  "하자 일자",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             Container(height: 10),
             GestureDetector(
-              onTap: () async {
-                DateTime? selectedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2101),
-                );
-                if (selectedDate != null) {
-                  print("선택된 날짜: ${selectedDate.toLocal()}");
-                }
-              },
+              onTap: () => _selectDate(context, true),
               child: Container(
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                 decoration: BoxDecoration(
@@ -393,7 +387,7 @@ class _ExamplePhotoPopupState extends State<ExamplePhotoPopup> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '날짜 선택',
+                      defectDate != null ? '${defectDate!.toLocal()}'.split(' ')[0] : '날짜 선택',
                       style: TextStyle(fontSize: 14, color: Colors.black54),
                     ),
                     Icon(Icons.calendar_today),
@@ -401,12 +395,43 @@ class _ExamplePhotoPopupState extends State<ExamplePhotoPopup> {
                 ),
               ),
             ),
-            Container(height: 30),
+            Container(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  "COMMENT 작성",
+                  "수리 일자",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            Container(height: 10),
+            GestureDetector(
+              onTap: () => _selectDate(context, false),
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      repairDate != null ? '${repairDate!.toLocal()}'.split(' ')[0] : '날짜 선택',
+                      style: TextStyle(fontSize: 14, color: Colors.black54),
+                    ),
+                    Icon(Icons.calendar_today),
+                  ],
+                ),
+              ),
+            ),
+            Container(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "하자 내용",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ],
@@ -416,32 +441,31 @@ class _ExamplePhotoPopupState extends State<ExamplePhotoPopup> {
               height: 150,
               width: 350,
               child: TextField(
-                focusNode: _focusNode,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey), // 기본 테두리 색상
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey), // 비활성화 상태 테두리 색상
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey), // 활성화 상태 테두리 색상
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
                   contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 ),
                 onChanged: (value) {
-                  text = value;
+                  defectComment = value;
                 },
                 maxLines: 5,
                 style: TextStyle(height: 1.5),
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  "이미지 등록 (최대 3건)",
+                  "하자 이미지 등록 (최대 3건)",
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ],
@@ -455,8 +479,8 @@ class _ExamplePhotoPopupState extends State<ExamplePhotoPopup> {
                     // 왼쪽 이미지 등록 로직
                   },
                   child: Container(
-                    height: 100,
-                    width: 100,
+                    height: 90,
+                    width: 90,
                     color: Colors.grey[200],
                     child: Center(
                       child: Icon(
@@ -472,8 +496,8 @@ class _ExamplePhotoPopupState extends State<ExamplePhotoPopup> {
                     // 중앙 이미지 등록 로직
                   },
                   child: Container(
-                    height: 100,
-                    width: 100,
+                    height: 90,
+                    width: 90,
                     color: Colors.grey[200],
                     child: Center(
                       child: Icon(
@@ -489,8 +513,8 @@ class _ExamplePhotoPopupState extends State<ExamplePhotoPopup> {
                     // 오른쪽 이미지 등록 로직
                   },
                   child: Container(
-                    height: 100,
-                    width: 100,
+                    height: 90,
+                    width: 90,
                     color: Colors.grey[200],
                     child: Center(
                       child: Icon(
@@ -508,8 +532,8 @@ class _ExamplePhotoPopupState extends State<ExamplePhotoPopup> {
       ),
       actions: [
         Container(
-          height: 50, // 버튼 높이
-          width: double.infinity, // 전체 너비
+          height: 50,
+          width: double.infinity,
           child: Row(
             children: [
               Expanded(
@@ -539,11 +563,19 @@ class _ExamplePhotoPopupState extends State<ExamplePhotoPopup> {
                     ),
                   ),
                   onPressed: () {
-                    // 저장 로직
-                    Navigator.of(context).pop(); // 다이얼로그 닫기
+
+                    print("하자 일자: ${defectDate!.toLocal()}");
+                    print("수리 일자: ${repairDate!.toLocal()}");
+                    print("하자 내용: $defectComment");
+                    print("이미지 1: $imagePath1");
+                    print("이미지 2: $imagePath2");
+                    print("이미지 3: $imagePath3");
+
+                    //Navigator.of(context).pop(); // 다이얼로그 닫기
                   },
-                  child: Text("저장",
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white)
+                  child: Text(
+                    "저장",
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                 ),
               ),
@@ -554,5 +586,22 @@ class _ExamplePhotoPopupState extends State<ExamplePhotoPopup> {
     );
   }
 
-
+  // [달력] 달력 호출
+  Future<void> _selectDate(BuildContext context, bool isDefectDate) async {
+    DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (selectedDate != null) {
+      setState(() {
+        if (isDefectDate) {
+          defectDate = selectedDate;
+        } else {
+          repairDate = selectedDate;
+        }
+      });
+    }
+  }
 }

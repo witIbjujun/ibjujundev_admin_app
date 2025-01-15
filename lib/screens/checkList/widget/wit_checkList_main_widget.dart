@@ -29,6 +29,7 @@ class CheckListView extends StatelessWidget {
           item: item,
           edited : edited,
           onTap: () async {
+            if (edited == false)
             await Navigator.push(
               context,
               SlideRoute(page: CheckListDetail(checkInfo: item)),
@@ -121,23 +122,46 @@ class _CheckListCardState extends State<CheckListCard> {
                     ],
                   ),
                 ),
-                if (widget.edited)
+                if (widget.edited == true)
                   Container(
                     height: 35, // 고정 높이 설정
                     child: Transform.scale(
                       scale: 0.6, // 스위치 크기 조정
                       child: Switch(
-                        value: true,
+                        value: widget.item["isSelected"] ?? true, // 스위치 상태
                         onChanged: (value) {
                           setState(() {
-                            // 스위치 상태 변경 로직
+                            widget.item["isSelected"] = value;
                           });
                         },
-                        activeTrackColor: Colors.blue[200],
-                        inactiveTrackColor: Colors.red[200],
+                        activeColor: Colors.blue, // 활성화 색상
                       ),
                     ),
                   ),
+                if (widget.edited == false)
+                  Container(
+                    height: 35, // 고정 높이 설정
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 8, 30, 0), // 오른쪽 패딩 설정
+                      child: widget.item["inspDetlChoiceCnt"] == "0"
+                          ? SizedBox.shrink() // 0일 경우 빈 공간
+                          : RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "${widget.item["inspDetlChoiceCnt"]} ", // 숫자
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.red),
+                            ),
+                            TextSpan(
+                              text: "건", // "건" 텍스트
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black), // 검정색
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+
               ],
             ),
             SizedBox(height: 20),

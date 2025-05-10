@@ -19,6 +19,13 @@ String formatDate(String date) {
   return '$year년 $month월 $day일'; // 형식화된 문자열 반환
 }
 
+String? formatDateYYYYMMDD(DateTime? date) {
+  if (date == null) {
+    return null; // date가 null인 경우 null 반환
+  }
+  return '${date.year}${date.month.toString().padLeft(2, '0')}${date.day.toString().padLeft(2, '0')}';
+}
+
 /**
  * [유틸] 금액 포맷
  */

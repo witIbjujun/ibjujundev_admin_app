@@ -138,7 +138,7 @@ class ImageListDisplay extends StatelessWidget {
   }
 }
 
-// 댓글 숫자 영역
+// 신고 건수 영역
 class ReportCount extends StatelessWidget {
   final int count;
 
@@ -163,7 +163,7 @@ class ReportCount extends StatelessWidget {
   }
 }
 
-// 댓글 리스트 영역
+// 신고 리스트 영역
 class ReportList extends StatelessWidget {
   final List<dynamic> reportList;
 

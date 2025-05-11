@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:ibjujundev_admin_app/screens/communitymanage/widget/wit_communitymanage_detail_widget.dart';
-
+import '../common/widget/wit_common_widget.dart';
+import '../communitymanage/widget/wit_communitymanage_detail_widget.dart';
 import '../../util/wit_api_ut.dart';
 import '../common/widget/wit_common_theme.dart';
 
@@ -103,6 +103,84 @@ class BoardDetailState extends State<BoardDetail> {
           ),
         ),
       ),
+      // 하단 버튼
+      persistentFooterButtons: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // 첫 번째 버튼 (예시: 처리 완료)
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      ConfirmationDialog.show(context, "신고 취소 하시겠습니까?",
+                            () async {
+                          await updateReportStat("신고 취소", "40");
+                        },
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: WitCommonTheme.wit_lightGreen,
+                      foregroundColor: WitCommonTheme.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    child: Text("신고 취소"), // 버튼 텍스트 변경 가능
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      ConfirmationDialog.show(context, "신고 보류 하시겠습니까?",
+                            () async {
+                          await updateReportStat("신고 보류", "30");
+                        },
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: WitCommonTheme.wit_lightGoldenrodYellow,
+                      foregroundColor: WitCommonTheme.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    child: Text("신고 보류"),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      ConfirmationDialog.show(context, "신고 완료 하시겠습니까?",
+                            () async {
+                          await updateReportStat("신고 완료", "20");
+                        },
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: WitCommonTheme.wit_red,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    child: Text("신고 완료"),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -163,6 +241,34 @@ class BoardDetailState extends State<BoardDetail> {
     // 결과 셋팅
     setState(() {
       boardReportDetailList = _BoardReportDetailList;
+    });
+  }
+
+  // [서비스] 게시판 신고 처리
+  Future<void> updateReportStat(confirmStr, stat) async {
+
+    // REST ID
+    String restId = "updateReportStat";
+
+    // PARAM
+    final param = jsonEncode({
+      "bordNo": boardDetailInfo["bordNo"],
+      "reportStat": stat,
+    });
+
+    // API 호출 (게시판 상세 조회)
+    final result = await sendPostRequest(restId, param);
+
+    // 결과 셋팅
+    setState(() {
+
+      if (result > 0) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(confirmStr + " 되었습니다.")));
+        Navigator.pop(context);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(confirmStr + " 실패 하였습니다.")));
+      }
+
     });
   }
 }

@@ -88,14 +88,14 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start, // 좌측 정렬
                 children: [
-                  buildDetailRow("사업자명", widget.itemInfo["storeName"]),
-                  buildDetailRow("대표자명", widget.itemInfo["name"]),
-                  buildDetailRow("대표 이메일", widget.itemInfo["email"]),
-                  buildDetailRow("담당자 연락처", formatPhoneNumber(widget.itemInfo["hp"])),
-                  buildDetailRow("사업장 주소", widget.itemInfo["zipCode"] + ") " + widget.itemInfo["address1"]),
-                  buildDetailRow("개업일자", formatDate(widget.itemInfo["openDate"])),
+                  buildDetailRow("사업자명", widget.itemInfo["storeName"] ?? ""),
+                  buildDetailRow("대표자명", widget.itemInfo["name"] ?? ""),
+                  buildDetailRow("대표 이메일", widget.itemInfo["email"] ?? ""),
+                  buildDetailRow("담당자 연락처", formatPhoneNumber(widget.itemInfo["hp"] ?? "")),
+                  buildDetailRow("사업장 주소", widget.itemInfo["zipCode"] ?? "" + ") " + widget.itemInfo["address1"] ?? ""),
+                  buildDetailRow("개업일자", formatDate(widget.itemInfo["openDate"] ?? "")),
                   buildDetailRow("사업자번호",
-                    widget.itemInfo["storeCode"] + "   ",
+                    widget.itemInfo["storeCode"] ?? "" + "   ",
                     action: ElevatedButton(
                       onPressed: isBizNo ? null : () {
                         // 사업자 번호 인증

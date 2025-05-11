@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:ibjujundev_admin_app/screens/CertificateHoldermanage/wit_certificateholdermanage_main_sc.dart';
-import 'package:ibjujundev_admin_app/screens/approvalmanage/wit_approvalmanage_main_sc.dart';
-import 'package:ibjujundev_admin_app/screens/communitymanage/wit_communitymanage_main_sc.dart';
-import 'package:ibjujundev_admin_app/screens/estimatemanage/wit_estimatemanage_main_sc.dart';
-import 'package:ibjujundev_admin_app/screens/joininfomanage/wit_joininfomanage_main_sc.dart';
-import 'package:ibjujundev_admin_app/screens/partnermanage/wit_partnermanage_main_sc.dart';
-import 'package:ibjujundev_admin_app/screens/pointmanage/wit_pointmanage_main_sc.dart';
-import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dart';
+import '../CertificateHoldermanage/wit_certificateholdermanage_main_sc.dart';
+import '../approvalmanage/wit_approvalmanage_main_sc.dart';
+import '../communitymanage/wit_communitymanage_main_sc.dart';
+import '../estimatemanage/wit_estimatemanage_main_sc.dart';
+import '../partnermanage/wit_partnermanage_main_sc.dart';
+import '../pointmanage/wit_pointmanage_main_sc.dart';
+import '../common/widget/wit_common_widget.dart';
 
 /**
  * 입주전 관리자 메인 홈
@@ -76,7 +75,7 @@ class HomeState extends State<Home> {
                       ),
                     ),
 
-                    SizedBox(height: 20),
+                    /*SizedBox(height: 20),
                     
                     // 포인트 관리 버튼
                     ElevatedButton(
@@ -93,11 +92,11 @@ class HomeState extends State<Home> {
                         "포인트 관리",
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),
-                    ),
+                    ),*/
 
                     SizedBox(height: 20),
                     
-                    // 커뮤니티 관리 버튼
+                    // 게시판 신고 관리
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(SlideRoute(page: CommunityManage()));
@@ -133,7 +132,7 @@ class HomeState extends State<Home> {
                       ),
                     ),
 
-                    SizedBox(height: 20),
+                    /*SizedBox(height: 20),
                     
                     // 가입정보 정보조회 버튼
                     ElevatedButton(
@@ -150,7 +149,7 @@ class HomeState extends State<Home> {
                         "가입정보 정보조회",
                         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                       ),
-                    ),
+                    ),*/
 
                     SizedBox(height: 20),
 

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:ibjujundev_admin_app/screens/communitymanage/widget/wit_communitymanage_main_widget.dart';
+import '../communitymanage/widget/wit_communitymanage_main_widget.dart';
 import '../../util/wit_api_ut.dart';
 import '../common/widget/wit_common_theme.dart';
 
@@ -57,10 +57,10 @@ class CommunityManageState extends State<CommunityManage> {
   Widget build(BuildContext context) {
 
     final Map<String, String> _functionOptionsMap = {
-      '10': '처리 요청',
-      '20': '처리 완료',
-      '30': '처리 대기',
-      '40': '처리 취소',
+      '10': '신고 요청',
+      '20': '신고 완료',
+      '30': '신고 보류',
+      '40': '신고 취소',
     };
 
     final List<DropdownMenuItem<String>> _dropdownItems = _functionOptionsMap.entries.map((entry) {

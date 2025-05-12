@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_theme.dart';
 
 /*******************************
  * [위젯] 검색 앱바
@@ -21,7 +22,8 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      backgroundColor: WitCommonTheme.wit_black,
+      iconTheme: IconThemeData(color: WitCommonTheme.wit_white),
       title: isSearching ?
       TextField(
         controller: searchController,
@@ -39,11 +41,11 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
           contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
         ),
       ) : Text(appBarTitle,
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_white),
       ),
       actions: [
         IconButton(
-          icon: Icon(isSearching ? Icons.close : Icons.search),
+          icon: Icon(isSearching ? Icons.close : Icons.search, color: WitCommonTheme.wit_white,),
           onPressed: onSearchToggle,
         ),
       ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_theme.dart';
 import '../CertificateHoldermanage/wit_certificateholdermanage_main_sc.dart';
 import '../approvalmanage/wit_approvalmanage_main_sc.dart';
 import '../communitymanage/wit_communitymanage_main_sc.dart';
@@ -42,9 +43,9 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: WitCommonTheme.wit_black,
         title: Text("입주전 관리자",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_white),
         ),
       ),
       body: Center(
@@ -71,7 +72,7 @@ class HomeState extends State<Home> {
                       ),
                       child: Text(
                         "사업자 인증 요청 내역",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        style: WitCommonTheme.title,
                       ),
                     ),
 
@@ -109,7 +110,7 @@ class HomeState extends State<Home> {
                       ),
                       child: Text(
                         "게시판 신고 관리",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        style: WitCommonTheme.title,
                       ),
                     ),
 
@@ -128,7 +129,7 @@ class HomeState extends State<Home> {
                       ),
                       child: Text(
                         "결재내역 조회",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        style: WitCommonTheme.title,
                       ),
                     ),
 
@@ -166,7 +167,7 @@ class HomeState extends State<Home> {
                       ),
                       child: Text(
                         "견적요청 리스트",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        style: WitCommonTheme.title,
                       ),
                     ),
 
@@ -185,7 +186,7 @@ class HomeState extends State<Home> {
                       ),
                       child: Text(
                         "협력업체 인증관리",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        style: WitCommonTheme.title,
                       ),
                     ),
                   ],

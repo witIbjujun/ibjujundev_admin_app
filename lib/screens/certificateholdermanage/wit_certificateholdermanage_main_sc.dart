@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/certificateholdermanage/widget/wit_certificateholdermanage_main_widget.dart';
 import 'package:ibjujundev_admin_app/util/wit_api_ut.dart';
+import '../common/widget/wit_common_theme.dart';
 import '../common/widget/wit_common_widget.dart';
 
 /**
@@ -30,6 +31,8 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
   bool isSearching = false;
   // TextEdit 컨트롤러
   TextEditingController searchController = TextEditingController();
+  // 선택한 신고 상태값
+  String? selectReportStat = "";
 
   /**
    * 화면 초기화
@@ -47,6 +50,23 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
    */
   @override
   Widget build(BuildContext context) {
+
+    final Map<String, String> _functionOptionsMap = {
+      '': '전체',
+      '01': '요청중',
+      '02': '인증완료',
+      '03': '인증완료(관리자)',
+      '04': '재등록요청',
+      '05': '불가처리',
+    };
+
+    final List<DropdownMenuItem<String>> _dropdownItems = _functionOptionsMap.entries.map((entry) {
+      return DropdownMenuItem<String>(
+        value: entry.key, // 코드 값 ('1', '2' 등)을 value로 사용
+        child: Text(entry.value), // 표시 텍스트 ("처리 요청" 등)를 child로 사용
+      );
+    }).toList();
+
     return Scaffold(
       appBar: SearchAppBar(
         appBarTitle: "사업자 인증 요청 내역",
@@ -62,16 +82,53 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
         onSearchSubmit: (value) => filterList(),
       ),
       body: SafeArea(
-        child: certificateHolderList.isEmpty
-            ? Center(
-          child: Text(
-            "조회된 데이터가 없습니다.",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-        )
-            : CertificateHolderListView(
-          certificateHolderList: certificateHolderList,
-          getList: getCertificateHolderList, // 메서드의 참조를 전달
+        child: Column( // 여러 위젯을 세로로 배열하기 위해 Column 추가
+          children: [
+            Padding( // 추가하려는 DropdownButton 부분 시작
+              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+              child: InputDecorator(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: selectReportStat,
+                    items: _dropdownItems,
+                    onChanged: (String? newValue) {
+                      if (newValue != null) {
+                        setState(() {
+                          selectReportStat = newValue;
+                          getCertificateHolderList();
+                        });
+                      }
+                    },
+                    style: WitCommonTheme.subtitle,
+                  ),
+                ),
+              ),
+            ), // 추가하려는 DropdownButton 부분 끝
+            Container( // 추가하려는 구분선 부분 시작
+              height: 1,
+              color: WitCommonTheme.wit_lightgray,
+            ), // 추가하려는 구분선 부분 끝
+            Expanded( // 남은 공간을 차지하도록 Expanded 추가
+              child: certificateHolderList.isEmpty
+                  ? Center(
+                child: Text(
+                  "조회된 데이터가 없습니다.",
+                  style: WitCommonTheme.title,
+                ),
+              )
+                  : CertificateHolderListView(
+                certificateHolderList: certificateHolderList,
+                getList: getCertificateHolderList, // 메서드의 참조를 전달
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -89,7 +146,8 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
 
     // PARAM
     final param = jsonEncode({
-      "storeName" : searchController.text
+      "storeName" : searchController.text,
+      "bizCertification" : selectReportStat
     });
 
     // API 호출 (사업자 인증 요청 업체 조회)

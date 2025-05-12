@@ -68,7 +68,10 @@ class BoardDetailState extends State<BoardDetail> {
                         boardDetailInfo: boardDetailInfo,
                       ),
                       SizedBox(height: 10),
-                      Divider(),
+                      Container(
+                        height: 1,
+                        color: WitCommonTheme.wit_lightgray,
+                      ),
                       SizedBox(height: 10),
                       ContentDisplay(
                         content: boardDetailInfo["bordContent"] ?? "",
@@ -76,16 +79,25 @@ class BoardDetailState extends State<BoardDetail> {
                       ),
                       if (boardDetailImageList.length > 0)...[
                         SizedBox(height: 10),
-                        Divider(),
+                        Container(
+                          height: 1,
+                          color: WitCommonTheme.wit_lightgray,
+                        ),
                         SizedBox(height: 10),
                         ImageListDisplay(
                           boardDetailImageList: boardDetailImageList,
                         ),
                         SizedBox(height: 10),
-                        Divider(),
+                        Container(
+                          height: 1,
+                          color: WitCommonTheme.wit_lightgray,
+                        ),
                         SizedBox(height: 10),
                       ] else ...[
-                        Divider(),
+                        Container(
+                          height: 1,
+                          color: WitCommonTheme.wit_lightgray,
+                        ),
                         SizedBox(height: 5),
                       ],
                       ReportCount(

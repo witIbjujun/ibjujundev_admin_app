@@ -178,46 +178,56 @@ class ReportList extends StatelessWidget {
       physics: NeverScrollableScrollPhysics(),
       itemCount: reportList.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          contentPadding: EdgeInsets.all(0),
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "신고 사유",
-                      style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      reportList[index]["reportReason"] ?? "",
-                      style: WitCommonTheme.subtitle,
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      "신고 내용",
-                      style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      reportList[index]["reportContent"] ?? "",
-                      style: WitCommonTheme.subtitle,
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      (reportList[index]["creUserNm"] ?? "") + " | " + (reportList[index]["creDateTxt"] ?? ""),
-                      style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_gray),
-                    ),
-                    SizedBox(height: 4),
-                    Divider(),
-                  ],
+        return Container( // 네모 박스로 감싸기 위해 Container 추가
+          margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 0), // 박스 간의 세로 간격 추가
+          padding: EdgeInsets.all(10.0), // 박스 내부 여백 추가
+          decoration: BoxDecoration(
+            color: WitCommonTheme.wit_extraLightGrey,
+            borderRadius: BorderRadius.circular(8.0), // 모서리 둥글게 만들기 (반경 8.0)
+          ),
+          child: ListTile(
+            contentPadding: EdgeInsets.all(0),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "신고 사유",
+                        style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        reportList[index]["reportReason"] ?? "",
+                        style: WitCommonTheme.subtitle,
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        "신고 내용",
+                        style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        reportList[index]["reportContent"] ?? "",
+                        style: WitCommonTheme.subtitle,
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        (reportList[index]["creUserNm"] ?? "") + " | " + (reportList[index]["creDateTxt"] ?? ""),
+                        style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_gray),
+                      ),
+                      SizedBox(height: 4),
+                      // 원래 Divider는 Container 밖으로 이동하거나 필요에 따라 조정 가능
+                      // Divider(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
     );
   }
+
 }

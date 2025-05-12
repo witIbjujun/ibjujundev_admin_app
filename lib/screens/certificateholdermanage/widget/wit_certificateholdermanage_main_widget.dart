@@ -175,10 +175,10 @@ class _CertificateHolderCardState extends State<CertificateHolderCard> {
                                   ),
                                 ),
                                 SizedBox(width: 10), // 박스와 텍스트 사이의 간격
-                                /*Text(
-                                  widget.item["bizCertificationDate"],
+                                Text(
+                                  widget.item["bizCertificationDate"] ?? "",
                                   style: TextStyle(fontSize: 12),
-                                ),*/
+                                ),
                               ],
                             ),
                           ),

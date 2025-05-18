@@ -4,6 +4,7 @@ import 'package:ibjujundev_admin_app/screens/estimatemanage/wit_estimatemanage_d
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_util.dart';
 
 import '../../../util/wit_code_ut.dart';
+import '../../common/widget/wit_common_theme.dart';
 
 /**
  * 견적요청 리스트 위젯
@@ -86,11 +87,11 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                 SizedBox(width: 20),
                 if (widget.item["storeImage"] != null) ...[
                   Container(
-                    width: 60,
-                    height: 60,
+                    width: 70,
+                    height: 70,
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: Colors.grey.withOpacity(0.5), // 연한 회색 테두리
+                        color: WitCommonTheme.wit_extraLightGrey, // 연한 회색 테두리
                         width: 1, // 테두리 두께
                       ),
                       borderRadius: BorderRadius.circular(4), // 모서리 둥글게
@@ -99,8 +100,8 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                       borderRadius: BorderRadius.circular(4), // 이미지 모서리 둥글게
                       child: Image.network(
                         apiUrl + widget.item["storeImage"],
-                        width: 60,
-                        height: 60,
+                        width: 70,
+                        height: 70,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -112,10 +113,10 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                     width: 70,
                     height: 70,
                     decoration: BoxDecoration(
-                      color: Colors.blue[50],
+                      color: WitCommonTheme.wit_lightBlue,
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(
-                        color: Colors.grey.shade200,
+                        color: WitCommonTheme.wit_extraLightGrey,
                         width: 1,
                       ),
                     ),
@@ -127,8 +128,8 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.item["storeName"],
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        widget.item["storeName"] ?? "",
+                        style: WitCommonTheme.title,
                       ),
                       SizedBox(height: 10),
                       Row(
@@ -140,18 +141,18 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                                 Container(
                                   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[200],
+                                    color: WitCommonTheme.wit_extraLightGrey,
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
                                     "견적 요청",
-                                    style: TextStyle(fontSize: 12),
+                                    style: WitCommonTheme.subtitle,
                                   ),
                                 ),
                                 SizedBox(width: 10),
                                 Text(
                                   formatCash(widget.item["waitCnt"]) + " 건",
-                                  style: TextStyle(fontSize: 12),
+                                  style: WitCommonTheme.subtitle,
                                 ),
                               ],
                             ),
@@ -163,18 +164,18 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                                 Container(
                                   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                                   decoration: BoxDecoration(
-                                    color: Colors.grey[200],
+                                    color: WitCommonTheme.wit_extraLightGrey,
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
                                     "견적 발송",
-                                    style: TextStyle(fontSize: 12),
+                                    style: WitCommonTheme.subtitle,
                                   ),
                                 ),
                                 SizedBox(width: 10),
                                 Text(
                                   formatCash(widget.item["goingCnt"]) + " 건",
-                                  style: TextStyle(fontSize: 12),
+                                  style: WitCommonTheme.subtitle,
                                 ),
                               ],
                             ),
@@ -189,7 +190,7 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
             SizedBox(height: 20),
             Container(
               height: 1,
-              color: Colors.grey[200],
+              color: WitCommonTheme.wit_extraLightGrey,
             ),
           ],
         ),

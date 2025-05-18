@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../common/widget/wit_common_theme.dart';
+
 /**
  * 업체별 상세 견적 리스트 뷰
  */
@@ -14,7 +16,7 @@ class EstimateListView extends StatelessWidget {
       return Center(
         child: Text(
           "조회된 데이터가 없습니다.",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: WitCommonTheme.title,
         ),
       );
     } else {
@@ -56,16 +58,16 @@ class EstimateListCard extends StatelessWidget {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.blue[50],
+                      color: WitCommonTheme.wit_lightBlue,
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(
-                        color: Colors.grey.shade200,
+                        color: WitCommonTheme.wit_extraLightGrey,
                         width: 1,
                       ),
                     ),
                   ),
-                  Text(item["itemName"],
-                    style: TextStyle(fontSize: 12),
+                  Text(item["itemName"] ?? "",
+                    style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
                   ),
                 ],
               ),
@@ -79,16 +81,16 @@ class EstimateListCard extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
                           decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.inversePrimary,
+                            color: WitCommonTheme.wit_lightBlue,
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: Text(item["stat"],
-                            style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                          child: Text(item["stat"] ?? "상태 없음",
+                            style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
                           ),
                         ),
                         SizedBox(width: 10),
-                        Text(item["aptName"],
-                          style: TextStyle(fontSize: 12),
+                        Text(item["aptName"] ?? "",
+                          style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
                         ),
                       ],
                     ),
@@ -98,16 +100,16 @@ class EstimateListCard extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                           decoration: BoxDecoration(
-                            color: Colors.grey[200],
+                            color: WitCommonTheme.wit_extraLightGrey,
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text("요청자",
-                            style: TextStyle(fontSize: 12),
+                            style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
                           ),
                         ),
                         SizedBox(width: 10),
-                        Text(item["prsnName"],
-                          style: TextStyle(fontSize: 12),
+                        Text(item["prsnName"] ?? "",
+                          style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
                         ),
                       ],
                     ),
@@ -121,12 +123,12 @@ class EstimateListCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text("요청 일자",
-                            style: TextStyle(fontSize: 12),
+                            style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
                           ),
                         ),
                         SizedBox(width: 10),
-                        Text(item["estDt"],
-                          style: TextStyle(fontSize: 12),
+                        Text(item["estDt"] ?? "",
+                          style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
                         ),
                       ],
                     ),
@@ -140,7 +142,7 @@ class EstimateListCard extends StatelessWidget {
               minHeight: 100, // 최소 높이 200 설정
             ),
             child: Container(
-              color: Colors.grey[100], // 배경색 회색 설정
+              color: WitCommonTheme.wit_extraLightGrey, // 배경색 회색 설정
               padding: EdgeInsets.symmetric(horizontal: 0, vertical: 10), // 좌우 0, 위아래 10의 패딩 추가
               margin: EdgeInsets.fromLTRB(20, 10, 20, 0), // 외부 여백 추가
               child: Row(
@@ -151,8 +153,8 @@ class EstimateListCard extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            item["reqContents"],
-                            style: TextStyle(fontSize: 12),
+                            item["reqContents"] ?? "",
+                            style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
                             maxLines: 99, // 최대 줄 수 설정 (필요에 따라 조정)
                             overflow: TextOverflow.visible, // 넘치는 경우 표시
                           ),
@@ -168,7 +170,7 @@ class EstimateListCard extends StatelessWidget {
           SizedBox(height: 10),
           Container(
             height: 1,
-            color: Colors.grey[200],
+            color: WitCommonTheme.wit_extraLightGrey,
           ),
         ],
       ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/estimatemanage/widget/wit_estimatemanage_detail_widget.dart';
 import 'package:ibjujundev_admin_app/util/wit_api_ut.dart';
 
+import '../common/widget/wit_common_theme.dart';
+
 /**
  * 업체별 상태별 견적 리스트 UI
  */
@@ -47,9 +49,10 @@ class EstimateInfoDetailState extends State<EstimateInfoDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: WitCommonTheme.wit_black,
+        iconTheme: IconThemeData(color: WitCommonTheme.wit_white),
         title: Text("업체별 상세 견적 정보 [" + widget.itemInfo["storeName"] + "]",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_white),
         ),
       ),
       body: DefaultTabController(

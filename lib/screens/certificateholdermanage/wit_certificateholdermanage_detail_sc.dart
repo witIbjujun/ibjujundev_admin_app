@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_theme.dart';
 import 'package:ibjujundev_admin_app/util/wit_api_ut.dart';
 import 'package:ibjujundev_admin_app/screens/certificateholdermanage/widget/wit_certificateholdermanage_detail_widget.dart';
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dart';
@@ -37,35 +38,39 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
   @override
   void initState() {
     super.initState();
-    
-    // 요청중 (01)
-    if (widget.itemInfo["bizCertification"] == "01") {
-      isBizNo = false;                // 활성화
-      isCertificateHolderYes = true;  // 비활성화
-      isCertificateHolderRe = false;  // 활성화
-      isCertificateHolderNo = false;  // 활성화
 
-    // 사업자번호 인증완료 (02)
-    } else if (widget.itemInfo["bizCertification"] == "02") {
-      isBizNo = true;                 // 비활성화
-      isCertificateHolderYes = false; // 활성화
-      isCertificateHolderRe = false;  // 활성화
-      isCertificateHolderNo = false;  // 활성화
+    setState(() {
 
-    // 사업자 인증완료
-    } else if (widget.itemInfo["bizCertification"] == "03") {
-      isBizNo = true;                 // 비활성화
-      isCertificateHolderYes = true;  // 비활성화
-      isCertificateHolderRe = false;  // 활성화
-      isCertificateHolderNo = false;  // 활성화
+      // 요청중 (01)
+      if (widget.itemInfo["bizCertification"] == "01") {
+        isBizNo = false;                // 활성화
+        isCertificateHolderYes = true;  // 비활성화
+        isCertificateHolderRe = false;  // 활성화
+        isCertificateHolderNo = false;  // 활성화
 
-    // 재등록 요청 (04), 불가처리 (05)
-    } else if (widget.itemInfo["bizCertification"] == "04" || widget.itemInfo["bizCertification"] == "05") {
-      isBizNo = true;                 // 비활성화
-      isCertificateHolderYes = true;  // 비활성화
-      isCertificateHolderRe = true;   // 비활성화
-      isCertificateHolderNo = true;   // 비활성화
-    }
+        // 사업자번호 인증완료 (02)
+      } else if (widget.itemInfo["bizCertification"] == "02") {
+        isBizNo = true;                 // 비활성화
+        isCertificateHolderYes = false; // 활성화
+        isCertificateHolderRe = false;  // 활성화
+        isCertificateHolderNo = false;  // 활성화
+
+        // 사업자 인증완료
+      } else if (widget.itemInfo["bizCertification"] == "03") {
+        isBizNo = true;                 // 비활성화
+        isCertificateHolderYes = true;  // 비활성화
+        isCertificateHolderRe = false;  // 활성화
+        isCertificateHolderNo = false;  // 활성화
+
+        // 재등록 요청 (04), 불가처리 (05)
+      } else if (widget.itemInfo["bizCertification"] == "04" || widget.itemInfo["bizCertification"] == "05") {
+        isBizNo = true;                 // 비활성화
+        isCertificateHolderYes = true;  // 비활성화
+        isCertificateHolderRe = true;   // 비활성화
+        isCertificateHolderNo = true;   // 비활성화
+      }
+
+    });
   }
 
   /**
@@ -75,9 +80,10 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: WitCommonTheme.wit_black,
+        iconTheme: IconThemeData(color: WitCommonTheme.wit_white),
         title: Text("사업자 인증 상세",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_white),
         ),
       ),
       body: SafeArea( // SafeArea로 감싸기
@@ -102,7 +108,7 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
                         checkBizNo(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red.shade200,
+                        backgroundColor: WitCommonTheme.wit_lightBlue,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5.0),
                         ),
@@ -198,7 +204,46 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
     final result = await sendPostRequest(restId, param);
 
     setState(() {
-      widget.itemInfo["bizCertification"] = biz;
+
+      if (result > 0) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("처리 되었습니다.")));
+
+        setState(() {
+
+          // 요청중 (01)
+          if (biz == "01") {
+            isBizNo = false;                // 활성화
+            isCertificateHolderYes = true;  // 비활성화
+            isCertificateHolderRe = false;  // 활성화
+            isCertificateHolderNo = false;  // 활성화
+
+            // 사업자번호 인증완료 (02)
+          } else if (biz == "02") {
+            isBizNo = true;                 // 비활성화
+            isCertificateHolderYes = false; // 활성화
+            isCertificateHolderRe = false;  // 활성화
+            isCertificateHolderNo = false;  // 활성화
+
+            // 사업자 인증완료
+          } else if (biz == "03") {
+            isBizNo = true;                 // 비활성화
+            isCertificateHolderYes = true;  // 비활성화
+            isCertificateHolderRe = false;  // 활성화
+            isCertificateHolderNo = false;  // 활성화
+
+            // 재등록 요청 (04), 불가처리 (05)
+          } else if (biz == "04" || biz == "05") {
+            isBizNo = true;                 // 비활성화
+            isCertificateHolderYes = true;  // 비활성화
+            isCertificateHolderRe = true;   // 비활성화
+            isCertificateHolderNo = true;   // 비활성화
+          }
+        });
+
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("처리 실패되었습니다.")));
+      }
+
     });
 
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dart';
 
+import '../../common/widget/wit_common_theme.dart';
+
 /**
  * 사업자 상세 ROW UI
  */
@@ -15,7 +17,7 @@ Widget buildDetailRow(String title, String value, {Widget? action}) {
           children: [
             Text(
               title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: WitCommonTheme.title,
             ),
             SizedBox(height: 6),
             Row(
@@ -27,7 +29,7 @@ Widget buildDetailRow(String title, String value, {Widget? action}) {
                     children: [
                       Text(
                         value,
-                        style: TextStyle(fontSize: 12),
+                        style: WitCommonTheme.subtitle,
                       ),
                       if (action != null) action, // 버튼 추가
                     ],
@@ -40,7 +42,7 @@ Widget buildDetailRow(String title, String value, {Widget? action}) {
       ),
       Container(
         height: 1, // 줄의 높이
-        color: Colors.grey[200], // 줄의 색상
+        color: WitCommonTheme.wit_extraLightGrey, // 줄의 색상
       ),
     ],
   );
@@ -81,7 +83,7 @@ class ActionButtonWidget extends StatelessWidget {
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+              backgroundColor: WitCommonTheme.wit_lightGreen,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4.0),
               ),
@@ -104,7 +106,7 @@ class ActionButtonWidget extends StatelessWidget {
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.tertiaryFixed,
+              backgroundColor: WitCommonTheme.wit_lightGoldenrodYellow,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4.0),
               ),
@@ -127,7 +129,7 @@ class ActionButtonWidget extends StatelessWidget {
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red.shade200,
+              backgroundColor: WitCommonTheme.wit_lightCoral,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4.0),
               ),

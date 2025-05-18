@@ -33,7 +33,7 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
         decoration: InputDecoration(
           hintText: "업체명을 입력해주세요...",
           filled: true,
-          fillColor: Colors.white,
+          fillColor: WitCommonTheme.wit_white,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: BorderSide.none,

@@ -129,9 +129,12 @@ class PartnerManageState extends State<PartnerManage> {
                   ),
                 ),
               )
-                  : PartnerListView(
-                partnerList: partnerList,
-                getList: getPartnerList, // 협력업체 인증 내역 조회
+                  : Container(
+                color: WitCommonTheme.wit_white,
+                  child: PartnerListView(
+                  partnerList: partnerList,
+                  getList: getPartnerList, // 협력업체 인증 내역 조회
+                ),
               ),
             ),
           ],

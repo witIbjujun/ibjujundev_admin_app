@@ -84,33 +84,36 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
       body: SafeArea(
         child: Column( // 여러 위젯을 세로로 배열하기 위해 Column 추가
           children: [
-            Padding( // 추가하려는 DropdownButton 부분 시작
-              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-              child: InputDecorator(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
+            Container(
+              color: WitCommonTheme.wit_white, // 배경색을 흰색으로 설정
+              child: Padding( // 추가하려는 DropdownButton 부분 시작
+                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),
                   ),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    value: selectReportStat,
-                    items: _dropdownItems,
-                    onChanged: (String? newValue) {
-                      if (newValue != null) {
-                        setState(() {
-                          selectReportStat = newValue;
-                          getCertificateHolderList();
-                        });
-                      }
-                    },
-                    style: WitCommonTheme.subtitle,
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      value: selectReportStat,
+                      items: _dropdownItems,
+                      onChanged: (String? newValue) {
+                        if (newValue != null) {
+                          setState(() {
+                            selectReportStat = newValue;
+                            getCertificateHolderList();
+                          });
+                        }
+                      },
+                      style: WitCommonTheme.subtitle,
+                    ),
                   ),
                 ),
               ),
-            ), // 추가하려는 DropdownButton 부분 끝
+            ),
             Container( // 추가하려는 구분선 부분 시작
               height: 1,
               color: WitCommonTheme.wit_lightgray,

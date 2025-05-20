@@ -54,12 +54,12 @@ Widget partnerDetailRow(String title, String value, {Widget? action}) {
 class partnerButtonWidget extends StatelessWidget {
 
   final dynamic itemInfo;
-  final Future<void> Function(String) updateCertificationYn;
+  final Future<void> Function(String) updatePartnerYn;
 
   const partnerButtonWidget({
     Key? key,
     required this.itemInfo,
-    required this.updateCertificationYn,
+    required this.updatePartnerYn,
   }) : super(key: key);
 
   @override
@@ -73,9 +73,9 @@ class partnerButtonWidget extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 if (itemInfo["certificationYn"] == "N") {
-                  updateCertificationYn("Y");
+                  updatePartnerYn("Y");
                 } else {
-                  updateCertificationYn("N");
+                  updatePartnerYn("N");
                 }
               },
               style: ElevatedButton.styleFrom(

@@ -73,7 +73,7 @@ class PartnerManageDetailState extends State<PartnerManageDetail> {
                   partnerDetailRow("인증상태", widget.itemInfo["certificationNm"] ?? ""),
                   partnerButtonWidget(
                     itemInfo : widget.itemInfo,
-                    updateCertificationYn: updateCertificationYn,
+                    updatePartnerYn: updatePartnerYn,
                   ),
                 ],
               ),
@@ -85,31 +85,32 @@ class PartnerManageDetailState extends State<PartnerManageDetail> {
   }
 
   // [서비스] 협력업체 인증 상태 변경
-  Future<void> updateCertificationYn(String stat) async {
+  Future<void> updatePartnerYn(String certificationYn) async {
 
     // REST ID
-    String restId = "updateCertificationYn";
+    String restId = "updatePartnerYn";
 
     // PARAM
     final param = jsonEncode({
       "sllrNo" : widget.itemInfo["sllrNo"],
-      "certificationYn" : stat
+      "certificationYn" : certificationYn
     });
 
     // API 호출 (협력업체 인증 상태 변경)
-    final result = 1;
+    final result = await sendPostRequest(restId, param);
 
     if (result > 0) {
       setState(() {
         if (widget.itemInfo["certificationYn"] == "N") {
           widget.itemInfo["certificationYn"] = "Y";
           widget.itemInfo["certificationNm"] = "협력업체 인증";
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("인증 완료 처리 되었습니다.")));
         } else {
           widget.itemInfo["certificationYn"] = "N";
           widget.itemInfo["certificationNm"] = "협력업체 미인증";
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("인증 취소 처리 되었습니다.")));
         }
       });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("처리 되었습니다.")));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("처리 실패되었습니다.")));
     }

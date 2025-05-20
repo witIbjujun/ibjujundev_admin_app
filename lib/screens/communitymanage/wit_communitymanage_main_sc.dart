@@ -80,31 +80,34 @@ class CommunityManageState extends State<CommunityManage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-              child: InputDecorator(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.0),
+          Container(
+            color: WitCommonTheme.wit_white, // 배경색을 흰색으로 설정
+            child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),
                   ),
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    value: selectReportStat,
-                    items: _dropdownItems,
-                    onChanged: (String? newValue) {
-                      if (newValue != null) {
-                        setState(() {
-                          selectReportStat = newValue;
-                          currentPage = 1;
-                          boardList = [];
-                          getBoardReportList();
-                        });
-                      }
-                    },
-                    style: WitCommonTheme.subtitle,
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      value: selectReportStat,
+                      items: _dropdownItems,
+                      onChanged: (String? newValue) {
+                        if (newValue != null) {
+                          setState(() {
+                            selectReportStat = newValue;
+                            currentPage = 1;
+                            boardList = [];
+                            getBoardReportList();
+                          });
+                        }
+                      },
+                      style: WitCommonTheme.subtitle,
+                    ),
                   ),
                 ),
               ),

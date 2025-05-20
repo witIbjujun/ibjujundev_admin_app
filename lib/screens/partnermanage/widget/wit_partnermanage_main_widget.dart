@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../certificateholdermanage/wit_certificateholdermanage_detail_sc.dart';
 import '../../common/widget/wit_common_widget.dart';
 import '../../common/widget/wit_common_theme.dart';
 import '../../../util/wit_code_ut.dart';
+import '../wit_partnermanage_detail_sc.dart';
 
 /**
  * 협력업체 인증관리 리스트 뷰
@@ -27,7 +27,7 @@ class PartnerListView extends StatelessWidget {
           onTap: () async {
             await Navigator.push(
               context,
-              SlideRoute(page: CertificateHolderDetail(itemInfo: item)),
+              SlideRoute(page: PartnerManageDetail(itemInfo: item)),
             );
             // 화면 복귀 시 리스트를 새로 조회
             await getList();

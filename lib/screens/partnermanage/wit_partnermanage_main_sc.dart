@@ -149,12 +149,10 @@ class PartnerManageState extends State<PartnerManage> {
     // REST ID
     String restId = "getSellerList";
 
-    print(dropBoxSelectStat);
-
     // PARAM
     final param = jsonEncode({
       "storeName" : searchController.text,
-      "certificationYn" : "Y",
+      "certificationYn" : dropBoxSelectStat,
     });
 
     // API 호출 (협력업체 인증 내역 조회)

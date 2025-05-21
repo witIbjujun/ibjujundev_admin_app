@@ -264,6 +264,9 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
             isCertificateHolderRe = true;   // 비활성화
             isCertificateHolderNo = true;   // 비활성화
           }
+
+          widget.itemInfo["bizCertification"] = biz;
+
         });
 
       } else {

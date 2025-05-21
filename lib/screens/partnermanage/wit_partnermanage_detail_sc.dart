@@ -30,6 +30,7 @@ class PartnerManageDetail extends StatefulWidget {
  */
 class PartnerManageDetailState extends State<PartnerManageDetail> {
 
+  List<dynamic> imageList = [];
   
   /**
    * 화면 초기화
@@ -38,7 +39,7 @@ class PartnerManageDetailState extends State<PartnerManageDetail> {
   void initState() {
     super.initState();
 
-
+    getSellerImageList();
   }
 
   /**
@@ -72,6 +73,7 @@ class PartnerManageDetailState extends State<PartnerManageDetail> {
                   partnerDetailRow("품목명", widget.itemInfo["categoryNm"] ?? ""),
                   partnerDetailRow("AS여부", widget.itemInfo["asGbnNm"] ?? ""),
                   partnerDetailRow("인증상태", widget.itemInfo["certificationNm"] ?? ""),
+                  ImageListDisplay(imageList: imageList),
                   partnerButtonWidget(
                     itemInfo : widget.itemInfo,
                     updatePartnerYn: updatePartnerYn,
@@ -83,6 +85,28 @@ class PartnerManageDetailState extends State<PartnerManageDetail> {
         ),
       ),
     );
+  }
+
+  // [서비스] 판매자 상세 이미지 조회
+  Future<void> getSellerImageList() async {
+    // REST ID
+    String restId = "getSellerDetailImageList";
+
+    // PARAM
+    final param = jsonEncode({
+      "bizCd": "SR01",
+      "bizKey": widget.itemInfo["sllrNo"],
+    });
+
+    final _imageList = await sendPostRequest(restId, param);
+
+    print(_imageList);
+
+    // 결과 셋팅
+    setState(() {
+      imageList = _imageList;
+    });
+
   }
 
   // [서비스] 협력업체 인증 상태 변경

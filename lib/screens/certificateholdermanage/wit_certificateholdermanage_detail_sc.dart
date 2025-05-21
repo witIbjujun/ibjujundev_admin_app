@@ -31,6 +31,7 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
   bool isCertificateHolderYes = false;
   bool isCertificateHolderRe = false;
   bool isCertificateHolderNo = false;
+  List<dynamic> imageList = [];
 
   /**
    * 화면 초기화
@@ -71,6 +72,9 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
       }
 
     });
+
+    // 판매자 이미지 조회
+    getSellerImageList();
   }
 
   /**
@@ -129,6 +133,7 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
                   buildDetailRow("품목명", widget.itemInfo["categoryNm"] ?? "", false),
                   buildDetailRow("AS여부", widget.itemInfo["asGbnNm"] ?? "", false),
                   buildDetailRow("인증상태", widget.itemInfo["certificationNm"] ?? "", false),
+                  ImageListDisplay(imageList: imageList),
                   ActionButtonWidget(
                     isCertificateHolderYes: isCertificateHolderYes,
                     isCertificateHolderRe: isCertificateHolderRe,
@@ -142,6 +147,26 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
         ),
       ),
     );
+  }
+
+  // [서비스] 판매자 상세 이미지 조회
+  Future<void> getSellerImageList() async {
+    // REST ID
+    String restId = "getSellerDetailImageList";
+
+    // PARAM
+    final param = jsonEncode({
+      "bizCd": "SR01",
+      "bizKey": widget.itemInfo["sllrNo"],
+    });
+
+    final _imageList = await sendPostRequest(restId, param);
+
+    // 결과 셋팅
+    setState(() {
+      imageList = _imageList;
+    });
+    
   }
 
   // [서비스] 사업자 인증

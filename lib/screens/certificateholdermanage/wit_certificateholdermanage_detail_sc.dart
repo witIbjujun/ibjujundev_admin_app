@@ -94,14 +94,14 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start, // 좌측 정렬
                 children: [
-                  buildDetailRow("사업자명", widget.itemInfo["storeName"] ?? ""),
-                  buildDetailRow("대표자명", widget.itemInfo["name"] ?? ""),
-                  buildDetailRow("대표 이메일", widget.itemInfo["email"] ?? ""),
-                  buildDetailRow("담당자 연락처", formatPhoneNumber(widget.itemInfo["hp"] ?? "")),
-                  buildDetailRow("사업장 주소", widget.itemInfo["zipCode"] ?? "" + ") " + widget.itemInfo["address1"] ?? ""),
-                  buildDetailRow("개업일자", formatDate(widget.itemInfo["openDate"] ?? "")),
+                  buildDetailRow("사업자명", widget.itemInfo["storeName"] ?? "", false),
+                  buildDetailRow("대표자명", widget.itemInfo["name"] ?? "", true),
+                  buildDetailRow("대표 이메일", widget.itemInfo["email"] ?? "", false),
+                  buildDetailRow("담당자 연락처", formatPhoneNumber(widget.itemInfo["hp"] ?? ""), false),
+                  buildDetailRow("사업장 주소", widget.itemInfo["zipCode"] ?? "" + ") " + widget.itemInfo["address1"] ?? "", false),
+                  buildDetailRow("개업일자", formatDate(widget.itemInfo["openDate"] ?? ""), true),
                   buildDetailRow("사업자번호",
-                    widget.itemInfo["storeCode"] ?? "" + "   ",
+                    widget.itemInfo["storeCode"] ?? "" + "   ", true,
                     action: ElevatedButton(
                       onPressed: isBizNo ? null : () {
                         // 사업자 번호 인증
@@ -115,19 +115,20 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
                         padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
                       ),
                       child: widget.itemInfo["bizCertification"] == "01"
-                          ? Text("인증")
+                          ? Text("인증대기")
                           : widget.itemInfo["bizCertification"] == "02"
-                          ? Text("인증완료")
+                          ? Text("인증확인")
                           : widget.itemInfo["bizCertification"] == "03"
-                          ? Text("인증완료")
+                          ? Text("인증확인")
                           : widget.itemInfo["bizCertification"] == "04"
-                          ? Text("재인증요청")
+                          ? Text("재등록요청")
                           : widget.itemInfo["bizCertification"] == "05"
-                          ? Text("인증")
+                          ? Text("인증실패")
                           : Text("상태 없음"),
-                    ),
-                  ),
-                  SizedBox(height: 20),
+                    )),
+                  buildDetailRow("품목명", widget.itemInfo["categoryNm"] ?? "", false),
+                  buildDetailRow("AS여부", widget.itemInfo["asGbnNm"] ?? "", false),
+                  buildDetailRow("인증상태", widget.itemInfo["certificationNm"] ?? "", false),
                   ActionButtonWidget(
                     isCertificateHolderYes: isCertificateHolderYes,
                     isCertificateHolderRe: isCertificateHolderRe,

@@ -6,6 +6,7 @@ import 'package:ibjujundev_admin_app/screens/partnermanage/widget/wit_partnerman
 import '../../util/wit_api_ut.dart';
 import '../common/widget/wit_common_theme.dart';
 import '../common/widget/wit_common_util.dart';
+import '../common/widget/wit_common_widget.dart';
 
 /**
  * 협력업체 인증관리 상세
@@ -104,16 +105,16 @@ class PartnerManageDetailState extends State<PartnerManageDetail> {
         if (widget.itemInfo["certificationYn"] == "N") {
           widget.itemInfo["certificationYn"] = "Y";
           widget.itemInfo["certificationNm"] = "협력업체 인증";
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("인증 완료 처리 되었습니다.")));
+
+          alertDialog.show(context, "인증 완료 처리 되었습니다.");
         } else {
           widget.itemInfo["certificationYn"] = "N";
           widget.itemInfo["certificationNm"] = "협력업체 미인증";
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("인증 취소 처리 되었습니다.")));
+          alertDialog.show(context, "인증 취소 처리 되었습니다.");
         }
       });
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("처리 실패되었습니다.")));
+      alertDialog.show(context, "처리 실패되었습니다.");
     }
   }
-
 }

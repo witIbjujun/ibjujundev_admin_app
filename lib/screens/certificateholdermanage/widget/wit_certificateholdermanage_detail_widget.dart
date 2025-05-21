@@ -6,18 +6,28 @@ import '../../common/widget/wit_common_theme.dart';
 /**
  * 사업자 상세 ROW UI
  */
-Widget buildDetailRow(String title, String value, {Widget? action}) {
+Widget buildDetailRow(String title, String value, bool pointFlag, {Widget? action}) {
   return Column( // Column으로 변경하여 Padding과 줄을 배치
     crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
     children: [
       Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0), // 항목 간의 간격 조정
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0), // 항목 간의 간격 조정
         child: Column( // Column으로 변경하여 두 줄로 배치
           crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
           children: [
-            Text(
-              title,
-              style: WitCommonTheme.title,
+            Row(
+              children: [
+                if (pointFlag == true)...[
+                  Text(
+                    "*  ",
+                    style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_red),
+                  ),
+                ],
+                Text(
+                  title,
+                  style: WitCommonTheme.title,
+                ),
+              ],
             ),
             SizedBox(height: 6),
             Row(
@@ -122,7 +132,7 @@ class ActionButtonWidget extends StatelessWidget {
                 : () {
               ConfirmationDialog.show(
                 context,
-                "인증 불가 처리 하시겠습니까?",
+                "인증 취소 처리 하시겠습니까?",
                     () async {
                   await updateBizCertification("05");
                 },
@@ -134,7 +144,7 @@ class ActionButtonWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4.0),
               ),
             ),
-            child: Text("인증 불가"),
+            child: Text("인증 취소"),
           ),
         ),
         SizedBox(width: 10), // 버튼 간격

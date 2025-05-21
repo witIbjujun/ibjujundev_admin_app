@@ -54,8 +54,8 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
     final Map<String, String> _functionOptionsMap = {
       '': '전체',
       '01': '요청중',
-      '02': '인증완료',
-      '03': '인증완료(관리자)',
+      '02': '사업자 인증완료',
+      '03': '사업자 인증완료 (관리자)',
       '04': '재등록요청',
       '05': '불가처리',
     };

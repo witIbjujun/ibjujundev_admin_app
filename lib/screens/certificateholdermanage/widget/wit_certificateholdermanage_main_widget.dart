@@ -131,9 +131,23 @@ class _CertificateHolderCardState extends State<CertificateHolderCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
                     children: [
-                      Text(
-                        widget.item["storeName"],
-                        style: WitCommonTheme.title,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            widget.item["storeName"],
+                            style: WitCommonTheme.title,
+                          ),
+                          if (widget.item["certificationYn"] == "Y")
+                            Padding(
+                              padding: const EdgeInsets.only(left: 6.0),
+                              child: Icon(
+                                Icons.emoji_events,
+                                size: 20,
+                                color: Colors.amber,
+                              ),
+                            ),
+                        ],
                       ),
                       SizedBox(height: 10), // 텍스트 간격
                       Row(

@@ -85,7 +85,7 @@ class PaymentManageState extends State<PaymentManage> {
 
     final Map<String, String> _functionOptionsMap = {
       "": '결재 상태',
-      "paid": '승인',
+      "paid": '승인완료',
       "nopaid": '미승인',
     };
 

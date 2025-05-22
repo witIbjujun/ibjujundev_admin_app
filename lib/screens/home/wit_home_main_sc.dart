@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_theme.dart';
 import '../CertificateHoldermanage/wit_certificateholdermanage_main_sc.dart';
-import '../approvalmanage/wit_approvalmanage_main_sc.dart';
 import '../communitymanage/wit_communitymanage_main_sc.dart';
 import '../estimatemanage/wit_estimatemanage_main_sc.dart';
 import '../partnermanage/wit_partnermanage_main_sc.dart';
-import '../pointmanage/wit_pointmanage_main_sc.dart';
+import '../paymentmanage/wit_paymentmanage_main_sc.dart';
 import '../common/widget/wit_common_widget.dart';
 
 /**
@@ -119,7 +118,7 @@ class HomeState extends State<Home> {
                     // 결재내역 조회 버튼
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(SlideRoute(page: ApprovalManage()));
+                        Navigator.of(context).push(SlideRoute(page: PaymentManage()));
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),

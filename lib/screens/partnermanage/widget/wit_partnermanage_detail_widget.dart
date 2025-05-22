@@ -75,9 +75,20 @@ class partnerButtonWidget extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 if (itemInfo["certificationYn"] == "N") {
-                  updatePartnerYn("Y");
+                  ConfirmationDialog.show(context, "협력업체 승인 하시겠습니까?",
+                    () async {
+                      await updatePartnerYn("Y");
+                      Navigator.of(context).pop();
+                    },
+                  );
+
                 } else {
-                  updatePartnerYn("N");
+                  ConfirmationDialog.show(context, "협력업체 승인 취소 하시겠습니까?",
+                    () async {
+                      await updatePartnerYn("N");
+                      Navigator.of(context).pop();
+                    },
+                  );
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -89,7 +100,7 @@ class partnerButtonWidget extends StatelessWidget {
               ),
               child: Text(
                 itemInfo["certificationYn"] == "Y"
-                    ? "협력업체 승인 취소" : "협력업체 승인 요청",
+                    ? "협력업체 승인 취소" : "협력업체 승인",
                 style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_white),
               ),
             ),

@@ -60,8 +60,14 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
       } else if (widget.itemInfo["bizCertification"] == "03") {
         isBizNo = true;                 // 비활성화
         isCertificateHolderYes = true;  // 비활성화
-        isCertificateHolderRe = false;  // 활성화
-        isCertificateHolderNo = false;  // 활성화
+
+        if (widget.itemInfo["certificationYn"] == "Y") {
+          isCertificateHolderRe = true;  // 비활성화
+          isCertificateHolderNo = true;  // 비활성화
+        } else {
+          isCertificateHolderRe = false;  // 활성화
+          isCertificateHolderNo = false;  // 활성화
+        }
 
         // 재등록 요청 (04), 불가처리 (05)
       } else if (widget.itemInfo["bizCertification"] == "04" || widget.itemInfo["bizCertification"] == "05") {
@@ -105,7 +111,7 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
                   buildDetailRow("사업장 주소", widget.itemInfo["zipCode"] ?? "" + ") " + widget.itemInfo["address1"] ?? "", false),
                   buildDetailRow("개업일자", formatDate(widget.itemInfo["openDate"] ?? ""), true),
                   buildDetailRow("사업자번호",
-                    widget.itemInfo["storeCode"] ?? "" + "   ", true,
+                      widget.itemInfo["storeCode"] + "   " + widget.itemInfo["bizCertificationNm"], true,
                     action: ElevatedButton(
                       onPressed: isBizNo ? null : () {
                         // 사업자 번호 인증
@@ -254,9 +260,13 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
           } else if (biz == "03") {
             isBizNo = true;                 // 비활성화
             isCertificateHolderYes = true;  // 비활성화
-            isCertificateHolderRe = false;  // 활성화
-            isCertificateHolderNo = false;  // 활성화
-
+            if (widget.itemInfo["certificationYn"] == "Y") {
+              isCertificateHolderRe = true;  // 비활성화
+              isCertificateHolderNo = true;  // 비활성화
+            } else {
+              isCertificateHolderRe = false;  // 활성화
+              isCertificateHolderNo = false;  // 활성화
+            }
             // 재등록 요청 (04), 불가처리 (05)
           } else if (biz == "04" || biz == "05") {
             isBizNo = true;                 // 비활성화

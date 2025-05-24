@@ -84,9 +84,11 @@ class PaymentManageState extends State<PaymentManage> {
   Widget build(BuildContext context) {
 
     final Map<String, String> _functionOptionsMap = {
-      "": '결재 상태',
-      "paid": '승인완료',
-      "nopaid": '미승인',
+      "": '결재 상태 (전체)',
+      "paid": '결제 성공',
+      "failed": '결제 실패',
+      "ready": '결재 대기',
+      "cancelled": '결재 취소',
     };
 
     final List<DropdownMenuItem<String>> _dropdownItems = _functionOptionsMap.entries.map((entry) {
@@ -97,10 +99,11 @@ class PaymentManageState extends State<PaymentManage> {
     }).toList();
 
     final Map<String, String> _functionOptionsMap2 = {
-      "": '결재 방식',
+      "": '결재 방식 (전체)',
       "card": '카드',
       "cash": '현금',
     };
+
 
     final List<DropdownMenuItem<String>> _dropdownItems2 = _functionOptionsMap2.entries.map((entry) {
       return DropdownMenuItem<String>(
@@ -198,7 +201,7 @@ class PaymentManageState extends State<PaymentManage> {
               color: WitCommonTheme.wit_lightgray,
             ),
             Expanded(
-              child: /*paymentList.isEmpty
+              child: paymentList.isEmpty
                   ? Container(
                 color: WitCommonTheme.wit_white,
                 child: Center(
@@ -208,7 +211,7 @@ class PaymentManageState extends State<PaymentManage> {
                   ),
                 ),
               )
-                  : */Container(
+                  : Container(
                 color: WitCommonTheme.wit_white,
                 child: PaymentListView(
                   paymentList: paymentList,

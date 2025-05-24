@@ -227,13 +227,13 @@ String _getPayStatNm(String payStat) {
   String payStatNm = "";
 
   if (payStat == "paid") {
-    payStatNm = "승인완료";
-  } else if (payStat == "cencer") {
-    payStatNm = "승인취소";
-  } else if (payStat == "wait") {
-    payStatNm = "승인대기";
-  } else {
-    payStatNm = "기타";
+    payStatNm = "결제 성공";
+  } else if (payStat == "failed") {
+    payStatNm = "결제 실패";
+  } else if (payStat == "ready") {
+    payStatNm = "결재 대기";
+  } else if (payStat == "cancelled") {
+    payStatNm = "결재 취소";
   }
 
   return payStatNm;

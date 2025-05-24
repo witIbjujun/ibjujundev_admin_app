@@ -155,6 +155,7 @@ class PartnerManageState extends State<PartnerManage> {
     // PARAM
     final param = jsonEncode({
       "storeName" : searchController.text,
+      "bizCertification" : "03",
       "certificationYn" : dropBoxSelectStat,
     });
 

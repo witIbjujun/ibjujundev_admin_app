@@ -121,7 +121,7 @@ class CommunityManageState extends State<CommunityManage> {
                 controller: _scrollController,
                 child: Container(
                   color: WitCommonTheme.wit_white,
-                  child: BoardListView(
+                  child: CommunityListView(
                     boardList: boardList,
                     refreshBoardList: refreshBoardReportList,
                     scrollController: _scrollController,

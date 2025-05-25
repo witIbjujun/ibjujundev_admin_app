@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_theme.dart';
 import '../CertificateHoldermanage/wit_certificateholdermanage_main_sc.dart';
+import '../board/wit_board_main_sc.dart';
 import '../communitymanage/wit_communitymanage_main_sc.dart';
 import '../estimatemanage/wit_estimatemanage_main_sc.dart';
 import '../partnermanage/wit_partnermanage_main_sc.dart';
@@ -194,7 +195,7 @@ class HomeState extends State<Home> {
                     // 공지사항 등록
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(SlideRoute(page: PartnerManage()));
+                        Navigator.of(context).push(SlideRoute(page: Board(bordType: "GJ01")));
                       },
                       style: ElevatedButton.styleFrom(
                         minimumSize: Size(double.infinity, 60),

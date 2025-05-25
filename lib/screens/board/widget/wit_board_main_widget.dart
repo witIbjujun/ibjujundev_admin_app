@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
 import '../../../util/wit_code_ut.dart';
 import '../../common/widget/wit_common_theme.dart';
 import '../../common/widget/wit_common_widget.dart';
-import '../wit_communitymanage_detail_sc.dart';
+import '../wit_board_detail_sc.dart';
 
 class CustomSearchAppBar extends StatefulWidget implements PreferredSizeWidget {
   final TextEditingController searchController;
@@ -107,15 +106,21 @@ class _CustomSearchAppBarState extends State<CustomSearchAppBar> {
   }
 }
 
-class CommunityListView extends StatelessWidget {
+class BoardListView extends StatelessWidget {
   final List<dynamic> boardList;
   final Function refreshBoardList;
   final ScrollController scrollController;
+  final String bordTitle;
+  final String bordTypeGbn;
+  final bool emptyDataFlag;
 
-  CommunityListView({
+  BoardListView({
     required this.boardList,
     required this.refreshBoardList,
     required this.scrollController,
+    required this.bordTitle,
+    required this.bordTypeGbn,
+    required this.emptyDataFlag,
   });
 
   @override
@@ -132,75 +137,51 @@ class CommunityListView extends StatelessWidget {
             controller: scrollController,
             slivers: [
               // 게시판 리스트
-              if (boardList.isEmpty)
+              if (emptyDataFlag == true)...[
                 SliverToBoxAdapter(
                   child: Container(
                     color: WitCommonTheme.wit_white,
                     height: MediaQuery.of(context).size.height * 0.5,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.info_outline,
-                            size: 48,
-                            color: WitCommonTheme.wit_lightgray,
-                          ),
-                          SizedBox(height: 16),
-                          Text(
-                            "조회된 값이 없습니다",
-                            style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_black),
-                          ),
-                        ],
+                    child: Container(
+                      color: WitCommonTheme.wit_white,
+                      height: MediaQuery.of(context).size.height * 0.5,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.info_outline,
+                              size: 48,
+                              color: WitCommonTheme.wit_lightgray,
+                            ),
+                            SizedBox(height: 16),
+                            Text(
+                              "조회된 값이 없습니다",
+                              style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_black),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 )
-              else
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                        (context, index) {
+                ] else ...[
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate((context, index) {
+
                       final boardInfo = boardList[index];
+
+                      String imgStr = boardInfo["imagePath"] ?? "";
+                      List<String> imgList = imgStr.split(",").where((s) => s.isNotEmpty).toList();
+
                       return Container(
-                        color: WitCommonTheme.wit_white, // 배경색을 흰색으로 설정
-                        child: Column(
+                          color: WitCommonTheme.wit_white, // 배경색을 흰색으로 설정
+                          child: Column(
                           children: [
                             ListTile(
                               contentPadding: EdgeInsets.fromLTRB(17, 7, 17, 7),
                               title: Row(
                                 children: [
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color: (boardInfo["bordType"] == "CM01") ? WitCommonTheme.wit_lightSteelBlue : // 커뮤니티
-                                                        (boardInfo["bordType"] == "GJ01") ? WitCommonTheme.wit_lightGreen :   // 공지사항
-                                                        (boardInfo["bordType"] == "JU01") ? WitCommonTheme.wit_lightCoral :   // 자유게시판
-                                                        (boardInfo["bordType"] == "UH01") ? WitCommonTheme.wit_lightCoral :   // 업체후기
-                                                        WitCommonTheme.wit_lightgray,
-                                                borderRadius: BorderRadius.circular(10),
-                                              ),
-                                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                                              child: Column(
-                                                children: [
-                                                  Center(
-                                                    child: Text("${boardInfo["bordTypeNm"]}",
-                                                      style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(width: 10), // 이미지 영역 뒤에 추가된 SizedBox
                                   Expanded(
                                     child: Container(
                                       child: Column(
@@ -229,7 +210,8 @@ class CommunityListView extends StatelessWidget {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  "${boardInfo["creUserNm"]}  |  ${boardInfo["creDateTxt"]}",
+                                                  // 사용자 이름, 날짜, 조회수만 표시 (별 문자열 없음)
+                                                  "${boardInfo["creUserNm"]}  |  ${boardInfo["creDateTxt"]}  |  조회 ${boardInfo["bordRdCnt"]}",
                                                   style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_gray),
                                                 ),
                                               ),
@@ -239,14 +221,14 @@ class CommunityListView extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  if (boardInfo["imagePath"] != null && boardInfo["imagePath"] != "") ...[
+                                  if (imgList.isNotEmpty) ...[
                                     Row(
                                       children: [
                                         SizedBox(width: 10),
                                         ClipRRect(
                                           borderRadius: BorderRadius.circular(10),
                                           child: Image.network(
-                                            apiUrl + boardInfo["imagePath"],
+                                            apiUrl + imgList.first,
                                             width: 55,
                                             height: 55,
                                             fit: BoxFit.cover,
@@ -258,44 +240,46 @@ class CommunityListView extends StatelessWidget {
                                       ],
                                     ),
                                   ],
-                                  SizedBox(width: 10), // 이미지 영역 뒤에 추가된 SizedBox
-                                  Container(
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                color: WitCommonTheme.wit_extraLightGrey,
-                                                borderRadius: BorderRadius.circular(10),
-                                              ),
-                                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                                              child: Column(
-                                                children: [
-                                                  Center(
-                                                    child: Text("${boardInfo["reportCnt"]}",
-                                                      style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
+                                  if (bordTypeGbn != "UH" && bordTypeGbn != "GJ")...[
+                                    SizedBox(width: 10), // 이미지 영역 뒤에 추가된 SizedBox
+                                    Container(
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: WitCommonTheme.wit_extraLightGrey,
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                                                child: Column(
+                                                  children: [
+                                                    Center(
+                                                      child: Text("${boardInfo["commentCnt"]}",
+                                                        style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
+                                                      ),
                                                     ),
-                                                  ),
-                                                  SizedBox(height: 4),
-                                                  Text("신고",
-                                                    style: WitCommonTheme.caption,
-                                                  ),
-                                                ],
+                                                    SizedBox(height: 4),
+                                                    Text("댓글",
+                                                      style: WitCommonTheme.caption,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
+                                  ]
                                 ],
                               ),
                               onTap: () async {
                                 await Navigator.push(
                                   context,
-                                  SlideRoute(page: CommunityDetail(param: boardInfo)),
+                                  SlideRoute(page: BoardDetail(param: boardInfo, bordTitle : bordTitle)),
                                 );
                                 await refreshBoardList();
                               },
@@ -314,6 +298,7 @@ class CommunityListView extends StatelessWidget {
                     childCount: boardList.length,
                   ),
                 ),
+              ],
             ],
           ),
         ),

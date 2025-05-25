@@ -9,20 +9,20 @@ dynamic boardDetailInfo = {};
 List<dynamic> boardDetailImageList = [];
 List<dynamic> boardReportDetailList = [];
 
-class BoardDetail extends StatefulWidget {
+class CommunityDetail extends StatefulWidget {
 
   final dynamic param;
 
-  const BoardDetail({super.key, required this.param});
+  const CommunityDetail({super.key, required this.param});
 
   @override
   State<StatefulWidget> createState() {
     boardDetailInfo = this.param;
-    return BoardDetailState();
+    return CommunityDetailState();
   }
 }
 
-class BoardDetailState extends State<BoardDetail> {
+class CommunityDetailState extends State<CommunityDetail> {
   TextEditingController commentController = TextEditingController();
 
   @override

@@ -5,9 +5,9 @@ import '../communitymanage/widget/wit_communitymanage_detail_widget.dart';
 import '../../util/wit_api_ut.dart';
 import '../common/widget/wit_common_theme.dart';
 
-dynamic boardDetailInfo = {};
-List<dynamic> boardDetailImageList = [];
-List<dynamic> boardReportDetailList = [];
+dynamic communityDetailInfo = {};
+List<dynamic> communityDetailImageList = [];
+List<dynamic> communityReportDetailList = [];
 
 class CommunityDetail extends StatefulWidget {
 
@@ -17,7 +17,7 @@ class CommunityDetail extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    boardDetailInfo = this.param;
+    communityDetailInfo = this.param;
     return CommunityDetailState();
   }
 }
@@ -30,13 +30,13 @@ class CommunityDetailState extends State<CommunityDetail> {
     super.initState();
 
     // 게시판 상세 조회
-    getBoardDetailList();
+    getCommunityDetailList();
 
     // 게시판 상세 이미지 조회
-    getBoardDetailImageList();
+    getCommunityDetailImageList();
 
     // 게시판 신고 상세 조회
-    getBoardReportDetailList();
+    getCommunityReportDetailList();
   }
 
   @override
@@ -61,11 +61,11 @@ class CommunityDetailState extends State<CommunityDetail> {
                     children: [
                       SizedBox(height: 20),
                       TitleAndMenu(
-                        boardDetailInfo: boardDetailInfo,
+                        communityDetailInfo: communityDetailInfo,
                       ),
                       SizedBox(height: 20),
                       UserInfo(
-                        boardDetailInfo: boardDetailInfo,
+                        communityDetailInfo: communityDetailInfo,
                       ),
                       SizedBox(height: 10),
                       Container(
@@ -74,10 +74,10 @@ class CommunityDetailState extends State<CommunityDetail> {
                       ),
                       SizedBox(height: 10),
                       ContentDisplay(
-                        content: boardDetailInfo["bordContent"] ?? "",
-                        imgCnt: boardDetailImageList.length,
+                        content: communityDetailInfo["bordContent"] ?? "",
+                        imgCnt: communityDetailImageList.length,
                       ),
-                      if (boardDetailImageList.length > 0)...[
+                      if (communityDetailImageList.length > 0)...[
                         SizedBox(height: 10),
                         Container(
                           height: 1,
@@ -85,7 +85,7 @@ class CommunityDetailState extends State<CommunityDetail> {
                         ),
                         SizedBox(height: 10),
                         ImageListDisplay(
-                          boardDetailImageList: boardDetailImageList,
+                          communityDetailImageList: communityDetailImageList,
                         ),
                         SizedBox(height: 10),
                         Container(
@@ -101,11 +101,11 @@ class CommunityDetailState extends State<CommunityDetail> {
                         SizedBox(height: 5),
                       ],
                       ReportCount(
-                        count: boardReportDetailList.length,
+                        count: communityReportDetailList.length,
                       ),
                       SizedBox(height: 5),
                       ReportList(
-                        reportList: boardReportDetailList,
+                        reportList: communityReportDetailList,
                       ),
                     ],
                   ),
@@ -197,62 +197,62 @@ class CommunityDetailState extends State<CommunityDetail> {
   }
 
   // [서비스] 게시판 상세 조회
-  Future<void> getBoardDetailList() async {
+  Future<void> getCommunityDetailList() async {
 
     // REST ID
     String restId = "getBoardDetailInfo";
 
     // PARAM
     final param = jsonEncode({
-      "bordNo": boardDetailInfo["bordNo"],
+      "bordNo": communityDetailInfo["bordNo"],
     });
 
     // API 호출 (게시판 상세 조회)
-    final _boardDetailInfo = await sendPostRequest(restId, param);
+    final _communityDetailInfo = await sendPostRequest(restId, param);
 
     // 결과 셋팅
     setState(() {
-      boardDetailInfo = _boardDetailInfo;
+      communityDetailInfo = _communityDetailInfo;
     });
   }
 
   // [서비스] 게시판 상세 이미지 조회
-  Future<void> getBoardDetailImageList() async {
+  Future<void> getCommunityDetailImageList() async {
     // REST ID
     String restId = "getBoardDetailImageList";
 
     // PARAM
     final param = jsonEncode({
-      "bordNo": boardDetailInfo["bordNo"],
-      "bordType": boardDetailInfo["bordType"],
+      "bordNo": communityDetailInfo["bordNo"],
+      "bordType": communityDetailInfo["bordType"],
     });
 
     // API 호출 (게시판 상세 조회)
-    final _boardDetailImageList = await sendPostRequest(restId, param);
+    final _communityDetailImageList = await sendPostRequest(restId, param);
 
     // 결과 셋팅
     setState(() {
-      boardDetailImageList = _boardDetailImageList;
+      communityDetailImageList = _communityDetailImageList;
     });
   }
 
   // [서비스] 게시판 신고 상세 조회
-  Future<void> getBoardReportDetailList() async {
+  Future<void> getCommunityReportDetailList() async {
 
     // REST ID
     String restId = "getBoardReportDetailList";
 
     // PARAM
     final param = jsonEncode({
-      "bordNo": boardDetailInfo["bordNo"],
+      "bordNo": communityDetailInfo["bordNo"],
     });
 
     // API 호출 (게시판 상세 조회)
-    final _BoardReportDetailList = await sendPostRequest(restId, param);
+    final _communityReportDetailList = await sendPostRequest(restId, param);
 
     // 결과 셋팅
     setState(() {
-      boardReportDetailList = _BoardReportDetailList;
+      communityReportDetailList = _communityReportDetailList;
     });
   }
 
@@ -264,7 +264,7 @@ class CommunityDetailState extends State<CommunityDetail> {
 
     // PARAM
     final param = jsonEncode({
-      "bordNo": boardDetailInfo["bordNo"],
+      "bordNo": communityDetailInfo["bordNo"],
       "reportStat": stat,
     });
 

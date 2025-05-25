@@ -16,7 +16,7 @@ class CommunityManage extends StatefulWidget {
 class CommunityManageState extends State<CommunityManage> {
 
   // 게시판 리스트
-  List<dynamic> boardList = [];
+  List<dynamic> communityList = [];
   // 검색 여부
   bool _isSearching = false;
   // 검색 Text 컨트롤러
@@ -29,9 +29,10 @@ class CommunityManageState extends State<CommunityManage> {
   int currentPage = 1;
   // 페이징 1회 건수
   final int pageSize = 10;
-
   // 선택한 신고 상태값
   String? selectReportStat = "10";
+  // 빈데이터 화면 출력여부
+  bool emptyDataFlag = false;
 
   /**
    * 초기로딩
@@ -45,9 +46,9 @@ class CommunityManageState extends State<CommunityManage> {
 
     // 게시판 리스트 조회
     currentPage = 1;
-    boardList = [];
+    communityList = [];
 
-    getBoardReportList();
+    getCommunityReportList();
   }
 
   /**
@@ -73,7 +74,7 @@ class CommunityManageState extends State<CommunityManage> {
     return Scaffold(
       appBar: CustomSearchAppBar(
         searchController: _searchController,
-        refreshBoardList: refreshBoardReportList,
+        refreshCommunityList: refreshCommunityReportList,
         bordTitle: "게시판 신고 관리",
       ),
       body: Container(
@@ -101,8 +102,8 @@ class CommunityManageState extends State<CommunityManage> {
                           setState(() {
                             selectReportStat = newValue;
                             currentPage = 1;
-                            boardList = [];
-                            getBoardReportList();
+                            communityList = [];
+                            getCommunityReportList();
                           });
                         }
                       },
@@ -122,9 +123,10 @@ class CommunityManageState extends State<CommunityManage> {
                 child: Container(
                   color: WitCommonTheme.wit_white,
                   child: CommunityListView(
-                    boardList: boardList,
-                    refreshBoardList: refreshBoardReportList,
+                    communityList: communityList,
+                    refreshCommunityList: refreshCommunityReportList,
                     scrollController: _scrollController,
+                    emptyDataFlag: emptyDataFlag,
                   ),
                 ),
               ),
@@ -136,7 +138,7 @@ class CommunityManageState extends State<CommunityManage> {
   }
 
   // [서비스] 게시판 리스트 조회
-  Future<void> getBoardReportList() async {
+  Future<void> getCommunityReportList() async {
 
     if (isLoading) return; // 이미 로딩 중이면 무시
 
@@ -156,21 +158,27 @@ class CommunityManageState extends State<CommunityManage> {
     });
 
     // API 호출 (게시판 리스트 조회)
-    final _boardList = await sendPostRequest(restId, param);
+    final _communityList = await sendPostRequest(restId, param);
 
     // 결과 셋팅
     setState(() {
-      boardList.addAll(_boardList);
+      communityList.addAll(_communityList);
       currentPage++;
       isLoading = false;
+
+      if (communityList.isEmpty) {
+        emptyDataFlag = true;
+      } else {
+        emptyDataFlag = false;
+      }
     });
   }
 
   // [서비스] 게시판 리스트 새로고침
-  Future<void> refreshBoardReportList() async {
+  Future<void> refreshCommunityReportList() async {
 
     currentPage = 1;
-    boardList = [];
+    communityList = [];
 
     // REST ID
     String restId = "getBoardReportList";
@@ -185,13 +193,19 @@ class CommunityManageState extends State<CommunityManage> {
 
 
     // API 호출 (게시판 리스트 조회)
-    final _boardList = await sendPostRequest(restId, param);
+    final _communityList = await sendPostRequest(restId, param);
 
     // 결과 셋팅
     setState(() {
-      boardList.addAll(_boardList);
+      communityList.addAll(_communityList);
       currentPage++; // 페이지 증가
       isLoading = false;
+
+      if (communityList.isEmpty) {
+        emptyDataFlag = true;
+      } else {
+        emptyDataFlag = false;
+      }
     });
 
   }
@@ -200,7 +214,7 @@ class CommunityManageState extends State<CommunityManage> {
   void _onScroll() {
     // 스크롤이 최하단에 도달하면 추가 데이터 로드
     if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-      getBoardReportList();
+      getCommunityReportList();
     }
   }
 

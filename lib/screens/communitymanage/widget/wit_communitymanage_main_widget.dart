@@ -7,12 +7,12 @@ import '../wit_communitymanage_detail_sc.dart';
 
 class CustomSearchAppBar extends StatefulWidget implements PreferredSizeWidget {
   final TextEditingController searchController;
-  final Function refreshBoardList;
+  final Function refreshCommunityList;
   final String bordTitle;
 
   CustomSearchAppBar({
     required this.searchController,
-    required this.refreshBoardList,
+    required this.refreshCommunityList,
     required this.bordTitle,
   });
 
@@ -33,7 +33,7 @@ class _CustomSearchAppBarState extends State<CustomSearchAppBar> {
 
     if (!_isSearching) {
       widget.searchController.clear();
-      widget.refreshBoardList();
+      widget.refreshCommunityList();
     }
   }
 
@@ -53,7 +53,7 @@ class _CustomSearchAppBarState extends State<CustomSearchAppBar> {
           border: InputBorder.none,
         ),
         onSubmitted: (String value) {
-          widget.refreshBoardList();
+          widget.refreshCommunityList();
         },
       )
           : Text(
@@ -86,7 +86,7 @@ class _CustomSearchAppBarState extends State<CustomSearchAppBar> {
                 );
               } else {
                 // 검색 버튼 클릭 시 동작
-                widget.refreshBoardList();
+                widget.refreshCommunityList();
               }
             } else {
               // 검색 모드로 전환
@@ -108,14 +108,16 @@ class _CustomSearchAppBarState extends State<CustomSearchAppBar> {
 }
 
 class CommunityListView extends StatelessWidget {
-  final List<dynamic> boardList;
-  final Function refreshBoardList;
+  final List<dynamic> communityList;
+  final Function refreshCommunityList;
   final ScrollController scrollController;
+  final bool emptyDataFlag;
 
   CommunityListView({
-    required this.boardList,
-    required this.refreshBoardList,
+    required this.communityList,
+    required this.refreshCommunityList,
     required this.scrollController,
+    required this.emptyDataFlag,
   });
 
   @override
@@ -126,13 +128,13 @@ class CommunityListView extends StatelessWidget {
         controller: scrollController,
         child: RefreshIndicator(
           onRefresh: () async {
-            await refreshBoardList();
+            await refreshCommunityList();
           },
           child: CustomScrollView(
             controller: scrollController,
             slivers: [
               // 게시판 리스트
-              if (boardList.isEmpty)
+              if (emptyDataFlag == true)
                 SliverToBoxAdapter(
                   child: Container(
                     color: WitCommonTheme.wit_white,
@@ -160,7 +162,7 @@ class CommunityListView extends StatelessWidget {
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                         (context, index) {
-                      final boardInfo = boardList[index];
+                      final communityInfo = communityList[index];
                       return Container(
                         color: WitCommonTheme.wit_white, // 배경색을 흰색으로 설정
                         child: Column(
@@ -177,10 +179,10 @@ class CommunityListView extends StatelessWidget {
                                           children: [
                                             Container(
                                               decoration: BoxDecoration(
-                                                color: (boardInfo["bordType"] == "CM01") ? WitCommonTheme.wit_lightSteelBlue : // 커뮤니티
-                                                        (boardInfo["bordType"] == "GJ01") ? WitCommonTheme.wit_lightGreen :   // 공지사항
-                                                        (boardInfo["bordType"] == "JU01") ? WitCommonTheme.wit_lightCoral :   // 자유게시판
-                                                        (boardInfo["bordType"] == "UH01") ? WitCommonTheme.wit_lightCoral :   // 업체후기
+                                                color: (communityInfo["bordType"] == "CM01") ? WitCommonTheme.wit_lightSteelBlue : // 커뮤니티
+                                                        (communityInfo["bordType"] == "GJ01") ? WitCommonTheme.wit_lightGreen :   // 공지사항
+                                                        (communityInfo["bordType"] == "JU01") ? WitCommonTheme.wit_lightCoral :   // 자유게시판
+                                                        (communityInfo["bordType"] == "UH01") ? WitCommonTheme.wit_lightCoral :   // 업체후기
                                                         WitCommonTheme.wit_lightgray,
                                                 borderRadius: BorderRadius.circular(10),
                                               ),
@@ -188,7 +190,7 @@ class CommunityListView extends StatelessWidget {
                                               child: Column(
                                                 children: [
                                                   Center(
-                                                    child: Text("${boardInfo["bordTypeNm"]}",
+                                                    child: Text("${communityInfo["bordTypeNm"]}",
                                                       style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
                                                     ),
                                                   ),
@@ -213,7 +215,7 @@ class CommunityListView extends StatelessWidget {
                                                   children: [
                                                     Expanded(
                                                       child: Text(
-                                                        boardInfo["bordTitle"],
+                                                        communityInfo["bordTitle"],
                                                         maxLines: 2,
                                                         overflow: TextOverflow.ellipsis,
                                                         style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
@@ -229,7 +231,7 @@ class CommunityListView extends StatelessWidget {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  "${boardInfo["creUserNm"]}  |  ${boardInfo["creDateTxt"]}",
+                                                  "${communityInfo["creUserNm"]}  |  ${communityInfo["creDateTxt"]}",
                                                   style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_gray),
                                                 ),
                                               ),
@@ -239,14 +241,14 @@ class CommunityListView extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  if (boardInfo["imagePath"] != null && boardInfo["imagePath"] != "") ...[
+                                  if (communityInfo["imagePath"] != null && communityInfo["imagePath"] != "") ...[
                                     Row(
                                       children: [
                                         SizedBox(width: 10),
                                         ClipRRect(
                                           borderRadius: BorderRadius.circular(10),
                                           child: Image.network(
-                                            apiUrl + boardInfo["imagePath"],
+                                            apiUrl + communityInfo["imagePath"],
                                             width: 55,
                                             height: 55,
                                             fit: BoxFit.cover,
@@ -274,7 +276,7 @@ class CommunityListView extends StatelessWidget {
                                               child: Column(
                                                 children: [
                                                   Center(
-                                                    child: Text("${boardInfo["reportCnt"]}",
+                                                    child: Text("${communityInfo["reportCnt"]}",
                                                       style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
                                                     ),
                                                   ),
@@ -295,9 +297,9 @@ class CommunityListView extends StatelessWidget {
                               onTap: () async {
                                 await Navigator.push(
                                   context,
-                                  SlideRoute(page: CommunityDetail(param: boardInfo)),
+                                  SlideRoute(page: CommunityDetail(param: communityInfo)),
                                 );
-                                await refreshBoardList();
+                                await refreshCommunityList();
                               },
                             ),
                             Padding(
@@ -311,7 +313,7 @@ class CommunityListView extends StatelessWidget {
                         ),
                       );
                     },
-                    childCount: boardList.length,
+                    childCount: communityList.length,
                   ),
                 ),
             ],

@@ -7,10 +7,10 @@ import '../../common/wit_ImageViewer_sc.dart';
 
 // 타이틀 및 수정/삭제 영역
 class TitleAndMenu extends StatelessWidget {
-  final Map<String, dynamic> boardDetailInfo;
+  final Map<String, dynamic> communityDetailInfo;
 
   TitleAndMenu({
-    required this.boardDetailInfo,
+    required this.communityDetailInfo,
   });
 
   @override
@@ -20,7 +20,7 @@ class TitleAndMenu extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            boardDetailInfo["bordTitle"] ?? "",
+            communityDetailInfo["bordTitle"] ?? "",
             style: WitCommonTheme.title,
           ),
         ),
@@ -31,10 +31,10 @@ class TitleAndMenu extends StatelessWidget {
 
 // 유저 영역
 class UserInfo extends StatelessWidget {
-  final Map<String, dynamic> boardDetailInfo;
+  final Map<String, dynamic> communityDetailInfo;
 
   UserInfo({
-    required this.boardDetailInfo,
+    required this.communityDetailInfo,
   });
 
   @override
@@ -47,18 +47,18 @@ class UserInfo extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "${boardDetailInfo["creUserNm"] ?? "익명"}",
+              "${communityDetailInfo["creUserNm"] ?? "익명"}",
               style: WitCommonTheme.subtitle,
             ),
             Row(
               children: [
                 Text(
-                  '${boardDetailInfo["creDateTxt"] ?? ""}',
+                  '${communityDetailInfo["creDateTxt"] ?? ""}',
                   style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_gray),
                 ),
                 SizedBox(width: 8),
                 Text(
-                  '조회 ${boardDetailInfo["bordRdCnt"] ?? 0}',
+                  '조회 ${communityDetailInfo["bordRdCnt"] ?? 0}',
                   style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_gray),
                 ),
               ],
@@ -95,10 +95,10 @@ class ContentDisplay extends StatelessWidget {
 
 // 이미지 리스트 영역
 class ImageListDisplay extends StatelessWidget {
-  final List<dynamic> boardDetailImageList;
+  final List<dynamic> communityDetailImageList;
 
   ImageListDisplay({
-    required this.boardDetailImageList,
+    required this.communityDetailImageList,
   });
 
   @override
@@ -107,14 +107,14 @@ class ImageListDisplay extends StatelessWidget {
       height: 80,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: boardDetailImageList.length,
+        itemCount: communityDetailImageList.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 SlideRoute(page: ImageViewer(
-                  imageUrls: boardDetailImageList.map((item) => apiUrl + item["imagePath"]).toList(),
+                  imageUrls: communityDetailImageList.map((item) => apiUrl + item["imagePath"]).toList(),
                   initialIndex: index,
                 )),
               );
@@ -126,7 +126,7 @@ class ImageListDisplay extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 image: DecorationImage(
-                  image: NetworkImage(apiUrl + boardDetailImageList[index]["imagePath"]),
+                  image: NetworkImage(apiUrl + communityDetailImageList[index]["imagePath"]),
                   fit: BoxFit.cover,
                 ),
               ),

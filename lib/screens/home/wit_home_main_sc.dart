@@ -54,7 +54,9 @@ class HomeState extends State<Home> {
           children: <Widget>[
             SizedBox(height: 20), // 텍스트와 버튼 간격 조정
             Expanded(
-              child: Padding(
+              child: Container(
+                color: WitCommonTheme.wit_white,
+                child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0), // 좌우 여백
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -65,6 +67,7 @@ class HomeState extends State<Home> {
                         Navigator.of(context).push(SlideRoute(page: CertificateHolderManage()));
                       },
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: WitCommonTheme.wit_extraLightGrey,
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
@@ -76,33 +79,15 @@ class HomeState extends State<Home> {
                       ),
                     ),
 
-                    /*SizedBox(height: 20),
-                    
-                    // 포인트 관리 버튼
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(SlideRoute(page: PointManage()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 60),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: Text(
-                        "포인트 관리",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                    ),*/
-
                     SizedBox(height: 20),
-                    
+
                     // 게시판 신고 관리
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(SlideRoute(page: CommunityManage()));
                       },
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: WitCommonTheme.wit_extraLightGrey,
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
@@ -115,13 +100,14 @@ class HomeState extends State<Home> {
                     ),
 
                     SizedBox(height: 20),
-                    
+
                     // 결재내역 조회 버튼
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(SlideRoute(page: PaymentManage()));
                       },
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: WitCommonTheme.wit_extraLightGrey,
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
@@ -133,25 +119,6 @@ class HomeState extends State<Home> {
                       ),
                     ),
 
-                    /*SizedBox(height: 20),
-                    
-                    // 가입정보 정보조회 버튼
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(SlideRoute(page: CertificateHolderManage()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(double.infinity, 60),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: Text(
-                        "가입정보 정보조회",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                    ),*/
-
                     SizedBox(height: 20),
 
                     // 견적요청 리스트 버튼
@@ -160,6 +127,7 @@ class HomeState extends State<Home> {
                         Navigator.of(context).push(SlideRoute(page: EstimateManage()));
                       },
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: WitCommonTheme.wit_extraLightGrey,
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
@@ -172,13 +140,14 @@ class HomeState extends State<Home> {
                     ),
 
                     SizedBox(height: 20),
-                    
+
                     // 협력업체 인증관리 버튼
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(SlideRoute(page: PartnerManage()));
                       },
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: WitCommonTheme.wit_extraLightGrey,
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
@@ -198,6 +167,7 @@ class HomeState extends State<Home> {
                         Navigator.of(context).push(SlideRoute(page: Board(bordType: "GJ01")));
                       },
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: WitCommonTheme.wit_extraLightGrey,
                         minimumSize: Size(double.infinity, 60),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
@@ -210,6 +180,7 @@ class HomeState extends State<Home> {
                     ),
                   ],
                 ),
+              ),
               ),
             ),
           ],

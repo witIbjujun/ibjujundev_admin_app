@@ -31,7 +31,7 @@ Widget buildDetailRow(String title, String value, bool pointFlag, {Widget? actio
                 ),
               ],
             ),
-            SizedBox(height: 6),
+            SizedBox(height: 4),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

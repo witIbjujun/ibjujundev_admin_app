@@ -21,7 +21,7 @@ Widget partnerDetailRow(String title, String value, {Widget? action}) {
               title,
               style: WitCommonTheme.title,
             ),
-            SizedBox(height: 6),
+            SizedBox(height: 4),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

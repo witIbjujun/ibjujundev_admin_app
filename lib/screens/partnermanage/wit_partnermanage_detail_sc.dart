@@ -64,7 +64,7 @@ class PartnerManageDetailState extends State<PartnerManageDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start, // 좌측 정렬
                 children: [
                   partnerDetailRow("사업자명", widget.itemInfo["storeName"] ?? ""),
-                  partnerDetailRow("대표자명", widget.itemInfo["name"] ?? ""),
+                  partnerDetailRow("대표자명", widget.itemInfo["ceoName"] ?? ""),
                   partnerDetailRow("대표 이메일", widget.itemInfo["email"] ?? ""),
                   partnerDetailRow("담당자 연락처", formatPhoneNumber(widget.itemInfo["hp"] ?? "")),
                   partnerDetailRow("사업장 주소", "${widget.itemInfo["zipCode"] + ") " + widget.itemInfo["address1"]+ widget.itemInfo["address2"]}"),

@@ -4,6 +4,8 @@ import 'package:ibjujundev_admin_app/util/wit_api_ut.dart';
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_widget.dart';
 import 'package:ibjujundev_admin_app/screens/estimatemanage/widget/wit_estimatemanage_main_widget.dart';
 
+import '../common/widget/wit_common_theme.dart';
+
 /**
  * 견적요청 리스트 메인 UI
  */
@@ -30,6 +32,8 @@ class EstimateManageState extends State<EstimateManage> {
   bool isSearching = false;
   // TextEdit 컨트롤러
   TextEditingController searchController = TextEditingController();
+  // 빈데이터 화면 출력여부
+  bool emptyDataFlag = false;
 
   /**
    * 화면 초기화
@@ -37,6 +41,10 @@ class EstimateManageState extends State<EstimateManage> {
   @override
   void initState() {
     super.initState();
+
+    estimateInfoList = [];
+    isSearching = false;
+    emptyDataFlag = false;
 
     // 견적요청 정보 조회
     getEstimateInfoList();
@@ -91,15 +99,33 @@ class EstimateManageState extends State<EstimateManage> {
         onSearchSubmit: (value) => filterList(),
       ),
       body: SafeArea(
-        child: estimateInfoList.isEmpty
-            ? Center(
-          child: Text("조회된 데이터가 없습니다.",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        child: emptyDataFlag
+            ? Container(
+          color: WitCommonTheme.wit_white,
+          height: MediaQuery.of(context).size.height * 0.5,
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.info_outline,
+                  size: 48,
+                  color: WitCommonTheme.wit_lightgray,
+                ),
+                SizedBox(height: 16),
+                Text(
+                  "조회된 값이 없습니다",
+                  style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_black),
+                ),
+              ],
+            ),
           ),
-        )
-            : EstimateInfoListView(
-          estimateInfoList: estimateInfoList,
-          getList: getEstimateInfoList, // 메서드의 참조를 전달
+        ) : Container(
+          color: WitCommonTheme.wit_white,
+          child : EstimateInfoListView(
+            estimateInfoList: estimateInfoList,
+            getList: getEstimateInfoList, // 메서드의 참조를 전달
+          ),
         ),
       ),
     );
@@ -125,6 +151,12 @@ class EstimateManageState extends State<EstimateManage> {
     // 결과 셋팅
     setState(() {
       estimateInfoList.addAll(_estimateInfoList);
+
+      if (estimateInfoList.isEmpty) {
+        emptyDataFlag = true;
+      } else {
+        emptyDataFlag = false;
+      }
     });
   }
 }

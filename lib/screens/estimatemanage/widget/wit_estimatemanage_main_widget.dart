@@ -113,7 +113,7 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                     width: 70,
                     height: 70,
                     decoration: BoxDecoration(
-                      color: WitCommonTheme.wit_lightBlue,
+                      color: WitCommonTheme.wit_extraLightGrey,
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(
                         color: WitCommonTheme.wit_extraLightGrey,
@@ -132,50 +132,48 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                         style: WitCommonTheme.title,
                       ),
                       SizedBox(height: 10),
-                      Row(
+                      Row( // 이 Row는 Column의 자식입니다.
                         children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                          Expanded( // 이 Expanded는 이 Row 내에서 자식들이 공간을 어떻게 나눌지 제어합니다.
+                            child: Row( // 이 Row가 Container와 Text를 포함합니다.
+                              crossAxisAlignment: CrossAxisAlignment.center, // <-- 이 부분입니다! 자식들을 수직 중앙에 정렬합니다.
                               children: [
+                                // 인증 여부를 표시할 네모 박스
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
+                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                                   decoration: BoxDecoration(
-                                    color: WitCommonTheme.wit_extraLightGrey,
+                                    color: WitCommonTheme.wit_lightgray,
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
                                     "견적 요청",
-                                    style: WitCommonTheme.subtitle,
+                                    style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_white),
                                   ),
                                 ),
                                 SizedBox(width: 10),
-                                Text(
-                                  formatCash(widget.item["waitCnt"]) + " 건",
-                                  style: WitCommonTheme.subtitle,
+                                Expanded( // Text를 Expanded로 감싸서 남은 공간을 차지하게 합니다.
+                                  child: Text(
+                                    formatCash(widget.item["waitCnt"]) + " 건",
+                                    style: WitCommonTheme.caption,
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
                                 Container(
                                   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                                   decoration: BoxDecoration(
-                                    color: WitCommonTheme.wit_extraLightGrey,
+                                    color: WitCommonTheme.wit_lightgray,
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
                                     "견적 발송",
-                                    style: WitCommonTheme.subtitle,
+                                    style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_white),
                                   ),
                                 ),
                                 SizedBox(width: 10),
-                                Text(
-                                  formatCash(widget.item["goingCnt"]) + " 건",
-                                  style: WitCommonTheme.subtitle,
+                                Expanded( // Text를 Expanded로 감싸서 남은 공간을 차지하게 합니다.
+                                  child: Text(
+                                    formatCash(widget.item["goingCnt"]) + " 건",
+                                    style: WitCommonTheme.caption,
+                                  ),
                                 ),
                               ],
                             ),

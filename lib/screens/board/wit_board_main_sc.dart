@@ -25,11 +25,11 @@ class BoardState extends State<Board> {
   // 게시판 리스트
   List<dynamic> boardList = [];
   // 검색 여부
-  bool _isSearching = false;
+  bool isSearching = false;
   // 검색 Text 컨트롤러
-  TextEditingController _searchController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
   // 페이징 컨트롤러
-  ScrollController _scrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
   // 페이징 로딩 여부
   bool isLoading = false;
   // 페이징 시작 번호
@@ -54,12 +54,41 @@ class BoardState extends State<Board> {
     });
     
     // 스크롤 이벤트 추가
-    _scrollController.addListener(_onScroll);
+    scrollController.addListener(_onScroll);
 
     // 게시판 리스트 조회
     currentPage = 1;
     boardList = [];
-    getBoardList();
+    getBoardList("init");
+  }
+
+  /**
+   * [이벤트] 검색 기능 활성화
+   */
+  void startSearch() {
+    setState(() {
+      isSearching = true;
+    });
+  }
+
+  /**
+   * [이벤트] 검색 기능 비활성화
+   */
+  void stopSearch() {
+    setState(() {
+      isSearching = false;
+      searchController.clear();
+    });
+    // 검색 완료시 필터 제거
+    getBoardList("init");
+  }
+
+  /**
+   * [이벤트] 필터 검색
+   */
+  void filterList() {
+    // 필터 검색
+    getBoardList("init");
   }
 
   /**
@@ -68,10 +97,18 @@ class BoardState extends State<Board> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomSearchAppBar(
-        searchController: _searchController,
-        refreshBoardList: refreshBoardList,
-        bordTitle: "공지사항",
+      appBar: SearchAppBar(
+        appBarTitle: "공지사항",
+        isSearching: isSearching,
+        searchController: searchController,
+        onSearchToggle: () {
+          if (isSearching) {
+            stopSearch();
+          } else {
+            startSearch();
+          }
+        },
+        onSearchSubmit: (value) => filterList(),
       ),
       body: Scrollbar(
         child: Container(
@@ -79,7 +116,7 @@ class BoardState extends State<Board> {
           child: BoardListView(
             boardList: boardList,
             refreshBoardList: refreshBoardList,
-            scrollController: _scrollController,  // ScrollController 연결
+            scrollController: scrollController,  // ScrollController 연결
             bordTitle: "공지사항",
             bordTypeGbn: bordTypeGbn,
             emptyDataFlag: emptyDataFlag,
@@ -118,7 +155,7 @@ class BoardState extends State<Board> {
   }
 
   // [서비스] 게시판 리스트 조회
-  Future<void> getBoardList() async {
+  Future<void> getBoardList(String searchGbn) async {
 
     if (isLoading) return; // 이미 로딩 중이면 무시
 
@@ -126,14 +163,18 @@ class BoardState extends State<Board> {
       isLoading = true;
     });
 
+    if (searchGbn == "init") {
+      currentPage = 1;
+      boardList = [];
+    }
+
     // REST ID
     String restId = "getBoardList";
 
     // PARAM
     final param = jsonEncode({
       "bordType": widget.bordType,
-      "bordKey": widget.bordKey,
-      "searchText" : _searchController.text.trim(),
+      "searchText" : searchController.text.trim(),
       "currentPage": (currentPage - 1) * pageSize,
       "pageSize": pageSize,
     });
@@ -169,8 +210,7 @@ class BoardState extends State<Board> {
     // PARAM
     final param = jsonEncode({
       "bordType": widget.bordType,
-      "bordKey": widget.bordKey,
-      "searchText" : _searchController.text.trim(),
+      "searchText" : searchController.text.trim(),
       "currentPage": (currentPage - 1) * pageSize,
       "pageSize": pageSize,
     });
@@ -184,6 +224,12 @@ class BoardState extends State<Board> {
       boardList.addAll(_boardList);
       currentPage++; // 페이지 증가
       isLoading = false;
+
+      if (boardList.isEmpty) {
+        emptyDataFlag = true;
+      } else {
+        emptyDataFlag = false;
+      }
     });
 
   }
@@ -191,14 +237,14 @@ class BoardState extends State<Board> {
   // [이벤트] 스크롤 이벤트
   void _onScroll() {
     // 스크롤이 최하단에 도달하면 추가 데이터 로드
-    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-      getBoardList();
+    if (scrollController.position.pixels == scrollController.position.maxScrollExtent) {
+      getBoardList("add");
     }
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 }

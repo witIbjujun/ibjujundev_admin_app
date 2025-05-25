@@ -215,7 +215,6 @@ class BoardDetailState extends State<BoardDetail> {
 
   // [서비스] 댓글 리스트 조회
   Future<void> getCommentList() async {
-    print("댓글 리스트 조회");
 
     // REST ID
     String restId = "getCommentList";

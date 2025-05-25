@@ -67,9 +67,6 @@ class BoardState extends State<Board> {
    */
   @override
   Widget build(BuildContext context) {
-
-    print(bordTypeGbn);
-
     return Scaffold(
       appBar: CustomSearchAppBar(
         searchController: _searchController,

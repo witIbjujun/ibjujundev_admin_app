@@ -29,8 +29,6 @@ class TitleAndMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    print(bordKeyGbn);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

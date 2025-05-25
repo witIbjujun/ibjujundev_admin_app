@@ -100,8 +100,6 @@ class PartnerManageDetailState extends State<PartnerManageDetail> {
 
     final _imageList = await sendPostRequest(restId, param);
 
-    print(_imageList);
-
     // 결과 셋팅
     setState(() {
       imageList = _imageList;

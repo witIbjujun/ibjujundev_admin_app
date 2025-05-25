@@ -175,8 +175,6 @@ class PartnerManageState extends State<PartnerManage> {
     // API 호출 (협력업체 인증 내역 조회)
     final _partnerList = await sendPostRequest(restId, param);
 
-    print(_partnerList.length);
-
     // 결과 셋팅
     setState(() {
       partnerList.addAll(_partnerList);

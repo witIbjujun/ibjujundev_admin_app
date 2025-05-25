@@ -176,7 +176,6 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
     final _certificateHolderList = await sendPostRequest(restId, param);
 
     final List<dynamic> filteredApiList = _certificateHolderList.where((item) {
-      print(item['regiLevel']);
       return item['regiLevel'] == '03' || item['regiLevel'] == '04';
     }).toList();
 

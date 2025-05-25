@@ -130,15 +130,15 @@ class PartnerManageDetailState extends State<PartnerManageDetail> {
           widget.itemInfo["certificationYn"] = "Y";
           widget.itemInfo["certificationNm"] = "협력업체 인증";
 
-          alertDialog.show(context, "인증 완료 처리 되었습니다.");
+          alertDialog.show(context: context, title: "알림", content: "인증 완료 처리 되었습니다.");
         } else {
           widget.itemInfo["certificationYn"] = "N";
           widget.itemInfo["certificationNm"] = "협력업체 미인증";
-          alertDialog.show(context, "인증 취소 처리 되었습니다.");
+          alertDialog.show(context: context, title: "알림", content: "인증 취소 처리 되었습니다.");
         }
       });
     } else {
-      alertDialog.show(context, "처리 실패되었습니다.");
+      alertDialog.show(context: context, title: "알림", content: "처리 실패되었습니다.");
     }
   }
 }

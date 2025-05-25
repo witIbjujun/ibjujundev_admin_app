@@ -159,7 +159,7 @@ class _CertificateHolderCardState extends State<CertificateHolderCard> {
                                 Container(
                                   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
                                   decoration: BoxDecoration(
-                                    color: WitCommonTheme.wit_lightGreen, // 배경 색상
+                                    color: WitCommonTheme.wit_lightgray, // 배경 색상
                                     borderRadius: BorderRadius.circular(4), // 라운드 처리
                                   ),
                                   child: Text(

@@ -158,7 +158,7 @@ class _PartnerCardState extends State<PartnerCard> {
                                 Container(
                                   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
                                   decoration: BoxDecoration(
-                                    color: WitCommonTheme.wit_lightGreen,
+                                    color: WitCommonTheme.wit_lightgray,
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(

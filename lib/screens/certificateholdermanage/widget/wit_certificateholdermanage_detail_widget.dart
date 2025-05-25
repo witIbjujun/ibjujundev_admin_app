@@ -87,12 +87,13 @@ class ActionButtonWidget extends StatelessWidget {
           child: ElevatedButton(
             onPressed: isCertificateHolderYes
                 ? null
-                : () {
-              ConfirmationDialog.show(context, "인증 완료 처리 하시겠습니까?",
-                () async {
-                  await updateBizCertification("03");
-                },
-              );
+                : () async {
+
+              bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"인증 완료 처리 하시겠습니까?");
+
+              if (isConfirmed == true) {
+                updateBizCertification("03");
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: WitCommonTheme.wit_lightGreen,
@@ -108,14 +109,14 @@ class ActionButtonWidget extends StatelessWidget {
           child: ElevatedButton(
             onPressed: isCertificateHolderRe
                 ? null
-                : () {
-              ConfirmationDialog.show(
-                context,
-                "재인증 요청을 하시겠습니까?",
-                    () async {
-                  await updateBizCertification("04");
-                },
-              );
+                : () async {
+
+              bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"재인증 요청을 하시겠습니까?");
+
+              if (isConfirmed == true) {
+                updateBizCertification("04");
+              }
+
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: WitCommonTheme.wit_lightGoldenrodYellow,
@@ -131,14 +132,13 @@ class ActionButtonWidget extends StatelessWidget {
           child: ElevatedButton(
             onPressed: isCertificateHolderNo
                 ? null
-                : () {
-              ConfirmationDialog.show(
-                context,
-                "인증 취소 처리 하시겠습니까?",
-                    () async {
-                  await updateBizCertification("05");
-                },
-              );
+                : () async {
+
+              bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"인증 취소 처리 하시겠습니까?");
+
+              if (isConfirmed == true) {
+                updateBizCertification("05");
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: WitCommonTheme.wit_lightCoral,

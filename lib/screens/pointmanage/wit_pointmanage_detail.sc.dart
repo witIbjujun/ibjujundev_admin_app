@@ -63,15 +63,11 @@ class PointManageDetailState extends State<PointManageDetail> {
               PointInputWidget(
                 pointInfo: widget.itemInfo,
                 controller: _controller,
-                onAddPressed: () {
-                  // 저장 여부 확인
-                  ConfirmationDialog.show(
-                    context,
-                    "[ " + widget.itemInfo["storeName"] + " ] 에게\n입력한 포인트를 등록하시겠습니까?",
-                    () async {
-                      savePointInfo();
-                    },
-                  );
+                onAddPressed: () async {
+                  bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"[ " + widget.itemInfo["storeName"] + " ] 에게\n입력한 포인트를 등록하시겠습니까?");
+                  if (isConfirmed == true) {
+                    savePointInfo();
+                  }
                 },
               ),
               Container(
@@ -161,9 +157,9 @@ class PointManageDetailState extends State<PointManageDetail> {
       // 포인트 상세 정보 조회
       getPointInfoDetailList();
 
-      alertDialog.show(context, "입력한 금액이 충전 되었습니다.");
+      alertDialog.show(context: context, title:"알림", content: "입력한 금액이 충전 되었습니다.");
     } else {
-      alertDialog.show(context, "충전중 오류가 발생 되었습니다.");
+      alertDialog.show(context: context, title:"알림", content: "충전중 오류가 발생 되었습니다.");
     }
   }
 }

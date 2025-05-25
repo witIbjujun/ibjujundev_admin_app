@@ -36,6 +36,8 @@ class PaymentManageState extends State<PaymentManage> {
   String? dropBoxPayMethod = "";
   // 드랍박스 - 결재 상태
   String? dropBoxPayStat = "";
+  // 빈데이터 화면 출력여부
+  bool emptyDataFlag = false;
 
   /**
    * 화면 초기화
@@ -201,17 +203,28 @@ class PaymentManageState extends State<PaymentManage> {
               color: WitCommonTheme.wit_lightgray,
             ),
             Expanded(
-              child: paymentList.isEmpty
+              child: emptyDataFlag
                   ? Container(
                 color: WitCommonTheme.wit_white,
+                height: MediaQuery.of(context).size.height * 0.5,
                 child: Center(
-                  child: Text(
-                    "조회된 데이터가 없습니다.",
-                    style: WitCommonTheme.title,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.info_outline,
+                        size: 48,
+                        color: WitCommonTheme.wit_lightgray,
+                      ),
+                      SizedBox(height: 16),
+                      Text(
+                        "조회된 값이 없습니다",
+                        style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_black),
+                      ),
+                    ],
                   ),
                 ),
-              )
-                  : Container(
+              ) : Container(
                 color: WitCommonTheme.wit_white,
                 child: PaymentListView(
                   paymentList: paymentList,
@@ -247,6 +260,12 @@ class PaymentManageState extends State<PaymentManage> {
     // 결과 셋팅
     setState(() {
       paymentList.addAll(_paymentList);
+
+      if (_paymentList.isEmpty) {
+        emptyDataFlag = true;
+      } else {
+        emptyDataFlag = false;
+      }
     });
   }
 }

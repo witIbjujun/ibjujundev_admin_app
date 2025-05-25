@@ -71,7 +71,7 @@ class _PointInputWidgetState extends State<PointInputWidget> {
                 onPressed: () {
                   // 충전금액 입력 체크
                   if (widget.controller.text.isEmpty || widget.controller.text == "0") {
-                    alertDialog.show(context, "충전 금액을 입력해주세요");
+                    alertDialog.show(context: context, title:"알림", content: "충전 금액을 입력해주세요.");
                     return;
                   }
                   // 저장 여부 확인

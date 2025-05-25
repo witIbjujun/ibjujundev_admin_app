@@ -73,22 +73,17 @@ class partnerButtonWidget extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.all(10),
             child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (itemInfo["certificationYn"] == "N") {
-                  ConfirmationDialog.show(context, "협력업체 승인 하시겠습니까?",
-                    () async {
-                      await updatePartnerYn("Y");
-                      Navigator.of(context).pop();
-                    },
-                  );
-
+                  bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"협력업체 승인 하시겠습니까?");
+                  if (isConfirmed == true) {
+                    updatePartnerYn("Y");
+                  }
                 } else {
-                  ConfirmationDialog.show(context, "협력업체 승인 취소 하시겠습니까?",
-                    () async {
-                      await updatePartnerYn("N");
-                      Navigator.of(context).pop();
-                    },
-                  );
+                  bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"협력업체 승인 취소 하시겠습니까?");
+                  if (isConfirmed == true) {
+                    updatePartnerYn("N");
+                  }
                 }
               },
               style: ElevatedButton.styleFrom(

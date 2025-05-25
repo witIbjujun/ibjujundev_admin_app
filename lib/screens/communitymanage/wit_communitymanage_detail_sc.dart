@@ -127,12 +127,12 @@ class BoardDetailState extends State<BoardDetail> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: ElevatedButton(
-                    onPressed: () {
-                      ConfirmationDialog.show(context, "신고 취소 하시겠습니까?",
-                            () async {
-                          await updateReportStat("신고 취소", "40");
-                        },
-                      );
+                    onPressed: () async {
+                      bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"신고 취소 하시겠습니까?");
+
+                      if (isConfirmed == true) {
+                        updateReportStat("신고 취소", "40");
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: WitCommonTheme.wit_lightGreen,
@@ -149,12 +149,12 @@ class BoardDetailState extends State<BoardDetail> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: ElevatedButton(
-                    onPressed: () {
-                      ConfirmationDialog.show(context, "신고 보류 하시겠습니까?",
-                            () async {
-                          await updateReportStat("신고 보류", "30");
-                        },
-                      );
+                    onPressed: () async {
+                      bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"신고 보류 하시겠습니까?");
+
+                      if (isConfirmed == true) {
+                        updateReportStat("신고 보류", "30");
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: WitCommonTheme.wit_lightGoldenrodYellow,
@@ -171,12 +171,12 @@ class BoardDetailState extends State<BoardDetail> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 5.0),
                   child: ElevatedButton(
-                    onPressed: () {
-                      ConfirmationDialog.show(context, "신고 완료 하시겠습니까?",
-                            () async {
-                          await updateReportStat("신고 완료", "20");
-                        },
-                      );
+                    onPressed: () async {
+                      bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"신고 완료 하시겠습니까?");
+
+                      if (isConfirmed == true) {
+                        updateReportStat("신고 완료", "20");
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: WitCommonTheme.wit_red,
@@ -275,10 +275,10 @@ class BoardDetailState extends State<BoardDetail> {
     setState(() {
 
       if (result > 0) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(confirmStr + " 되었습니다.")));
+        alertDialog.show(context: context, title:"알림", content: confirmStr + " 되었습니다.");
         Navigator.pop(context);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(confirmStr + " 실패 하였습니다.")));
+        alertDialog.show(context: context, title:"알림", content: confirmStr + " 되었습니다.");
       }
 
     });

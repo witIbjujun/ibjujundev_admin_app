@@ -105,10 +105,10 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
                 crossAxisAlignment: CrossAxisAlignment.start, // 좌측 정렬
                 children: [
                   buildDetailRow("사업자명", widget.itemInfo["storeName"] ?? "", false),
-                  buildDetailRow("대표자명", widget.itemInfo["name"] ?? "", true),
+                  buildDetailRow("대표자명", widget.itemInfo["ceoName"] ?? "", true),
                   buildDetailRow("대표 이메일", widget.itemInfo["email"] ?? "", false),
                   buildDetailRow("담당자 연락처", formatPhoneNumber(widget.itemInfo["hp"] ?? ""), false),
-                  buildDetailRow("사업장 주소", widget.itemInfo["zipCode"] ?? "" + ") " + widget.itemInfo["address1"] ?? "", false),
+                  buildDetailRow("사업장 주소", "${widget.itemInfo["zipCode"] ?? ""}" + ") " + "${widget.itemInfo["address1"]}", false),
                   buildDetailRow("개업일자", formatDate(widget.itemInfo["openDate"] ?? ""), true),
                   buildDetailRow("사업자번호",
                       widget.itemInfo["storeCode"] + "   " + widget.itemInfo["bizCertificationNm"], true,
@@ -238,7 +238,7 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
     setState(() {
 
       if (result > 0) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("처리 되었습니다.")));
+        alertDialog.show(context: context, title:"알림", content: "처리 되었습니다.");
 
         setState(() {
 
@@ -280,7 +280,7 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
         });
 
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("처리 실패되었습니다.")));
+        alertDialog.show(context: context, title:"알림", content: "처리 실패되었습니다.");
       }
 
     });

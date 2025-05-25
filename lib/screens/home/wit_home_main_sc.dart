@@ -188,6 +188,25 @@ class HomeState extends State<Home> {
                         style: WitCommonTheme.title,
                       ),
                     ),
+
+                    SizedBox(height: 20),
+
+                    // 공지사항 등록
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(SlideRoute(page: PartnerManage()));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: Size(double.infinity, 60),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      child: Text(
+                        "공지사항 등록",
+                        style: WitCommonTheme.title,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -198,3 +217,4 @@ class HomeState extends State<Home> {
     );
   }
 }
+

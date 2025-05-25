@@ -12,6 +12,9 @@ String formatPhoneNumber(String phoneNumber) {
  * [유틸] 날짜 포맷
  */
 String formatDate(String date) {
+  if (date == null || date == "") {
+    return "";
+  }
   DateTime parsedDate = DateTime.parse(date);
   String year = parsedDate.year.toString();
   String month = parsedDate.month.toString().padLeft(2, '0'); // 01, 02 형태로
@@ -20,8 +23,8 @@ String formatDate(String date) {
 }
 
 String? formatDateYYYYMMDD(DateTime? date) {
-  if (date == null) {
-    return null; // date가 null인 경우 null 반환
+  if (date == null || date == "") {
+    return "";
   }
   return '${date.year}${date.month.toString().padLeft(2, '0')}${date.day.toString().padLeft(2, '0')}';
 }

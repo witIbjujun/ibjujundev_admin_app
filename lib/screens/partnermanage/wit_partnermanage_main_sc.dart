@@ -34,7 +34,9 @@ class PartnerManageState extends State<PartnerManage> {
   TextEditingController searchController = TextEditingController();
   // 드랍박스 선택한 상태값
   String? dropBoxSelectStat = "";
-  
+  // 빈데이터 화면 출력여부
+  bool emptyDataFlag = false;
+
   /**
    * 화면 초기화
    */
@@ -119,18 +121,29 @@ class PartnerManageState extends State<PartnerManage> {
               color: WitCommonTheme.wit_lightgray,
             ),
             Expanded(
-              child: partnerList.isEmpty
+              child: emptyDataFlag
                   ? Container(
-                color: WitCommonTheme.wit_white,
-                child: Center(
-                  child: Text(
-                    "조회된 데이터가 없습니다.",
-                    style: WitCommonTheme.title,
-                  ),
-                ),
-              )
-                  : Container(
-                color: WitCommonTheme.wit_white,
+                    color: WitCommonTheme.wit_white,
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.info_outline,
+                            size: 48,
+                            color: WitCommonTheme.wit_lightgray,
+                          ),
+                          SizedBox(height: 16),
+                          Text(
+                            "조회된 값이 없습니다",
+                            style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_black),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ) : Container(
+                  color: WitCommonTheme.wit_white,
                   child: PartnerListView(
                   partnerList: partnerList,
                   getList: getPartnerList, // 협력업체 인증 내역 조회
@@ -167,6 +180,13 @@ class PartnerManageState extends State<PartnerManage> {
     // 결과 셋팅
     setState(() {
       partnerList.addAll(_partnerList);
+
+      if (_partnerList.isEmpty) {
+        emptyDataFlag = true;
+      } else {
+        emptyDataFlag = false;
+      }
+
     });
   }
 

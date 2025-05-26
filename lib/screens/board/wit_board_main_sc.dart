@@ -40,6 +40,8 @@ class BoardState extends State<Board> {
   String bordTypeGbn = "";
   // 빈데이터 화면 출력여부
   bool emptyDataFlag = false;
+  // 드랍박스 선택한 상태값
+  String dropBoxSelectStat = "GJ01";
 
   /**
    * 초기로딩
@@ -96,6 +98,20 @@ class BoardState extends State<Board> {
    */
   @override
   Widget build(BuildContext context) {
+
+    final Map<String, String> _functionOptionsMap = {
+      "GJ01": '전체 공지사항',
+      "GJ02": '사용자 공지사항',
+      "GJ03": '판매자 공지사항',
+    };
+
+    final List<DropdownMenuItem<String>> _dropdownItems = _functionOptionsMap.entries.map((entry) {
+      return DropdownMenuItem<String>(
+        value: entry.key,
+        child: Text(entry.value),
+      );
+    }).toList();
+
     return Scaffold(
       appBar: SearchAppBar(
         appBarTitle: "공지사항",
@@ -110,17 +126,60 @@ class BoardState extends State<Board> {
         },
         onSearchSubmit: (value) => filterList(),
       ),
-      body: Scrollbar(
-        child: Container(
-          color: WitCommonTheme.wit_white,
-          child: BoardListView(
-            boardList: boardList,
-            refreshBoardList: refreshBoardList,
-            scrollController: scrollController,  // ScrollController 연결
-            bordTitle: "공지사항",
-            bordTypeGbn: bordTypeGbn,
-            emptyDataFlag: emptyDataFlag,
-          ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              color: WitCommonTheme.wit_white, // 배경색을 흰색으로 설정
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                child: InputDecorator(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 0.0),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      dropdownColor: WitCommonTheme.wit_white,
+                      value: dropBoxSelectStat,
+                      items: _dropdownItems,
+                      onChanged: (String? newValue) {
+                        if (newValue != null) {
+                          setState(() {
+                            dropBoxSelectStat = newValue;
+                            getBoardList("init");
+                          });
+                        }
+                      },
+                      style: WitCommonTheme.subtitle,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container( // 추가하려는 구분선 부분 시작
+              height: 1,
+              color: WitCommonTheme.wit_lightgray,
+            ),
+            Expanded(
+              child: Scrollbar(
+                child: Container(
+                  color: WitCommonTheme.wit_white,
+                  child: BoardListView(
+                    boardList: boardList,
+                    refreshBoardList: refreshBoardList,
+                    scrollController: scrollController,  // ScrollController 연결
+                    bordTitle: "공지사항",
+                    bordTypeGbn: bordTypeGbn,
+                    emptyDataFlag: emptyDataFlag,
+                  ),
+                ),
+              ),
+            ),
+          ]
         ),
       ),
       // FloatingActionButton을 조건에 따라 표시하는 부분
@@ -132,7 +191,7 @@ class BoardState extends State<Board> {
             await Navigator.push(
               context,
               SlideRoute(page: BoardWrite(bordNo: ""
-                  , bordType: widget.bordType
+                  , bordType: dropBoxSelectStat
                   , bordKey: widget.bordKey)),
             );
             await refreshBoardList();
@@ -173,7 +232,7 @@ class BoardState extends State<Board> {
 
     // PARAM
     final param = jsonEncode({
-      "bordType": widget.bordType,
+      "bordType": dropBoxSelectStat,
       "searchText" : searchController.text.trim(),
       "currentPage": (currentPage - 1) * pageSize,
       "pageSize": pageSize,
@@ -209,7 +268,7 @@ class BoardState extends State<Board> {
 
     // PARAM
     final param = jsonEncode({
-      "bordType": widget.bordType,
+      "bordType": dropBoxSelectStat,
       "searchText" : searchController.text.trim(),
       "currentPage": (currentPage - 1) * pageSize,
       "pageSize": pageSize,

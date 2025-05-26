@@ -32,7 +32,7 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
   // TextEdit 컨트롤러
   TextEditingController searchController = TextEditingController();
   // 선택한 신고 상태값
-  String? selectReportStat = "";
+  String? selectReportStat = "01";
   // 빈데이터 화면 출력여부
   bool emptyDataFlag = false;
 

@@ -240,40 +240,6 @@ class BoardListView extends StatelessWidget {
                                       ],
                                     ),
                                   ],
-                                  if (bordTypeGbn != "UH" && bordTypeGbn != "GJ")...[
-                                    SizedBox(width: 10), // 이미지 영역 뒤에 추가된 SizedBox
-                                    Container(
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            children: [
-                                              Container(
-                                                decoration: BoxDecoration(
-                                                  color: WitCommonTheme.wit_extraLightGrey,
-                                                  borderRadius: BorderRadius.circular(10),
-                                                ),
-                                                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-                                                child: Column(
-                                                  children: [
-                                                    Center(
-                                                      child: Text("${boardInfo["commentCnt"]}",
-                                                        style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 4),
-                                                    Text("댓글",
-                                                      style: WitCommonTheme.caption,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ]
                                 ],
                               ),
                               onTap: () async {

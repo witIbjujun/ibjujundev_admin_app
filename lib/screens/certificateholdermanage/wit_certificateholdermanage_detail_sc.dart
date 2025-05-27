@@ -125,15 +125,15 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
                         padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
                       ),
                       child: widget.itemInfo["bizCertification"] == "01"
-                          ? Text("인증대기")
+                          ? Text("인증 대기")
                           : widget.itemInfo["bizCertification"] == "02"
-                          ? Text("인증확인")
+                          ? Text("인증 확인")
                           : widget.itemInfo["bizCertification"] == "03"
-                          ? Text("인증확인")
+                          ? Text("인증 확인")
                           : widget.itemInfo["bizCertification"] == "04"
-                          ? Text("재등록요청")
+                          ? Text("재등록 요청")
                           : widget.itemInfo["bizCertification"] == "05"
-                          ? Text("인증실패")
+                          ? Text("인증 취소")
                           : Text("상태 없음"),
                     )),
                   buildDetailRow("품목명", widget.itemInfo["categoryNm"] ?? "", false),

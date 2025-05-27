@@ -133,7 +133,13 @@ class _BoardWriteState extends State<BoardWrite> {
               mainAxisAlignment: MainAxisAlignment.start, // 왼쪽 정렬
               children: [
                 GestureDetector(
-                  onTap: () => _showImagePickerOptions(),
+                  onTap: () {
+                    if (_images.length >= 5) {
+                      alertDialog.show(context: context, title:"알림", content: "이미지는 최대 5건\n입력 가능합니다.");
+                      return;
+                    }
+                    _showImagePickerOptions();
+                  },
                   child: Container(
                     width: 85,
                     height: 85,
@@ -142,7 +148,21 @@ class _BoardWriteState extends State<BoardWrite> {
                       border: Border.all(width: 1, color: WitCommonTheme.wit_lightgray),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Icon(Icons.add_a_photo, size: 40, color: WitCommonTheme.wit_gray), // 사진기 아이콘
+                    // 아이콘과 텍스트를 세로로 배치하기 위해 Column 사용
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center, // 세로 중앙 정렬
+                      crossAxisAlignment: CrossAxisAlignment.center, // 가로 중앙 정렬
+                      mainAxisSize: MainAxisSize.min, // Column의 크기를 자식 위젯들 크기에 맞게 최소화
+                      children: [
+                        Icon(Icons.add_a_photo, size: 40, color: WitCommonTheme.wit_gray), // 사진기 아이콘
+                        SizedBox(height: 4), // 아이콘과 텍스트 사이 간격 추가 (조절 가능)
+                        Text(
+                          '${_images.length}/5', // <--- 이 부분을 수정했습니다.
+                          style: WitCommonTheme.subtitle, // 텍스트 색상 조절
+                        ),
+                      ],
+                    ),
+                    // Container 자체의 정렬은 Column의 중앙 정렬과 함께 사용되어 효과적으로 중앙 배치
                     alignment: Alignment.center,
                   ),
                 ),
@@ -374,7 +394,9 @@ class _BoardWriteState extends State<BoardWrite> {
     final XFile? pickedFile = await _picker.pickImage(source: source);
     if (pickedFile != null) {
       setState(() {
-        _images.add(File(pickedFile.path));
+        if (_images.length < 5) {
+          _images.add(File(pickedFile.path));
+        }
       });
     }
   }
@@ -383,7 +405,11 @@ class _BoardWriteState extends State<BoardWrite> {
     final List<XFile>? pickedFiles = await _picker.pickMultiImage();
     if (pickedFiles != null && pickedFiles.isNotEmpty) {
       setState(() {
-        _images.addAll(pickedFiles.map((xfile) => File(xfile.path)).toList());
+        for (final xfile in pickedFiles) {
+          if (_images.length < 5) {
+            _images.add(File(xfile.path));
+          }
+        }
       });
     }
   }

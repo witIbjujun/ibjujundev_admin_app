@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ibjujundev_admin_app/screens/common/widget/wit_common_theme.dart';
 
+import '../../../util/wit_code_ut.dart';
+
 /*******************************
  * [위젯] 검색 앱바
  ******************************/
@@ -191,5 +193,25 @@ class alertDialog {
         );
       },
     );
+  }
+}
+
+class proFlieImage {
+  /// 🔹 이미지 경로에 맞는 ImageProvider를 반환
+  static ImageProvider getImageProvider(String imagePath) {
+    print("이미지========"+imagePath);
+
+
+    if (imagePath.startsWith('https')) {
+      return NetworkImage(imagePath);
+    }
+
+    // 🔹 빈 문자열이 아니면 서버 경로 붙여서 네트워크 이미지
+    if (imagePath.isNotEmpty) {
+      return NetworkImage(apiUrl + imagePath);
+    }
+
+    // 🔹 기본 이미지 반환
+    return const AssetImage('assets/images/profile1.png');
   }
 }

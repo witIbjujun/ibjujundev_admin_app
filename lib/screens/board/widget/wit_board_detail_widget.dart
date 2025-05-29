@@ -96,7 +96,10 @@ class UserInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CircleAvatar(radius: 20, backgroundColor: WitCommonTheme.wit_lightBlue),
+        CircleAvatar(
+          radius: 20,
+          backgroundImage: proFlieImage.getImageProvider(boardDetailInfo["profileImg"]),
+        ),
         SizedBox(width: 15),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -243,7 +246,8 @@ class CommentList extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CircleAvatar(
-                radius: 20, backgroundColor: WitCommonTheme.wit_lightBlue
+                radius: 20,
+                backgroundImage: proFlieImage.getImageProvider(commentList[index]["profileImg"]),
               ),
               SizedBox(width: 15),
               Expanded(

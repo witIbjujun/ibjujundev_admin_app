@@ -98,7 +98,7 @@ class UserInfo extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 20,
-          backgroundImage: proFlieImage.getImageProvider(boardDetailInfo["profileImg"]),
+          backgroundImage: proFlieImage.getImageProvider(boardDetailInfo["profileImg"] ?? ""),
         ),
         SizedBox(width: 15),
         Column(
@@ -247,7 +247,7 @@ class CommentList extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 20,
-                backgroundImage: proFlieImage.getImageProvider(commentList[index]["profileImg"]),
+                backgroundImage: proFlieImage.getImageProvider(commentList[index]["profileImg"] ?? ""),
               ),
               SizedBox(width: 15),
               Expanded(

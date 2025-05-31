@@ -142,8 +142,8 @@ class _BoardWriteState extends State<BoardWrite> {
                       _showImagePickerOptions();
                     },
                     child: Container(
-                      width: 85,
-                      height: 85,
+                      width: 75,
+                      height: 75,
                       decoration: BoxDecoration(
                         color: WitCommonTheme.wit_white,
                         border: Border.all(width: 1, color: WitCommonTheme.wit_lightgray),
@@ -154,7 +154,7 @@ class _BoardWriteState extends State<BoardWrite> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.add_a_photo, size: 40, color: WitCommonTheme.wit_gray),
+                          Icon(Icons.add_a_photo, size: 30, color: WitCommonTheme.wit_gray),
                           SizedBox(height: 4),
                           Text(
                             '${_images.length}/5',
@@ -184,8 +184,8 @@ class _BoardWriteState extends State<BoardWrite> {
                                         borderRadius: BorderRadius.circular(12.0),
                                         child: Image.file(
                                           image,
-                                          width: 85,
-                                          height: 85,
+                                          width: 75,
+                                          height: 75,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -219,8 +219,8 @@ class _BoardWriteState extends State<BoardWrite> {
                                         borderRadius: BorderRadius.circular(12.0),
                                         child: Image.network(
                                           image,
-                                          width: 85,
-                                          height: 85,
+                                          width: 75,
+                                          height: 75,
                                           fit: BoxFit.cover,
                                         ),
                                       ),

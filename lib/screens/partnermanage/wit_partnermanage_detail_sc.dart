@@ -94,15 +94,17 @@ class PartnerManageDetailState extends State<PartnerManageDetail> {
 
     // PARAM
     final param = jsonEncode({
-      "bizCd": "SR01",
       "bizKey": widget.itemInfo["sllrNo"],
     });
 
     final _imageList = await sendPostRequest(restId, param);
 
+    // _imageList에서 bizCd가 'SR01'인 항목만 필터링
+    final filteredImageList = _imageList.where((item) => item["bizCd"] == 'SR01').toList();
+
     // 결과 셋팅
     setState(() {
-      imageList = _imageList;
+      imageList = filteredImageList;
     });
 
   }

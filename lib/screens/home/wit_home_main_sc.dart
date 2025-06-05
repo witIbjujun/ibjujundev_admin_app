@@ -52,12 +52,12 @@ class HomeState extends State<Home> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 20), // 텍스트와 버튼 간격 조정
+            SizedBox(height: 20),
             Expanded(
               child: Container(
                 color: WitCommonTheme.wit_white,
                 child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0), // 좌우 여백
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -73,68 +73,7 @@ class HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      child: Text(
-                        "사업자 인증 요청 내역",
-                        style: WitCommonTheme.title,
-                      ),
-                    ),
-
-                    SizedBox(height: 20),
-
-                    // 게시판 신고 관리
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(SlideRoute(page: CommunityManage()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: WitCommonTheme.wit_extraLightGrey,
-                        minimumSize: Size(double.infinity, 60),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: Text(
-                        "게시판 신고 관리",
-                        style: WitCommonTheme.title,
-                      ),
-                    ),
-
-                    SizedBox(height: 20),
-
-                    // 결재내역 조회 버튼
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(SlideRoute(page: PaymentManage()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: WitCommonTheme.wit_extraLightGrey,
-                        minimumSize: Size(double.infinity, 60),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: Text(
-                        "결재내역 조회",
-                        style: WitCommonTheme.title,
-                      ),
-                    ),
-
-                    SizedBox(height: 20),
-
-                    // 견적요청 리스트 버튼
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).push(SlideRoute(page: EstimateManage()));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: WitCommonTheme.wit_extraLightGrey,
-                        minimumSize: Size(double.infinity, 60),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: Text(
-                        "견적요청 리스트",
+                      child: Text("사업자 인증 요청 내역",
                         style: WitCommonTheme.title,
                       ),
                     ),
@@ -153,8 +92,64 @@ class HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      child: Text(
-                        "협력업체 인증관리",
+                      child: Text("협력업체 인증관리",
+                        style: WitCommonTheme.title,
+                      ),
+                    ),
+
+                    SizedBox(height: 60),
+
+                    // 견적요청 리스트 버튼
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(SlideRoute(page: EstimateManage()));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: WitCommonTheme.wit_extraLightGrey,
+                        minimumSize: Size(double.infinity, 60),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      child: Text("견적요청 리스트",
+                        style: WitCommonTheme.title,
+                      ),
+                    ),
+
+                    SizedBox(height: 20),
+
+                    // 결재내역 조회 버튼
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(SlideRoute(page: PaymentManage()));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: WitCommonTheme.wit_extraLightGrey,
+                        minimumSize: Size(double.infinity, 60),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      child: Text("결재내역 조회",
+                        style: WitCommonTheme.title,
+                      ),
+                    ),
+
+                    SizedBox(height: 60),
+
+                    // 게시판 신고 관리
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).push(SlideRoute(page: CommunityManage()));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: WitCommonTheme.wit_extraLightGrey,
+                        minimumSize: Size(double.infinity, 60),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                      child: Text("게시판 신고 관리",
                         style: WitCommonTheme.title,
                       ),
                     ),
@@ -173,8 +168,7 @@ class HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      child: Text(
-                        "공지사항 등록",
+                      child: Text("공지사항 등록",
                         style: WitCommonTheme.title,
                       ),
                     ),

@@ -33,7 +33,7 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
   TextEditingController searchController = TextEditingController();
   // 선택한 신고 상태값
   String? selectReportStat = "01";
-  // 빈데이터 화면 출력여부
+  // 빈 데이터 화면 출력 여부
   bool emptyDataFlag = false;
 
   /**
@@ -63,8 +63,8 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
 
     final List<DropdownMenuItem<String>> _dropdownItems = _functionOptionsMap.entries.map((entry) {
       return DropdownMenuItem<String>(
-        value: entry.key, // 코드 값 ('1', '2' 등)을 value로 사용
-        child: Text(entry.value), // 표시 텍스트 ("처리 요청" 등)를 child로 사용
+        value: entry.key,
+        child: Text(entry.value),
       );
     }).toList();
 
@@ -83,11 +83,11 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
         onSearchSubmit: (value) => filterList(),
       ),
       body: SafeArea(
-        child: Column( // 여러 위젯을 세로로 배열하기 위해 Column 추가
+        child: Column(
           children: [
             Container(
-              color: WitCommonTheme.wit_white, // 배경색을 흰색으로 설정
-              child: Padding( // 추가하려는 DropdownButton 부분 시작
+              color: WitCommonTheme.wit_white,
+              child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                 child: InputDecorator(
                   decoration: InputDecoration(
@@ -115,11 +115,11 @@ class CertificateHolderManageState extends State<CertificateHolderManage> {
                 ),
               ),
             ),
-            Container( // 추가하려는 구분선 부분 시작
+            Container(
               height: 1,
               color: WitCommonTheme.wit_lightgray,
-            ), // 추가하려는 구분선 부분 끝
-            Expanded( // 남은 공간을 차지하도록 Expanded 추가
+            ),
+            Expanded(
               child: emptyDataFlag
                   ? Container(
                     color: WitCommonTheme.wit_white,

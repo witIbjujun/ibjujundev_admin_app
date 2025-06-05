@@ -9,19 +9,18 @@ import '../../common/wit_ImageViewer_sc.dart';
  * 사업자 상세 ROW UI
  */
 Widget buildDetailRow(String title, String value, bool pointFlag, {Widget? action}) {
-  return Column( // Column으로 변경하여 Padding과 줄을 배치
+  return Column(
     crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
     children: [
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0), // 항목 간의 간격 조정
-        child: Column( // Column으로 변경하여 두 줄로 배치
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
           children: [
             Row(
               children: [
                 if (pointFlag == true)...[
-                  Text(
-                    "*  ",
+                  Text("*  ",
                     style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_red),
                   ),
                 ],
@@ -39,11 +38,10 @@ Widget buildDetailRow(String title, String value, bool pointFlag, {Widget? actio
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        value,
+                      Text(value,
                         style: WitCommonTheme.caption,
                       ),
-                      if (action != null) action, // 버튼 추가
+                      if (action != null) action,
                     ],
                   ),
                 ),
@@ -53,8 +51,8 @@ Widget buildDetailRow(String title, String value, bool pointFlag, {Widget? actio
         ),
       ),
       Container(
-        height: 1, // 줄의 높이
-        color: WitCommonTheme.wit_extraLightGrey, // 줄의 색상
+        height: 1,
+        color: WitCommonTheme.wit_extraLightGrey,
       ),
     ],
   );
@@ -82,13 +80,10 @@ class ActionButtonWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(width: 10), // 버튼 간격
+        SizedBox(width: 10),
         Expanded(
           child: ElevatedButton(
-            onPressed: isCertificateHolderYes
-                ? null
-                : () async {
-
+            onPressed: isCertificateHolderYes ? null : () async {
               bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"인증 완료 처리 하시겠습니까?");
 
               if (isConfirmed == true) {
@@ -104,13 +99,10 @@ class ActionButtonWidget extends StatelessWidget {
             child: Text("인증 완료", style: WitCommonTheme.subtitle),
           ),
         ),
-        SizedBox(width: 10), // 버튼 간격
+        SizedBox(width: 10),
         Expanded(
           child: ElevatedButton(
-            onPressed: isCertificateHolderRe
-                ? null
-                : () async {
-
+            onPressed: isCertificateHolderRe ? null : () async {
               bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"재인증 요청을 하시겠습니까?");
 
               if (isConfirmed == true) {
@@ -127,13 +119,10 @@ class ActionButtonWidget extends StatelessWidget {
             child: Text("재인증 요청", style: WitCommonTheme.subtitle),
           ),
         ),
-        SizedBox(width: 10), // 버튼 간격
+        SizedBox(width: 10),
         Expanded(
           child: ElevatedButton(
-            onPressed: isCertificateHolderNo
-                ? null
-                : () async {
-
+            onPressed: isCertificateHolderNo ? null : () async {
               bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"불량 업체로 등록 하시겠습니까?");
 
               if (isConfirmed == true) {
@@ -149,7 +138,7 @@ class ActionButtonWidget extends StatelessWidget {
             child: Text("불량 업체", style: WitCommonTheme.subtitle),
           ),
         ),
-        SizedBox(width: 10), // 버튼 간격
+        SizedBox(width: 10),
       ],
     );
   }
@@ -167,11 +156,10 @@ class bizInfoDialog {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          // AlertDialog의 기본 배경색은 흰색입니다.
           title: Text("사업자 인증 결과",
               style: WitCommonTheme.title
           ),
-          content: SingleChildScrollView( // 내용이 길어지면 스크롤 가능
+          content: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -186,7 +174,7 @@ class bizInfoDialog {
               ],
             ),
           ),
-          actions: <Widget>[ // actions에 포함된 위젯은 다이얼로그 하단에 배치됩니다.
+          actions: <Widget>[
             Container( // 구분선
               height: 1,
               color: WitCommonTheme.wit_lightgray,
@@ -198,7 +186,6 @@ class bizInfoDialog {
               },
             ),
           ],
-          // actionsPadding이나 buttonPadding 등으로 버튼 영역의 패딩을 조절할 수 있습니다.
         );
       },
     );
@@ -246,7 +233,7 @@ class ImageListDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return imageList.length > 0 ? Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0), // 항목 간의 간격 조정
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
       child: Container(
         height: 80,
         child: ListView.builder(

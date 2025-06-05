@@ -47,19 +47,17 @@ class PaymentCard extends StatefulWidget {
 
 class _PaymentCardState extends State<PaymentCard> {
 
-  Color _backgroundColor = WitCommonTheme.wit_white; // 초기 배경 색상
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
       child : Container(
-        decoration: BoxDecoration( // BoxDecoration 추가
+        decoration: BoxDecoration(
           color: WitCommonTheme.wit_extraLightGrey,
-          borderRadius: BorderRadius.circular(12.0), // 모서리 둥글게 설정 (값은 조절 가능)
+          borderRadius: BorderRadius.circular(12.0),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
           child : Column(
             children: [
               Row(
@@ -70,7 +68,7 @@ class _PaymentCardState extends State<PaymentCard> {
                       children: [
                         Text(
                             "${widget.item["storeName"]}",
-                            style: WitCommonTheme.title
+                            style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold)
                         ),
                         SizedBox(height: 5),
                         paymentDetailRow("결재 목록", widget.item["aptName"], WitCommonTheme.wit_lightGreen),
@@ -114,7 +112,7 @@ Widget paymentDetailRow(String title, String value, Color color) {
               children: [
                 // 인증 여부를 표시할 네모 박스
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
                   decoration: BoxDecoration(
                     color: color,
                     borderRadius: BorderRadius.circular(4),
@@ -155,7 +153,7 @@ Widget paymentDetailRow2(String title1, String value1, String title2, String val
               children: [
                 // 인증 여부를 표시할 네모 박스
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
                   decoration: BoxDecoration(
                     color: color,
                     borderRadius: BorderRadius.circular(4),
@@ -173,7 +171,7 @@ Widget paymentDetailRow2(String title1, String value1, String title2, String val
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
                   decoration: BoxDecoration(
                     color: color,
                     borderRadius: BorderRadius.circular(4),

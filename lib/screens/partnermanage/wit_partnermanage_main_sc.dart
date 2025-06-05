@@ -82,10 +82,10 @@ class PartnerManageState extends State<PartnerManage> {
         onSearchSubmit: (value) => filterList(),
       ),
       body: SafeArea(
-        child: Column( // 여러 위젯을 세로로 배열하기 위해 Column 추가
+        child: Column(
           children: [
             Container(
-              color: WitCommonTheme.wit_white, // 배경색을 흰색으로 설정
+              color: WitCommonTheme.wit_white,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                 child: InputDecorator(
@@ -146,7 +146,7 @@ class PartnerManageState extends State<PartnerManage> {
                   color: WitCommonTheme.wit_white,
                   child: PartnerListView(
                   partnerList: partnerList,
-                  getList: getPartnerList, // 협력업체 인증 내역 조회
+                  getList: getPartnerList,
                 ),
               ),
             ),

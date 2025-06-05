@@ -91,8 +91,8 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
           style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_white),
         ),
       ),
-      body: Container( // Container 추가
-        color: Colors.white, // 배경색을 흰색으로 설정
+      body: Container(
+        color: Colors.white,
         child: SafeArea(
           child: Column(
             children: [
@@ -166,12 +166,12 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
       // PARAM
       final param = jsonEncode({
         "businesses" : [{
-          "b_no" : "8922900486",
-          "start_dt" : "20171122",
-          "p_nm" : "조성훈"
-          //"b_no" : widget.itemInfo["storeCode"],
-          //"start_dt" : widget.itemInfo["openDate"],
-          //"p_nm" : widget.itemInfo["ceoName"]
+          //"b_no" : "8922900486",
+          //"start_dt" : "20171122",
+          //"p_nm" : "조성훈"
+          "b_no" : widget.itemInfo["storeCode"],
+          "start_dt" : widget.itemInfo["openDate"],
+          "p_nm" : widget.itemInfo["ceoName"]
 
         }]
       });

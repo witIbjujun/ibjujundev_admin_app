@@ -55,13 +55,13 @@ class PartnerManageDetailState extends State<PartnerManageDetail> {
           style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_white),
         ),
       ),
-      body: SafeArea( // SafeArea로 감싸기
-        child: SingleChildScrollView( // 스크롤 가능하게 만들기
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Center(
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start, // 좌측 정렬
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   partnerDetailRow("사업자명", widget.itemInfo["storeName"] ?? ""),
                   partnerDetailRow("대표자명", widget.itemInfo["ceoName"] ?? ""),

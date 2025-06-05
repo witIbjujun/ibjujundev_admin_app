@@ -9,13 +9,13 @@ import '../../common/wit_ImageViewer_sc.dart';
  * 사업자 상세 ROW UI
  */
 Widget partnerDetailRow(String title, String value, {Widget? action}) {
-  return Column( // Column으로 변경하여 Padding과 줄을 배치
-    crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0), // 항목 간의 간격 조정
-        child: Column( // Column으로 변경하여 두 줄로 배치
-          crossAxisAlignment: CrossAxisAlignment.start, // 왼쪽 정렬
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               title,
@@ -33,7 +33,7 @@ Widget partnerDetailRow(String title, String value, {Widget? action}) {
                         value,
                         style: WitCommonTheme.subtitle,
                       ),
-                      if (action != null) action, // 버튼 추가
+                      if (action != null) action,
                     ],
                   ),
                 ),
@@ -44,7 +44,7 @@ Widget partnerDetailRow(String title, String value, {Widget? action}) {
       ),
       Container(
         height: 1, // 줄의 높이
-        color: WitCommonTheme.wit_extraLightGrey, // 줄의 색상
+        color: WitCommonTheme.wit_extraLightGrey,
       ),
     ],
   );
@@ -117,7 +117,7 @@ class ImageListDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return imageList.length > 0 ? Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0), // 항목 간의 간격 조정
+      padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
       child: Container(
         height: 80,
         child: ListView.builder(

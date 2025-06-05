@@ -54,7 +54,7 @@ class PartnerCard extends StatefulWidget {
 
 class _PartnerCardState extends State<PartnerCard> {
 
-  Color _backgroundColor = WitCommonTheme.wit_white; // 초기 배경 색상
+  Color _backgroundColor = WitCommonTheme.wit_white;
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +85,6 @@ class _PartnerCardState extends State<PartnerCard> {
                 SizedBox(width: 20),
                 Column(
                   children: [
-                    // 이미지가 존재할 경우에만 표시
                     if (widget.item["storeImage"] != null) ...[
                       Container(
                         width: 60,
@@ -93,7 +92,7 @@ class _PartnerCardState extends State<PartnerCard> {
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: WitCommonTheme.wit_gray.withOpacity(0.5),
-                            width: 1, // 테두리 두께
+                            width: 1,
                           ),
                           borderRadius: BorderRadius.circular(4),
                         ),
@@ -154,7 +153,6 @@ class _PartnerCardState extends State<PartnerCard> {
                           Expanded(
                             child: Row(
                               children: [
-                                // 인증 여부를 표시할 네모 박스
                                 Container(
                                   padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
                                   decoration: BoxDecoration(
@@ -162,14 +160,12 @@ class _PartnerCardState extends State<PartnerCard> {
                                     borderRadius: BorderRadius.circular(4),
                                     border: Border.all(color: WitCommonTheme.wit_gray),
                                   ),
-                                  child: Text(
-                                    "협력업체 여부",
+                                  child: Text("협력업체 여부",
                                     style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
                                   ),
                                 ),
                                 SizedBox(width: 10),
-                                Text(
-                                    "${widget.item["certificationNm"] ?? "협력업체 미인증"}",
+                                Text("${widget.item["certificationNm"] ?? "협력업체 미인증"}",
                                     style: WitCommonTheme.caption
                                 ),
                               ],

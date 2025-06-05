@@ -81,14 +81,14 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
         color: _backgroundColor,
         child: Column(
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Row(
               children: [
                 SizedBox(width: 20),
                 if (widget.item["storeImage"] != null) ...[
                   Container(
-                    width: 70,
-                    height: 70,
+                    width: 60,
+                    height: 60,
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: WitCommonTheme.wit_extraLightGrey, // 연한 회색 테두리
@@ -100,8 +100,8 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                       borderRadius: BorderRadius.circular(4), // 이미지 모서리 둥글게
                       child: Image.network(
                         apiUrl + widget.item["storeImage"],
-                        width: 70,
-                        height: 70,
+                        width: 60,
+                        height: 60,
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -110,8 +110,8 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                 ],
                 if (widget.item["storeImage"] == null) ...[
                   Container(
-                    width: 70,
-                    height: 70,
+                    width: 60,
+                    height: 60,
                     decoration: BoxDecoration(
                       color: WitCommonTheme.wit_extraLightGrey,
                       borderRadius: BorderRadius.circular(5),
@@ -121,17 +121,17 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                       ),
                     ),
                   ),
+                  SizedBox(width: 15),
                 ],
-                SizedBox(width: 20),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         widget.item["storeName"] ?? "",
-                        style: WitCommonTheme.title,
+                        style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 7),
                       Row( // 이 Row는 Column의 자식입니다.
                         children: [
                           Expanded( // 이 Expanded는 이 Row 내에서 자식들이 공간을 어떻게 나눌지 제어합니다.
@@ -140,14 +140,15 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                               children: [
                                 // 인증 여부를 표시할 네모 박스
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
                                   decoration: BoxDecoration(
-                                    color: WitCommonTheme.wit_lightgray,
+                                    color: WitCommonTheme.wit_white,
                                     borderRadius: BorderRadius.circular(4),
+                                    border: Border.all(color: WitCommonTheme.wit_gray),
                                   ),
                                   child: Text(
                                     "견적 요청",
-                                    style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_white),
+                                    style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
                                   ),
                                 ),
                                 SizedBox(width: 10),
@@ -158,14 +159,15 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                                   ),
                                 ),
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
                                   decoration: BoxDecoration(
-                                    color: WitCommonTheme.wit_lightgray,
+                                    color: WitCommonTheme.wit_white,
                                     borderRadius: BorderRadius.circular(4),
+                                    border: Border.all(color: WitCommonTheme.wit_gray),
                                   ),
                                   child: Text(
                                     "견적 발송",
-                                    style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_white),
+                                    style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
                                   ),
                                 ),
                                 SizedBox(width: 10),
@@ -185,7 +187,7 @@ class _EstimateInfoListCardState extends State<EstimateInfoListCard> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Container(
               height: 1,
               color: WitCommonTheme.wit_extraLightGrey,

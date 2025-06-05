@@ -27,7 +27,6 @@ class CertificateHolderDetail extends StatefulWidget {
  */
 class CertificateHolderDetailState extends State<CertificateHolderDetail> {
 
-  bool isBizNo = false;
   bool isCertificateHolderYes = false;
   bool isCertificateHolderRe = false;
   bool isCertificateHolderNo = false;
@@ -44,21 +43,18 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
 
       // 요청중 (01)
       if (widget.itemInfo["bizCertification"] == "01") {
-        isBizNo = false;                // 활성화
-        isCertificateHolderYes = true;  // 비활성화
+        isCertificateHolderYes = false;  // 활성화
         isCertificateHolderRe = false;  // 활성화
         isCertificateHolderNo = false;  // 활성화
 
         // 사업자번호 인증완료 (02)
       } else if (widget.itemInfo["bizCertification"] == "02") {
-        isBizNo = true;                 // 비활성화
         isCertificateHolderYes = false; // 활성화
         isCertificateHolderRe = false;  // 활성화
         isCertificateHolderNo = false;  // 활성화
 
         // 사업자 인증완료
       } else if (widget.itemInfo["bizCertification"] == "03") {
-        isBizNo = true;                 // 비활성화
         isCertificateHolderYes = true;  // 비활성화
 
         if (widget.itemInfo["certificationYn"] == "Y") {
@@ -71,7 +67,6 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
 
         // 재등록 요청 (04), 불가처리 (05)
       } else if (widget.itemInfo["bizCertification"] == "04" || widget.itemInfo["bizCertification"] == "05") {
-        isBizNo = true;                 // 비활성화
         isCertificateHolderYes = true;  // 비활성화
         isCertificateHolderRe = true;   // 비활성화
         isCertificateHolderNo = true;   // 비활성화
@@ -96,59 +91,45 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
           style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_white),
         ),
       ),
-      body: SafeArea( // SafeArea로 감싸기
-        child: SingleChildScrollView( // 스크롤 가능하게 만들기
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start, // 좌측 정렬
-                children: [
-                  buildDetailRow("사업자명", widget.itemInfo["storeName"] ?? "", false),
-                  buildDetailRow("대표자명", widget.itemInfo["ceoName"] ?? "", true),
-                  buildDetailRow("대표 이메일", widget.itemInfo["email"] ?? "", false),
-                  buildDetailRow("담당자 연락처", formatPhoneNumber(widget.itemInfo["hp"] ?? ""), false),
-                  buildDetailRow("사업장 주소", "${widget.itemInfo["zipCode"] ?? ""}" + ") " + "${widget.itemInfo["address1"]}", false),
-                  buildDetailRow("개업일자", formatDate(widget.itemInfo["openDate"] ?? ""), true),
-                  buildDetailRow("사업자번호",
-                      widget.itemInfo["storeCode"] + "   " + widget.itemInfo["bizCertificationNm"], true,
-                    action: ElevatedButton(
-                      onPressed: isBizNo ? null : () {
-                        // 사업자 번호 인증
-                        checkBizNo(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: WitCommonTheme.wit_lightBlue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5.0),
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
+      body: Container( // Container 추가
+        color: Colors.white, // 배경색을 흰색으로 설정
+        child: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start, // 좌측 정렬
+                        children: [
+                          buildDetailRow("대표자명", widget.itemInfo["ceoName"] ?? "", true),
+                          buildDetailRow("개업일자", formatDate(widget.itemInfo["openDate"] ?? ""), true),
+                          buildDetailRow("사업자번호", widget.itemInfo["storeCode"], true),
+                          buildDetailRow("사업자명", widget.itemInfo["storeName"] ?? "", false),
+                          buildDetailRow("대표 이메일", widget.itemInfo["email"] ?? "", false),
+                          buildDetailRow("담당자 연락처", formatPhoneNumber(widget.itemInfo["hp"] ?? ""), false),
+                          buildDetailRow("사업장 주소", "${widget.itemInfo["zipCode"] ?? ""}" + ") " + "${widget.itemInfo["address1"]}", false),
+                          buildDetailRow("품목명", widget.itemInfo["categoryNm"] ?? "", false),
+                          buildDetailRow("AS여부", widget.itemInfo["asGbnNm"] ?? "", false),
+                          buildDetailRow("사업자 인증 상태", widget.itemInfo["bizCertificationNm"] ?? "", false),
+                          buildDetailRow("협력업체 인증 상태", widget.itemInfo["certificationNm"] ?? "", false),
+                        ],
                       ),
-                      child: widget.itemInfo["bizCertification"] == "01"
-                          ? Text("인증 대기")
-                          : widget.itemInfo["bizCertification"] == "02"
-                          ? Text("인증 확인")
-                          : widget.itemInfo["bizCertification"] == "03"
-                          ? Text("인증 확인")
-                          : widget.itemInfo["bizCertification"] == "04"
-                          ? Text("재등록 요청")
-                          : widget.itemInfo["bizCertification"] == "05"
-                          ? Text("인증 취소")
-                          : Text("상태 없음"),
-                    )),
-                  buildDetailRow("품목명", widget.itemInfo["categoryNm"] ?? "", false),
-                  buildDetailRow("AS여부", widget.itemInfo["asGbnNm"] ?? "", false),
-                  buildDetailRow("인증상태", widget.itemInfo["certificationNm"] ?? "", false),
-                  ImageListDisplay(imageList: imageList),
-                  ActionButtonWidget(
-                    isCertificateHolderYes: isCertificateHolderYes,
-                    isCertificateHolderRe: isCertificateHolderRe,
-                    isCertificateHolderNo: isCertificateHolderNo,
-                    updateBizCertification: updateBizCertification,
+                    ),
                   ),
-                ],
+                ),
               ),
-            ),
+              ImageListDisplay(imageList: imageList),
+              ActionButtonWidget(
+                isCertificateHolderYes: isCertificateHolderYes,
+                isCertificateHolderRe: isCertificateHolderRe,
+                isCertificateHolderNo: isCertificateHolderNo,
+                updateBizCertification: checkBizNo,
+              ),
+              SizedBox(height: 5),
+            ],
           ),
         ),
       ),
@@ -178,47 +159,42 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
   }
 
   // [서비스] 사업자 인증
-  Future<void> checkBizNo(BuildContext context) async {
+  Future<void> checkBizNo(String biz) async {
 
-    // PARAM
-    final param = jsonEncode({
-      "businesses" : [{
-        //"b_no" : "8922900486",
-        //"start_dt" : "20171122",
-        //"p_nm" : "조성훈"
-        "b_no" : widget.itemInfo["storeCode"],
-        "start_dt" : widget.itemInfo["openDate"],
-        "p_nm" : widget.itemInfo["name"]
+    if (biz == "03") {
 
-      }]
-    });
+      // PARAM
+      final param = jsonEncode({
+        "businesses" : [{
+          "b_no" : "8922900486",
+          "start_dt" : "20171122",
+          "p_nm" : "조성훈"
+          //"b_no" : widget.itemInfo["storeCode"],
+          //"start_dt" : widget.itemInfo["openDate"],
+          //"p_nm" : widget.itemInfo["ceoName"]
 
-    // API 호출 (사업자 인증 요청 업체 조회)
-    final result = await sendPostRequestByBizCd(param);
+        }]
+      });
 
-    if (result["status_code"] == "OK") {
+      // API 호출 (사업자 인증 요청 업체 조회)
+      final result = await sendPostRequestByBizCd(param);
 
-      var obj = result["data"][0];
+      if (result["status_code"] == "OK") {
 
-      // 사업자번호 정상이면
-      if (obj["valid"] == "01") {
-        setState(() {
-          isBizNo = true;
-          isCertificateHolderYes = false;
-        });
+        var obj = result["data"][0];
 
-        updateBizCertification("02");
+        if (obj["valid"] == "01") {
+          updateBizCertification(biz);
+        }
+        bizInfoDialog.show(context, obj);
+      } else {
+
+        var obj = result["data"][0];
+        bizInfoDialog.show(context, obj);
       }
 
-      bizInfoDialog.show(context, obj);
-
-    // 사업자번호 인증 실패
     } else {
-      var obj = {};
-      obj["b_no"] = widget.itemInfo["storeCode"];
-      obj["tax_type"] = "사업자번호 인증 실패";
-
-      bizInfoDialog.show(context, obj);
+      updateBizCertification(biz);
     }
   }
 
@@ -240,27 +216,28 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
     setState(() {
 
       if (result > 0) {
-        alertDialog.show(context: context, title:"알림", content: "처리 되었습니다.");
+
+        if (biz != "03") {
+          alertDialog.show(context: context, title:"알림", content: "인증 상태를 변경 하였습니다.");
+        }
 
         setState(() {
 
           // 요청중 (01)
           if (biz == "01") {
-            isBizNo = false;                // 활성화
-            isCertificateHolderYes = true;  // 비활성화
+            isCertificateHolderYes = false;  // 활성화
             isCertificateHolderRe = false;  // 활성화
             isCertificateHolderNo = false;  // 활성화
 
             // 사업자번호 인증완료 (02)
           } else if (biz == "02") {
-            isBizNo = true;                 // 비활성화
             isCertificateHolderYes = false; // 활성화
             isCertificateHolderRe = false;  // 활성화
             isCertificateHolderNo = false;  // 활성화
 
             // 사업자 인증완료
           } else if (biz == "03") {
-            isBizNo = true;                 // 비활성화
+            widget.itemInfo["bizCertificationNm"] = "사업자 인증완료 (관리자)";
             isCertificateHolderYes = true;  // 비활성화
             if (widget.itemInfo["certificationYn"] == "Y") {
               isCertificateHolderRe = true;  // 비활성화
@@ -271,7 +248,13 @@ class CertificateHolderDetailState extends State<CertificateHolderDetail> {
             }
             // 재등록 요청 (04), 불가처리 (05)
           } else if (biz == "04" || biz == "05") {
-            isBizNo = true;                 // 비활성화
+
+            if (biz == "04") {
+              widget.itemInfo["bizCertificationNm"] = "재인증요청";
+            } else if (biz == "05") {
+              widget.itemInfo["bizCertificationNm"] = "불량업체";
+            }
+
             isCertificateHolderYes = true;  // 비활성화
             isCertificateHolderRe = true;   // 비활성화
             isCertificateHolderNo = true;   // 비활성화

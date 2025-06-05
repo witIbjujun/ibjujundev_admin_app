@@ -62,9 +62,16 @@ Future<File> compressImage(File file) async {
   // 이미지 디코딩
   img.Image? image = img.decodeImage(bytes);
 
+  image = img.copyResize(
+    image!,
+    width: 800,
+    height: 800,
+    // interpolation: img.Interpolation.linear, // 필요에 따라 보간 방식 지정 가능
+  );
+
   // 압축된 이미지를 파일로 저장 (사이즈 조절 없이 압축만 수행)
   final compressedFile = File(file.path);
-  await compressedFile.writeAsBytes(img.encodeJpg(image!, quality: 10)); // quality: 0~100
+  await compressedFile.writeAsBytes(img.encodeJpg(image!, quality: 50)); // quality: 0~100
 
   return compressedFile;
 }

@@ -394,7 +394,13 @@ class _BoardWriteState extends State<BoardWrite> {
   }
 
   Future<void> _pickImage(ImageSource source) async {
-    final XFile? pickedFile = await _picker.pickImage(source: source);
+    final XFile? pickedFile = await _picker.pickImage(
+        source: source,
+        maxHeight: 1200,
+        maxWidth: 1200,
+        imageQuality: 40,
+    );
+
     if (pickedFile != null) {
       setState(() {
         if (_images.length < 5) {
@@ -405,7 +411,11 @@ class _BoardWriteState extends State<BoardWrite> {
   }
 
   Future<void> _pickMultiImages() async {
-    final List<XFile>? pickedFiles = await _picker.pickMultiImage();
+    final List<XFile>? pickedFiles = await _picker.pickMultiImage(
+      maxHeight: 1200,
+      maxWidth: 1200,
+      imageQuality: 40,
+    );
     if (pickedFiles != null && pickedFiles.isNotEmpty) {
       setState(() {
         for (final xfile in pickedFiles) {

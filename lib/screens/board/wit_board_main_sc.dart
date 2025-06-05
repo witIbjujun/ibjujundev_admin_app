@@ -202,7 +202,7 @@ class BoardState extends State<Board> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.add,
+                Icons.edit_note,
                 color: WitCommonTheme.wit_white,
                 size: 35,
               )

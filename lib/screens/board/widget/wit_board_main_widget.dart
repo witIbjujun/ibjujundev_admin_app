@@ -179,7 +179,7 @@ class BoardListView extends StatelessWidget {
                           child: Column(
                           children: [
                             ListTile(
-                              contentPadding: EdgeInsets.fromLTRB(17, 7, 17, 7),
+                              contentPadding: EdgeInsets.fromLTRB(15, 2, 15, 2),
                               title: Row(
                                 children: [
                                   Expanded(
@@ -205,7 +205,7 @@ class BoardListView extends StatelessWidget {
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: 10),
+                                          SizedBox(height: 7),
                                           Row(
                                             children: [
                                               Expanded(

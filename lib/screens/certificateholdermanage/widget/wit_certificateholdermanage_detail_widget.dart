@@ -27,7 +27,7 @@ Widget buildDetailRow(String title, String value, bool pointFlag, {Widget? actio
                 ],
                 Text(
                   title,
-                  style: WitCommonTheme.title,
+                  style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
                 ),
               ],
             ),
@@ -41,7 +41,7 @@ Widget buildDetailRow(String title, String value, bool pointFlag, {Widget? actio
                     children: [
                       Text(
                         value,
-                        style: WitCommonTheme.subtitle,
+                        style: WitCommonTheme.caption,
                       ),
                       if (action != null) action, // 버튼 추가
                     ],
@@ -101,7 +101,7 @@ class ActionButtonWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4.0),
               ),
             ),
-            child: Text("인증 완료"),
+            child: Text("인증 완료", style: WitCommonTheme.subtitle),
           ),
         ),
         SizedBox(width: 10), // 버튼 간격
@@ -124,7 +124,7 @@ class ActionButtonWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4.0),
               ),
             ),
-            child: Text("재인증 요청"),
+            child: Text("재인증 요청", style: WitCommonTheme.subtitle),
           ),
         ),
         SizedBox(width: 10), // 버튼 간격
@@ -134,7 +134,7 @@ class ActionButtonWidget extends StatelessWidget {
                 ? null
                 : () async {
 
-              bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"인증 취소 처리 하시겠습니까?");
+              bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"불량 업체로 등록 하시겠습니까?");
 
               if (isConfirmed == true) {
                 updateBizCertification("05");
@@ -146,7 +146,7 @@ class ActionButtonWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(4.0),
               ),
             ),
-            child: Text("인증 취소"),
+            child: Text("불량 업체", style: WitCommonTheme.subtitle),
           ),
         ),
         SizedBox(width: 10), // 버튼 간격
@@ -160,23 +160,37 @@ class ActionButtonWidget extends StatelessWidget {
  */
 class bizInfoDialog {
   static void show(BuildContext context, var obj) {
+
+    print(obj);
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          // AlertDialog의 기본 배경색은 흰색입니다.
           title: Text("사업자 인증 결과",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+              style: WitCommonTheme.title
           ),
-          content: SingleChildScrollView(
+          content: SingleChildScrollView( // 내용이 길어지면 스크롤 가능
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildInfoRow("사업자등록번호", obj["b_no"]),
-                _buildInfoRow("진위확인 결과 코드", obj["valid"]),
+                _buildInfoRow("사업자등록번호", obj["b_no"], WitCommonTheme.wit_white),
+                _buildInfoRow("개업일자", obj["request_param"]["start_dt"], WitCommonTheme.wit_white),
+                _buildInfoRow("대표자명", obj["request_param"]["p_nm"], WitCommonTheme.wit_white),
+                _buildInfoRow("사업자 인증 결과", obj["valid"] == "01" ? "인증성공" : "인증실패",
+                    obj["valid"] == "01" ? WitCommonTheme.wit_lightBlue : WitCommonTheme.wit_lightCoral),
+                if ( obj["valid"] == "02") ...[
+                  _buildInfoRow("실패내용", obj["valid_msg"], WitCommonTheme.wit_lightCoral),
+                ]
               ],
             ),
           ),
-          actions: <Widget>[
+          actions: <Widget>[ // actions에 포함된 위젯은 다이얼로그 하단에 배치됩니다.
+            Container( // 구분선
+              height: 1,
+              color: WitCommonTheme.wit_lightgray,
+            ),
             TextButton(
               child: Text("확인"),
               onPressed: () {
@@ -184,32 +198,34 @@ class bizInfoDialog {
               },
             ),
           ],
+          // actionsPadding이나 buttonPadding 등으로 버튼 영역의 패딩을 조절할 수 있습니다.
         );
       },
     );
   }
 
-  static Widget _buildInfoRow(String label, String value) {
+  static Widget _buildInfoRow(String label, String value, Color color) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0), // 패딩 추가
+            padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
             decoration: BoxDecoration(
-              color: Colors.grey[200], // 배경 색상
-              borderRadius: BorderRadius.circular(4), // 라운드 처리
+              color: color,
+              borderRadius: BorderRadius.circular(4),
+              border: Border.all(color: WitCommonTheme.wit_gray),
             ),
             child: Text(
               label,
-              style: TextStyle(fontSize: 12),
+              style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
             ),
           ),
           Expanded(
             child: Align(
               alignment: Alignment.centerRight,
               child: Text(value,
-                style: TextStyle(fontSize: 12),
+                style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
               ),
             ),
           ),

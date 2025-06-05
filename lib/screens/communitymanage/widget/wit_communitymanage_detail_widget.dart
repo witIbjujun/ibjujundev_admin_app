@@ -15,15 +15,29 @@ class TitleAndMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    String bordTypeGbn = communityDetailInfo["bordType"].substring(0, 2);
+    
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(
-          child: Text(
-            communityDetailInfo["bordTitle"] ?? "",
-            style: WitCommonTheme.title,
+        if (bordTypeGbn == "UH")...[
+          Expanded(
+            child: Text(
+              "업체 후기",
+              style: WitCommonTheme.title,
+            ),
           ),
-        ),
+        ] else... [
+          Expanded(
+            child: Text(
+              communityDetailInfo["bordTitle"] ?? "",
+              style: WitCommonTheme.title,
+            ),
+          ),
+        ]
+        
+        
       ],
     );
   }
@@ -41,7 +55,10 @@ class UserInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CircleAvatar(radius: 20, backgroundColor: WitCommonTheme.wit_lightBlue),
+        CircleAvatar(
+          radius: 20,
+          backgroundImage: proFlieImage.getImageProvider(communityDetailInfo["profileImg"] ?? ""),
+        ),
         SizedBox(width: 15),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

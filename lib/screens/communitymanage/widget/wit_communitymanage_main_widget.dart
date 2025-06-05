@@ -168,7 +168,7 @@ class CommunityListView extends StatelessWidget {
                         child: Column(
                           children: [
                             ListTile(
-                              contentPadding: EdgeInsets.fromLTRB(17, 7, 17, 7),
+                              contentPadding: EdgeInsets.fromLTRB(15, 0, 15, 0),
                               title: Row(
                                 children: [
                                   Container(
@@ -180,18 +180,17 @@ class CommunityListView extends StatelessWidget {
                                             Container(
                                               decoration: BoxDecoration(
                                                 color: (communityInfo["bordType"] == "CM01") ? WitCommonTheme.wit_lightSteelBlue : // 커뮤니티
-                                                        (communityInfo["bordType"] == "GJ01") ? WitCommonTheme.wit_lightGreen :   // 공지사항
                                                         (communityInfo["bordType"] == "JU01") ? WitCommonTheme.wit_lightCoral :   // 자유게시판
                                                         (communityInfo["bordType"] == "UH01") ? WitCommonTheme.wit_lightCoral :   // 업체후기
                                                         WitCommonTheme.wit_lightgray,
                                                 borderRadius: BorderRadius.circular(10),
                                               ),
-                                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                                              padding: EdgeInsets.symmetric(horizontal: 7, vertical: 10),
                                               child: Column(
                                                 children: [
                                                   Center(
                                                     child: Text("${communityInfo["bordTypeNm"]}",
-                                                      style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
+                                                      style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_white),
                                                     ),
                                                   ),
                                                 ],
@@ -215,8 +214,8 @@ class CommunityListView extends StatelessWidget {
                                                   children: [
                                                     Expanded(
                                                       child: Text(
-                                                        communityInfo["bordTitle"],
-                                                        maxLines: 2,
+                                                        communityInfo["bordTitle"] == "" ? communityInfo["bordContent"] : communityInfo["bordTitle"],
+                                                        maxLines: 1,
                                                         overflow: TextOverflow.ellipsis,
                                                         style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
                                                       ),
@@ -226,12 +225,12 @@ class CommunityListView extends StatelessWidget {
                                               ),
                                             ],
                                           ),
-                                          SizedBox(height: 10),
+                                          SizedBox(height: 5),
                                           Row(
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  "${communityInfo["creUserNm"]}  |  ${communityInfo["creDateTxt"]}",
+                                                  "${communityInfo["creUserNm"] ?? "익명"}  |  ${communityInfo["creDateTxt"]}  |  조회 ${communityInfo["bordRdCnt"]}",
                                                   style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_gray),
                                                 ),
                                               ),

@@ -79,7 +79,7 @@ class _PartnerCardState extends State<PartnerCard> {
         color: _backgroundColor,
         child: Column(
           children: [
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Row(
               children: [
                 SizedBox(width: 20),
@@ -88,8 +88,8 @@ class _PartnerCardState extends State<PartnerCard> {
                     // 이미지가 존재할 경우에만 표시
                     if (widget.item["storeImage"] != null) ...[
                       Container(
-                        width: 70,
-                        height: 70,
+                        width: 60,
+                        height: 60,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: WitCommonTheme.wit_gray.withOpacity(0.5),
@@ -101,8 +101,8 @@ class _PartnerCardState extends State<PartnerCard> {
                           borderRadius: BorderRadius.circular(4),
                           child: Image.network(
                             apiUrl + widget.item["storeImage"],
-                            width: 70,
-                            height: 70,
+                            width: 60,
+                            height: 60,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -111,8 +111,8 @@ class _PartnerCardState extends State<PartnerCard> {
                     ],
                     if (widget.item["storeImage"] == null) ...[
                       Container(
-                        width: 70,
-                        height: 70,
+                        width: 60,
+                        height: 60,
                         decoration: BoxDecoration(
                           color: WitCommonTheme.wit_extraLightGrey,
                           borderRadius: BorderRadius.circular(5),
@@ -135,7 +135,7 @@ class _PartnerCardState extends State<PartnerCard> {
                         children: [
                           Text(
                             widget.item["storeName"],
-                            style: WitCommonTheme.title,
+                            style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
                           ),
                           if (widget.item["certificationYn"] == "Y")
                             Padding(
@@ -148,7 +148,7 @@ class _PartnerCardState extends State<PartnerCard> {
                             ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 7),
                       Row(
                         children: [
                           Expanded(
@@ -156,14 +156,15 @@ class _PartnerCardState extends State<PartnerCard> {
                               children: [
                                 // 인증 여부를 표시할 네모 박스
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
                                   decoration: BoxDecoration(
-                                    color: WitCommonTheme.wit_lightgray,
+                                    color: WitCommonTheme.wit_white,
                                     borderRadius: BorderRadius.circular(4),
+                                    border: Border.all(color: WitCommonTheme.wit_gray),
                                   ),
                                   child: Text(
                                     "협력업체 여부",
-                                    style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_white),
+                                    style: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_black),
                                   ),
                                 ),
                                 SizedBox(width: 10),
@@ -181,7 +182,7 @@ class _PartnerCardState extends State<PartnerCard> {
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Container(
               height: 1,
               color:WitCommonTheme.wit_extraLightGrey,

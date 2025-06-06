@@ -50,14 +50,13 @@ class _PaymentCardState extends State<PaymentCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(3),
       child : Container(
         decoration: BoxDecoration(
-          color: WitCommonTheme.wit_extraLightGrey,
-          borderRadius: BorderRadius.circular(10.0),
+          color: WitCommonTheme.wit_white,
         ),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+          padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
           child : Column(
             children: [
               Row(
@@ -84,6 +83,11 @@ class _PaymentCardState extends State<PaymentCard> {
                     ),
                   ),
                 ],
+              ),
+              SizedBox(height: 15),
+              Container(
+                height: 1,
+                color: WitCommonTheme.wit_extraLightGrey,
               ),
             ],
           ),

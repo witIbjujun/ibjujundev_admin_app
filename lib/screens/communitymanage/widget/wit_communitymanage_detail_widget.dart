@@ -36,8 +36,6 @@ class TitleAndMenu extends StatelessWidget {
             ),
           ),
         ]
-        
-        
       ],
     );
   }
@@ -168,12 +166,12 @@ class ReportCount extends StatelessWidget {
     return Row(
       children: [
         Text(
-          "신고 건수 ",
-          style: WitCommonTheme.title,
+          "신고 건수 - ",
+          style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
         ),
         Text(
           count.toString() + "건",
-          style: WitCommonTheme.subtitle,
+          style: WitCommonTheme.caption,
         ),
       ],
     );
@@ -197,10 +195,10 @@ class ReportList extends StatelessWidget {
       itemBuilder: (context, index) {
         return Container( // 네모 박스로 감싸기 위해 Container 추가
           margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 0), // 박스 간의 세로 간격 추가
-          padding: EdgeInsets.all(10.0), // 박스 내부 여백 추가
+          padding: EdgeInsets.all(0.0), // 박스 내부 여백 추가
           decoration: BoxDecoration(
-            color: WitCommonTheme.wit_extraLightGrey,
-            borderRadius: BorderRadius.circular(8.0), // 모서리 둥글게 만들기 (반경 8.0)
+            color: WitCommonTheme.wit_white,
+            borderRadius: BorderRadius.circular(0.0), // 모서리 둥글게 만들기 (반경 8.0)
           ),
           child: ListTile(
             contentPadding: EdgeInsets.all(0),
@@ -212,17 +210,8 @@ class ReportList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "신고 사유",
-                        style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        reportList[index]["reportReason"] ?? "",
+                        "신고 사유 - " + reportList[index]["reportReason"] ?? "",
                         style: WitCommonTheme.subtitle,
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        "신고 내용",
-                        style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         reportList[index]["reportContent"] ?? "",

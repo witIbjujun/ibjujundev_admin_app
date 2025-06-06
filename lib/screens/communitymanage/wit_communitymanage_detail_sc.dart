@@ -70,7 +70,7 @@ class CommunityDetailState extends State<CommunityDetail> {
                       SizedBox(height: 10),
                       Container(
                         height: 1,
-                        color: WitCommonTheme.wit_lightgray,
+                        color: WitCommonTheme.wit_extraLightGrey,
                       ),
                       SizedBox(height: 10),
                       ContentDisplay(
@@ -79,31 +79,25 @@ class CommunityDetailState extends State<CommunityDetail> {
                       ),
                       if (communityDetailImageList.length > 0)...[
                         SizedBox(height: 10),
-                        Container(
-                          height: 1,
-                          color: WitCommonTheme.wit_lightgray,
-                        ),
-                        SizedBox(height: 10),
                         ImageListDisplay(
                           communityDetailImageList: communityDetailImageList,
                         ),
                         SizedBox(height: 10),
                         Container(
                           height: 1,
-                          color: WitCommonTheme.wit_lightgray,
+                          color: WitCommonTheme.wit_extraLightGrey,
                         ),
                         SizedBox(height: 10),
                       ] else ...[
                         Container(
                           height: 1,
-                          color: WitCommonTheme.wit_lightgray,
+                          color: WitCommonTheme.wit_extraLightGrey,
                         ),
                         SizedBox(height: 5),
                       ],
                       ReportCount(
                         count: communityReportDetailList.length,
                       ),
-                      SizedBox(height: 5),
                       ReportList(
                         reportList: communityReportDetailList,
                       ),
@@ -169,13 +163,13 @@ class CommunityDetailState extends State<CommunityDetail> {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 0.0),
                   child: ElevatedButton(
                     onPressed: () async {
                       bool isConfirmed = await ConfirmationDialog.show(context: context, title:"확인", content:"신고 완료 하시겠습니까?");
 
                       if (isConfirmed == true) {
-                        updateReportStat("신고 완료", "20");
+                        updateReportStat("블라인드 처리", "20");
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -185,7 +179,7 @@ class CommunityDetailState extends State<CommunityDetail> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    child: Text("신고 완료"),
+                    child: Text("블라인드 처리"),
                   ),
                 ),
               ),
@@ -275,10 +269,10 @@ class CommunityDetailState extends State<CommunityDetail> {
     setState(() {
 
       if (result > 0) {
-        alertDialog.show(context: context, title:"알림", content: confirmStr + " 되었습니다.");
         Navigator.pop(context);
+        alertDialog.show(context: context, title:"알림", content: confirmStr + " 처리 되었습니다.");
       } else {
-        alertDialog.show(context: context, title:"알림", content: confirmStr + " 되었습니다.");
+        alertDialog.show(context: context, title:"알림", content: confirmStr + " 처리중 오류가 발생되었습니다.");
       }
 
     });

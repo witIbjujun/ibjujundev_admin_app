@@ -36,6 +36,8 @@ class _BoardWriteState extends State<BoardWrite> {
   final ImagePicker _picker = ImagePicker();
   // 별점 상태 변수
   int starRating = 0;
+  // 사진 최대 건수
+  int maxPhotoCnt = 5;
 
   @override
   void initState() {
@@ -135,11 +137,11 @@ class _BoardWriteState extends State<BoardWrite> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      if (_images.length >= 5) {
-                        alertDialog.show(context: context, title:"알림", content: "이미지는 최대 5건\n입력 가능합니다.");
+                      if (_images.length >= maxPhotoCnt) {
+                        alertDialog.show(context: context, title:"알림", content: "이미지는 최대 " + maxPhotoCnt.toString() + "건\n입력 가능합니다.");
                         return;
                       }
-                      _showImagePickerOptions();
+                      _showImagePickerOptions(maxPhotoCnt);
                     },
                     child: Container(
                       width: 75,
@@ -157,7 +159,7 @@ class _BoardWriteState extends State<BoardWrite> {
                           Icon(Icons.add_a_photo, size: 30, color: WitCommonTheme.wit_gray),
                           SizedBox(height: 4),
                           Text(
-                            '${_images.length}/5',
+                            '${_images.length}/' + maxPhotoCnt.toString(),
                             style: WitCommonTheme.subtitle,
                           ),
                         ],
@@ -362,27 +364,27 @@ class _BoardWriteState extends State<BoardWrite> {
   }
 
   // [팝업] 갤러리, 카메라 팝업 호출
-  void _showImagePickerOptions() {
+  void _showImagePickerOptions(int maxCnt) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: 150,
+          height: 200,
           child: Column(
             children: [
               ListTile(
-                leading: Icon(Icons.photo),
-                title: Text('갤러리에서 선택'),
+                leading: Icon(Icons.photo,size: 30),
+                title: Text('갤러리에서 선택', style: WitCommonTheme.subtitle),
                 onTap: () {
-                  _pickMultiImages();
+                  _pickMultiImages(maxCnt);
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                leading: Icon(Icons.camera),
-                title: Text('사진 찍기'),
+                leading: Icon(Icons.camera,size: 30),
+                title: Text('사진 찍기', style: WitCommonTheme.subtitle),
                 onTap: () {
-                  _pickImage(ImageSource.camera);
+                  _pickImage(ImageSource.camera, maxCnt);
                   Navigator.pop(context);
                 },
               ),
@@ -393,12 +395,12 @@ class _BoardWriteState extends State<BoardWrite> {
     );
   }
 
-  Future<void> _pickImage(ImageSource source) async {
+  Future<void> _pickImage(ImageSource source, int maxCnt) async {
     final XFile? pickedFile = await _picker.pickImage(
         source: source,
         maxHeight: 1200,
         maxWidth: 1200,
-        imageQuality: 40,
+        imageQuality: 30,
     );
 
     if (pickedFile != null) {
@@ -410,11 +412,11 @@ class _BoardWriteState extends State<BoardWrite> {
     }
   }
 
-  Future<void> _pickMultiImages() async {
+  Future<void> _pickMultiImages(int maxCnt) async {
     final List<XFile>? pickedFiles = await _picker.pickMultiImage(
       maxHeight: 1200,
       maxWidth: 1200,
-      imageQuality: 40,
+      imageQuality: 30,
     );
     if (pickedFiles != null && pickedFiles.isNotEmpty) {
       setState(() {

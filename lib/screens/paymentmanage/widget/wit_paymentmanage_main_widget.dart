@@ -54,7 +54,7 @@ class _PaymentCardState extends State<PaymentCard> {
       child : Container(
         decoration: BoxDecoration(
           color: WitCommonTheme.wit_extraLightGrey,
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -84,10 +84,6 @@ class _PaymentCardState extends State<PaymentCard> {
                     ),
                   ),
                 ],
-              ),
-              Container(
-                height: 1,
-                color:WitCommonTheme.wit_extraLightGrey,
               ),
             ],
           ),

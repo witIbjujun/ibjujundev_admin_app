@@ -55,32 +55,43 @@ class PartnerManageDetailState extends State<PartnerManageDetail> {
           style: WitCommonTheme.title.copyWith(color: WitCommonTheme.wit_white),
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  partnerDetailRow("사업자명", widget.itemInfo["storeName"] ?? ""),
-                  partnerDetailRow("대표자명", widget.itemInfo["ceoName"] ?? ""),
-                  partnerDetailRow("대표 이메일", widget.itemInfo["email"] ?? ""),
-                  partnerDetailRow("담당자 연락처", formatPhoneNumber(widget.itemInfo["hp"] ?? "")),
-                  partnerDetailRow("사업장 주소", "${widget.itemInfo["zipCode"] + ") " + widget.itemInfo["address1"]+ widget.itemInfo["address2"]}"),
-                  partnerDetailRow("개업일자", formatDate(widget.itemInfo["openDate"] ?? "")),
-                  partnerDetailRow("사업자번호", "${widget.itemInfo["storeCode"] + "  " + widget.itemInfo["bizCertificationNm"]}"),
-                  partnerDetailRow("품목명", widget.itemInfo["categoryNm"] ?? ""),
-                  partnerDetailRow("AS여부", widget.itemInfo["asGbnNm"] ?? ""),
-                  partnerDetailRow("인증상태", widget.itemInfo["certificationNm"] ?? ""),
-                  ImageListDisplay(imageList: imageList),
-                  partnerButtonWidget(
-                    itemInfo : widget.itemInfo,
-                    updatePartnerYn: updatePartnerYn,
+      body: Container(
+        color: Colors.white,
+        child: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 0.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start, // 좌측 정렬
+                        children: [
+                          partnerDetailRow("사업자명", widget.itemInfo["storeName"] ?? ""),
+                          partnerDetailRow("대표자명", widget.itemInfo["ceoName"] ?? ""),
+                          partnerDetailRow("대표 이메일", widget.itemInfo["email"] ?? ""),
+                          partnerDetailRow("담당자 연락처", formatPhoneNumber(widget.itemInfo["hp"] ?? "")),
+                          partnerDetailRow("사업장 주소", "${widget.itemInfo["zipCode"] + ") " + widget.itemInfo["address1"]+ widget.itemInfo["address2"]}"),
+                          partnerDetailRow("개업일자", formatDate(widget.itemInfo["openDate"] ?? "")),
+                          partnerDetailRow("사업자번호", "${widget.itemInfo["storeCode"]}"),
+                          partnerDetailRow("품목명", widget.itemInfo["categoryNm"] ?? ""),
+                          partnerDetailRow("AS여부", widget.itemInfo["asGbnNm"] ?? ""),
+                          partnerDetailRow("사업자 인증 상태", widget.itemInfo["bizCertificationNm"] ?? ""),
+                          partnerDetailRow("인증상태", widget.itemInfo["certificationNm"] ?? ""),
+                        ],
+                      ),
+                    ),
                   ),
-                ],
+                ),
               ),
-            ),
+              ImageListDisplay(imageList: imageList),
+              partnerButtonWidget(
+                itemInfo : widget.itemInfo,
+                updatePartnerYn: updatePartnerYn,
+              ),
+              SizedBox(height: 5),
+            ],
           ),
         ),
       ),

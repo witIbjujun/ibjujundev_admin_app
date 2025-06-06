@@ -19,7 +19,7 @@ Widget partnerDetailRow(String title, String value, {Widget? action}) {
           children: [
             Text(
               title,
-              style: WitCommonTheme.title,
+              style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 4),
             Row(
@@ -31,7 +31,7 @@ Widget partnerDetailRow(String title, String value, {Widget? action}) {
                     children: [
                       Text(
                         value,
-                        style: WitCommonTheme.subtitle,
+                        style: WitCommonTheme.caption,
                       ),
                       if (action != null) action,
                     ],

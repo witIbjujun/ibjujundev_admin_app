@@ -84,49 +84,73 @@ class _BoardWriteState extends State<BoardWrite> {
         child: Column(
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+              child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (bordTypeGbn == "UH")...[
+                      Center(
+                        child: Text(
+                          "이용 후기는 어떠셨나요?",
+                          style: WitCommonTheme.title,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Center(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: List.generate(5, (index) => _buildStar(index)),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                    ],
+                    if (bordTypeGbn != "UH")...[
                       Text(
                         "제목",
-                        style: WitCommonTheme.title,
+                        style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),
                       ),
                       TextField(
                         controller: _titleController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "제목을 입력하세요",
-                          hintStyle: WitCommonTheme.subtitle.copyWith(color: WitCommonTheme.wit_lightgray),
+                          hintStyle: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_lightgray),
+                          counterText: "",
                         ),
                         style: WitCommonTheme.subtitle,
                         maxLines: 1,
+                        maxLength: 30,
                       ),
-                      SizedBox(height: 10),
-                      Container(
-                        height: 1,
-                        color: WitCommonTheme.wit_extraLightGrey,
-                      ),
-                      SizedBox(height: 10),
-                      Text("내용", style: WitCommonTheme.title),
-                      TextField(
+                    ],
+                    Container(
+                      height: 1,
+                      color: WitCommonTheme.wit_extraLightGrey,
+                    ),
+                    SizedBox(height: 10),
+                    if (bordTypeGbn == "UH")...[
+                      Text("후기 작성",
+                        style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),),
+                    ] else ...[
+                      Text("내용",
+                        style: WitCommonTheme.subtitle.copyWith(fontWeight: FontWeight.bold),),
+                    ],
+                    Expanded(
+                      child: TextField(
                         controller: _contentController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "내용을 입력하세요",
-                          hintStyle: WitCommonTheme.subtitle.copyWith(color: WitCommonTheme.wit_lightgray),
+                          hintStyle: WitCommonTheme.caption.copyWith(color: WitCommonTheme.wit_lightgray),
                         ),
                         style: WitCommonTheme.subtitle,
                         maxLines: null,
-                        minLines: 15,
+                        maxLength: 1000,
                         keyboardType: TextInputType.multiline,
+                        expands: true,
                       ),
-                      // 스크롤 콘텐츠 마지막 부분과 버튼 사이에 여백 추가
-                      SizedBox(height: 20),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -160,7 +184,7 @@ class _BoardWriteState extends State<BoardWrite> {
                           SizedBox(height: 4),
                           Text(
                             '${_images.length}/' + maxPhotoCnt.toString(),
-                            style: WitCommonTheme.subtitle,
+                            style: WitCommonTheme.caption,
                           ),
                         ],
                       ),

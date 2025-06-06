@@ -161,11 +161,12 @@ class EstimateInfoDetailState extends State<EstimateInfoDetail> {
       "stat": dropBoxSelectStat,
     });
 
-    print(widget.itemInfo["sllrNo"]);
-    print(dropBoxSelectStat);
-
     // API 호출 (사업자 인증 요청 업체 조회)
     final _estimateInfoDetailList = await sendPostRequest(restId, param);
+
+    print(widget.itemInfo["sllrNo"]);
+    print(dropBoxSelectStat);
+    print(_estimateInfoDetailList);
 
     // 결과 셋팅
     setState(() {

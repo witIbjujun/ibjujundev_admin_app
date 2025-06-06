@@ -66,14 +66,36 @@ class TitleAndMenu extends StatelessWidget {
             return [
               PopupMenuItem<String>(
                 value: 'edit',
-                child: Text('수정하기',
-                  style: WitCommonTheme.subtitle,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.edit_note_rounded,
+                      color: WitCommonTheme.wit_lightBlue,
+                      size: 20,
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      '수정하기',
+                      style: WitCommonTheme.caption,
+                    ),
+                  ],
                 ),
               ),
               PopupMenuItem<String>(
                 value: 'delete',
-                child: Text('삭제하기',
-                  style: WitCommonTheme.subtitle,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.delete,
+                      color: WitCommonTheme.wit_lightBlue,
+                      size: 20,
+                    ),
+                    SizedBox(width: 8),
+                    Text(
+                      '삭제하기',
+                      style: WitCommonTheme.caption,
+                    ),
+                  ],
                 ),
               ),
             ];
